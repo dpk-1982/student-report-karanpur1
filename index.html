@@ -1,0 +1,261 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Report - Primary School Karanpur</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #007bff;
+      color: white;
+      padding: 20px;
+    }
+
+    label, select, input {
+      margin: 5px 0;
+      display: block;
+    }
+
+    .report-card, .admin-form {
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: white;
+      color: black;
+    }
+
+    .admin-form {
+      display: none;
+      background-color: #28a745;
+      color: white;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      border: 1px solid #999;
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .flex-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .admin-button {
+      margin-top: 20px;
+      padding: 10px 15px;
+      background-color: #0056b3;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button[type="submit"] {
+      margin-top: 10px;
+      padding: 8px 12px;
+      background-color: white;
+      color: #28a745;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    input, select {
+      padding: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Primary School Karanpur</h1>
+
+  <!-- Class and Student Selection -->
+  <label for="classSelect">Select Class:</label>
+  <select id="classSelect" onchange="populateStudents()">
+    <option value="">--Select Class--</option>
+    <option value="1">Class 1</option>
+    <option value="2">Class 2</option>
+    <option value="3">Class 3</option>
+    <option value="4">Class 4</option>
+    <option value="5">Class 5</option>
+  </select>
+
+  <label for="studentSelect">Select Student:</label>
+  <select id="studentSelect" onchange="showReport()">
+    <option value="">--Select Student--</option>
+  </select>
+
+  <!-- Report Display -->
+  <div class="report-card" id="reportCard" style="display: none;"></div>
+
+  <!-- Admin Login Button -->
+  <button class="admin-button" onclick="adminLogin()">Admin Login</button>
+
+  <!-- Admin Form -->
+  <div class="admin-form" id="adminFormSection">
+    <h2>Add Student Record (Admin Only)</h2>
+    <form id="studentForm">
+      <label>Class:
+        <select id="classInput" required>
+          <option value="">--Select Class--</option>
+          <option value="1">Class 1</option>
+          <option value="2">Class 2</option>
+          <option value="3">Class 3</option>
+          <option value="4">Class 4</option>
+          <option value="5">Class 5</option>
+        </select>
+      </label>
+
+      <label>Student Name: <input type="text" id="nameInput" required></label>
+      <label>Father's Name: <input type="text" id="fatherInput" required></label>
+      <label>Roll Number: <input type="number" id="rollInput" required></label>
+      <label>Subjects (comma separated): <input type="text" id="subjectsInput" placeholder="Math:45, English:40" required></label>
+      <label>Rank in Class: <input type="number" id="rankInput" required></label>
+
+      <button type="submit">Add Student</button>
+    </form>
+  </div>
+
+  <script>
+    const studentsData = {
+      "1": {
+        "Amit": { father: "Ravi", roll: 1, subjects: { Math: 35, English: 40 }, rank: 2 },
+        "Neha": { father: "Suresh", roll: 2, subjects: { Math: 38, English: 42 }, rank: 1 }
+      },
+      "2": {
+        "Rahul": { father: "Mahesh", roll: 3, subjects: { Math: 45, English: 44 }, rank: 1 }
+      }
+    };
+
+    function populateStudents() {
+      const classId = document.getElementById('classSelect').value;
+      const studentSelect = document.getElementById('studentSelect');
+      studentSelect.innerHTML = '<option value="">--Select Student--</option>';
+
+      if (classId && studentsData[classId]) {
+        const students = Object.keys(studentsData[classId]);
+        if (students.length === 0) {
+          alert("No students found in this class.");
+        }
+        for (const student of students) {
+          const option = document.createElement('option');
+          option.value = student;
+          option.textContent = student;
+          studentSelect.appendChild(option);
+        }
+      }
+
+      document.getElementById('reportCard').style.display = 'none';
+    }
+
+    function showReport() {
+      const classId = document.getElementById('classSelect').value;
+      const studentName = document.getElementById('studentSelect').value;
+      const reportCard = document.getElementById('reportCard');
+
+      if (!studentName || !studentsData[classId] || !studentsData[classId][studentName]) {
+        reportCard.style.display = 'none';
+        return;
+      }
+
+      const data = studentsData[classId][studentName];
+      const subjects = data.subjects;
+      let total = 0;
+      let maxTotal = 0;
+      let rows = '';
+
+      for (const subject in subjects) {
+        const marks = subjects[subject];
+        total += marks;
+        maxTotal += 50;
+        rows += `<tr><td>${subject}</td><td>${marks}</td></tr>`;
+      }
+
+      const percent = ((total / maxTotal) * 100).toFixed(2);
+
+      reportCard.innerHTML = `
+        <div class="flex-row">
+          <p><strong>Student Name:</strong> ${studentName}</p>
+          <p><strong>Father's Name:</strong> ${data.father}</p>
+        </div>
+        <p><strong>Roll Number:</strong> ${data.roll}</p>
+        <p><strong>Class:</strong> Class ${classId}</p>
+        <table>
+          <tr><th>Subject</th><th>Marks</th></tr>
+          ${rows}
+        </table>
+        <p><strong>Total Marks:</strong> ${total} / ${maxTotal}</p>
+        <p><strong>Percentage:</strong> ${percent}%</p>
+        <p><strong>Rank in Class:</strong> ${data.rank}</p>
+      `;
+      reportCard.style.display = 'block';
+    }
+
+    function adminLogin() {
+      const password = prompt("Enter admin password:");
+      if (password === "admin123") {
+        document.getElementById('adminFormSection').style.display = 'block';
+      } else {
+        alert("Incorrect password!");
+      }
+    }
+
+    document.getElementById('studentForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const classId = document.getElementById('classInput').value;
+      const name = document.getElementById('nameInput').value.trim();
+      const father = document.getElementById('fatherInput').value.trim();
+      const roll = parseInt(document.getElementById('rollInput').value);
+      const rank = parseInt(document.getElementById('rankInput').value);
+      const subjectsInput = document.getElementById('subjectsInput').value;
+
+      const subjectPairs = subjectsInput.split(',').map(s => s.trim());
+      const subjects = {};
+      for (const pair of subjectPairs) {
+        const [sub, mark] = pair.split(':').map(s => s.trim());
+        if (sub && mark && !isNaN(mark)) {
+          subjects[sub] = parseInt(mark);
+        } else {
+          alert("Invalid subject format. Use format like Math:45, English:40");
+          return;
+        }
+      }
+
+      if (!studentsData[classId]) studentsData[classId] = {};
+      if (studentsData[classId][name]) {
+        alert("Student already exists. Use a unique name.");
+        return;
+      }
+
+      studentsData[classId][name] = { father, roll, subjects, rank };
+
+      alert("Student added successfully!");
+      e.target.reset();
+
+      // Refresh dropdown if class is currently selected
+      const selectedClass = document.getElementById('classSelect').value;
+      if (selectedClass === classId) {
+        populateStudents();
+        document.getElementById('studentSelect').value = name;
+        showReport();
+      }
+    });
+  </script>
+
+</body>
+</html>
