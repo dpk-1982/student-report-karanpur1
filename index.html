@@ -1,55 +1,37 @@
 <html lang="en">
+
 <head>
-  <marquee>This website is developed by Deepak Kumar Vaishy</marquee>
-  <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyBe15RHbaDwJ-xE-EZOq83OcDOHQevz-00",
-    authDomain: "karanpurstudentreports.firebaseapp.com",
-    databaseURL: "https://karanpurstudentreports-default-rtdb.firebaseio.com",
-    projectId: "karanpurstudentreports",
-    storageBucket: "karanpurstudentreports.firebasestorage.app",
-    messagingSenderId: "121363143185",
-    appId: "1:121363143185:web:c2464bc1162103c28aafb0"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-</script>
   <meta charset="UTF-8">
   <title>Student Report - Primary School Karanpur</title>
- 
   <style>
     body {
-      font-family: Arial, sans-serif, font-size: 40px;
-      background-color: #14EADC;
-      color: black;
-      padding: 40px;
-          }
-    
-    label, select, input {
+      font-family: Arial, sans-serif;
+      background-color: #007bff;
+      color: white;
+      padding: 20px;
+    }
+
+    label,
+    select,
+    input {
       margin: 5px 0;
       display: block;
     }
 
-    .report-card, .admin-form {
+    .report-card,
+    .admin-form {
       margin-top: 20px;
       border: 1px solid #ccc;
       padding: 20px;
       border-radius: 10px;
-      background-color: pink;
+      background-color: white;
       color: black;
     }
 
     .admin-form {
       display: none;
       background-color: #28a745;
-      color: black;
+      color: white;
     }
 
     table {
@@ -58,7 +40,8 @@
       margin-top: 10px;
     }
 
-    th, td {
+    th,
+    td {
       border: 1px solid #999;
       padding: 8px;
       text-align: center;
@@ -87,20 +70,22 @@
     button[type="submit"] {
       margin-top: 10px;
       padding: 8px 12px;
-      background-color: yellow;
-      color: black;
+      background-color: white;
+      color: #28a745;
       border: none;
       border-radius: 5px;
       cursor: pointer;
     }
 
-    input, select {
+    input,
+    select {
       padding: 5px;
       border-radius: 5px;
       border: 1px solid #ccc;
     }
   </style>
 </head>
+
 <body>
 
   <h1>Primary School Karanpur</h1>
@@ -152,64 +137,75 @@
     </form>
   </div>
 
-  <script>
-    const studentsData = {
-      "1": {
-        "Amit": { father: "Ravi", roll: 1, subjects: { Math: 35, English: 40 }, rank: 2 },
-        "Neha": { father: "Suresh", roll: 2, subjects: { Math: 38, English: 42 }, rank: 1 }
-      },
-      "2": {
-        "Rahul": { father: "Mahesh", roll: 3, subjects: { Math: 45, English: 44 }, rank: 1 }
-      }
+  <script type="module">
+    import {
+      initializeApp
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import {
+      getDatabase,
+      ref,
+      set,
+      get,
+      remove
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+    const firebaseConfig = {
+      apiKey: "AIzaSyBXcBGbfxZ0kU0vqbZvsB_eD7nRBdmRAVI",
+      authDomain: "deeapk1281.firebaseapp.com",
+      databaseURL: "https://deeapk1281-default-rtdb.firebaseio.com",
+      projectId: "deeapk1281",
+      storageBucket: "deeapk1281.appspot.com",
+      messagingSenderId: "1033114222578",
+      appId: "1:1033114222578:web:c60b948ecacf60888a356b",
+      measurementId: "G-KMVWFVFM35"
     };
-
-    function populateStudents() {
-      const classId = document.getElementById('classSelect').value;
-      const studentSelect = document.getElementById('studentSelect');
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const classSelect = document.getElementById('classSelect');
+    const studentSelect = document.getElementById('studentSelect');
+    const reportCard = document.getElementById('reportCard');
+    // Load students from Firebase
+    window.populateStudents = function() {
+      const classId = classSelect.value;
       studentSelect.innerHTML = '<option value="">--Select Student--</option>';
-
-      if (classId && studentsData[classId]) {
-        const students = Object.keys(studentsData[classId]);
-        if (students.length === 0) {
+      if (!classId) return;
+      get(ref(db, 'students/' + classId)).then(snapshot => {
+        if (snapshot.exists()) {
+          const students = snapshot.val();
+          for (const studentName in students) {
+            const option = document.createElement('option');
+            option.value = studentName;
+            option.textContent = studentName;
+            studentSelect.appendChild(option);
+          }
+        } else {
           alert("No students found in this class.");
         }
-        for (const student of students) {
-          const option = document.createElement('option');
-          option.value = student;
-          option.textContent = student;
-          studentSelect.appendChild(option);
+      });
+      reportCard.style.display = 'none';
+    };
+    // Show report with update/delete buttons
+    window.showReport = function() {
+      const classId = classSelect.value;
+      const studentName = studentSelect.value;
+      if (!classId || !studentName) return;
+      const studentRef = ref(db, `students/${classId}/${studentName}`);
+      get(studentRef).then(snapshot => {
+        if (!snapshot.exists()) {
+          reportCard.style.display = 'none';
+          return;
         }
-      }
-
-      document.getElementById('reportCard').style.display = 'none';
-    }
-
-    function showReport() {
-      const classId = document.getElementById('classSelect').value;
-      const studentName = document.getElementById('studentSelect').value;
-      const reportCard = document.getElementById('reportCard');
-
-      if (!studentName || !studentsData[classId] || !studentsData[classId][studentName]) {
-        reportCard.style.display = 'none';
-        return;
-      }
-
-      const data = studentsData[classId][studentName];
-      const subjects = data.subjects;
-      let total = 0;
-      let maxTotal = 0;
-      let rows = '';
-
-      for (const subject in subjects) {
-        const marks = subjects[subject];
-        total += marks;
-        maxTotal += 50;
-        rows += `<tr><td>${subject}</td><td>${marks}</td></tr>`;
-      }
-
-      const percent = ((total / maxTotal) * 100).toFixed(2);
-
-      reportCard.innerHTML = `
+        const data = snapshot.val();
+        let rows = '';
+        let total = 0,
+          maxTotal = 0;
+        for (const subject in data.subjects) {
+          const marks = data.subjects[subject];
+          total += marks;
+          maxTotal += 50;
+          rows += `<tr><td>${subject}</td><td>${marks}</td></tr>`;
+        }
+        const percent = ((total / maxTotal) * 100).toFixed(2);
+        reportCard.innerHTML = `
         <div class="flex-row">
           <p><strong>Student Name:</strong> ${studentName}</p>
           <p><strong>Father's Name:</strong> ${data.father}</p>
@@ -223,29 +219,30 @@
         <p><strong>Total Marks:</strong> ${total} / ${maxTotal}</p>
         <p><strong>Percentage:</strong> ${percent}%</p>
         <p><strong>Rank in Class:</strong> ${data.rank}</p>
+        <button onclick="editStudent('${classId}', '${studentName}')">Edit</button>
+        <button onclick="deleteStudent('${classId}', '${studentName}')">Delete</button>
       `;
-      reportCard.style.display = 'block';
-    }
-
-    function adminLogin() {
+        reportCard.style.display = 'block';
+      });
+    };
+    // Admin login
+    window.adminLogin = function() {
       const password = prompt("Enter admin password:");
       if (password === "admin123") {
         document.getElementById('adminFormSection').style.display = 'block';
       } else {
         alert("Incorrect password!");
       }
-    }
-
+    };
+    // Submit (Add or Update)
     document.getElementById('studentForm').addEventListener('submit', function(e) {
       e.preventDefault();
-
       const classId = document.getElementById('classInput').value;
       const name = document.getElementById('nameInput').value.trim();
       const father = document.getElementById('fatherInput').value.trim();
       const roll = parseInt(document.getElementById('rollInput').value);
       const rank = parseInt(document.getElementById('rankInput').value);
       const subjectsInput = document.getElementById('subjectsInput').value;
-
       const subjectPairs = subjectsInput.split(',').map(s => s.trim());
       const subjects = {};
       for (const pair of subjectPairs) {
@@ -257,27 +254,54 @@
           return;
         }
       }
-
-      if (!studentsData[classId]) studentsData[classId] = {};
-      if (studentsData[classId][name]) {
-        alert("Student already exists. Use a unique name.");
-        return;
-      }
-
-      studentsData[classId][name] = { father, roll, subjects, rank };
-
-      alert("Student added successfully!");
-      e.target.reset();
-
-      // Refresh dropdown if class is currently selected
-      const selectedClass = document.getElementById('classSelect').value;
-      if (selectedClass === classId) {
-        populateStudents();
-        document.getElementById('studentSelect').value = name;
-        showReport();
-      }
+      const studentRef = ref(db, `students/${classId}/${name}`);
+      set(studentRef, {
+        father,
+        roll,
+        subjects,
+        rank
+      }).then(() => {
+        alert("Student saved successfully!");
+        e.target.reset();
+        if (classSelect.value === classId) {
+          populateStudents();
+          studentSelect.value = name;
+          showReport();
+        }
+      }).catch(err => alert("Error: " + err.message));
     });
+    // Delete Student
+    window.deleteStudent = function(classId, studentName) {
+      const confirmDelete = confirm(`Delete student ${studentName} from Class ${classId}?`);
+      if (!confirmDelete) return;
+      const studentRef = ref(db, `students/${classId}/${studentName}`);
+      remove(studentRef).then(() => {
+        alert("Student deleted.");
+        populateStudents();
+        reportCard.style.display = 'none';
+      }).catch(err => alert("Error deleting: " + err.message));
+    };
+    // Edit Student (Pre-fill form)
+    window.editStudent = function(classId, studentName) {
+      const studentRef = ref(db, `students/${classId}/${studentName}`);
+      get(studentRef).then(snapshot => {
+        if (!snapshot.exists()) return alert("Student not found.");
+        const data = snapshot.val();
+        document.getElementById('classInput').value = classId;
+        document.getElementById('nameInput').value = studentName;
+        document.getElementById('fatherInput').value = data.father;
+        document.getElementById('rollInput').value = data.roll;
+        document.getElementById('rankInput').value = data.rank;
+        const subjectsStr = Object.entries(data.subjects).map(([k, v]) => `${k}:${v}`).join(', ');
+        document.getElementById('subjectsInput').value = subjectsStr;
+        document.getElementById('adminFormSection').style.display = 'block';
+        alert("Edit the fields and click 'Add Student' to update.");
+      });
+    };
   </script>
 
 </body>
+
+<marquee>This website is developed by Deepak Kumar Vaishya!!</marquee>
+
 </html>
