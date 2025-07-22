@@ -2,11 +2,15 @@
 
 <head>
   <meta charset="UTF-8">
+  <marquee behavior="scroll" direction="left" style="font-size: 27px; color: #07e2ee;">
+    🎓📚 Welcome to Primary School Karanpur 📚🎓
+  </marquee>
+
   <title>Student Report - Primary School Karanpur</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #007bff;
+      background-color: #ee6207;
       color: white;
       padding: 20px;
     }
@@ -24,7 +28,7 @@
       border: 1px solid #ccc;
       padding: 20px;
       border-radius: 10px;
-      background-color: grey;
+      background-color: white;
       color: black;
     }
 
@@ -88,7 +92,12 @@
 
 <body>
 
-  <h1>Primary School Karanpur</h1>
+  <h1 style="text-align: center; font-size: 70px; font-family: Arial; color: #6b0f01; background-color: yellow;">
+    Primary School Karanpur
+  </h1>
+  <h2 style="text-align: center; font-size: 40px; font-family: Arial; color: white;">
+    Block- Behjam , Lakhimpur-Kheri
+  </h2>
 
   <!-- Class and Student Selection -->
   <label for="classSelect">Select Class:</label>
@@ -132,8 +141,10 @@
       <label>Roll Number: <input type="number" id="rollInput" required></label>
       <label>Subjects (comma separated): <input type="text" id="subjectsInput" placeholder="Math:45, English:40" required></label>
       <label>Rank in Class: <input type="number" id="rankInput" required></label>
-
+      <button onclick="editStudent('${classId}', '${studentName}')">Edit</button>
+      <button onclick="deleteStudent('${classId}', '${studentName}')">Delete</button>
       <button type="submit">Add Student</button>
+      <input type="number" id="maxMarksInput" placeholder="Max Marks per Subject" style="display:none" />
     </form>
   </div>
 
@@ -206,21 +217,22 @@
         }
         const percent = ((total / maxTotal) * 100).toFixed(2);
         reportCard.innerHTML = `
-        <div class="flex-row">
-          <p><strong>Student Name:</strong> ${studentName}</p>
-          <p><strong>Father's Name:</strong> ${data.father}</p>
+        <div style="background: #f0f8ff; border: 2px solid #007acc; padding: 20px; border-radius: 10px; color: #333; font-family: Arial;">
+          <h2 style="text-align:center; color: #007acc;">📘 Report Card</h2>
+          <div style="display: flex; justify-content: space-between;">
+            <p><strong>👤 Student Name:</strong> ${studentName}</p>
+            <p><strong>👨‍👧 Father's Name:</strong> ${data.father}</p>
+          </div>
+          <p><strong>🔢 Roll Number:</strong> ${data.roll}</p>
+          <p><strong>🏫 Class:</strong> Class ${classId}</p>
+          <table style="width:100%; border-collapse: collapse; margin: 10px 0;">
+            <tr style="background: #007acc; color: black;"><th>📚 Subject</th><th>📝 Marks</th></tr>
+            ${rows}
+          </table>
+          <p><strong>🔢 Total Marks:</strong> ${total} / ${maxTotal}</p>
+          <p><strong>📊 Percentage:</strong> ${percent}%</p>
+          <p><strong>🏅 Rank in Class:</strong> ${data.rank}</p>
         </div>
-        <p><strong>Roll Number:</strong> ${data.roll}</p>
-        <p><strong>Class:</strong> Class ${classId}</p>
-        <table>
-          <tr><th>Subject</th><th>Marks</th></tr>
-          ${rows}
-        </table>
-        <p><strong>Total Marks:</strong> ${total} / ${maxTotal}</p>
-        <p><strong>Percentage:</strong> ${percent}%</p>
-        <p><strong>Rank in Class:</strong> ${data.rank}</p>
-        <button onclick="editStudent('${classId}', '${studentName}')">Edit</button>
-        <button onclick="deleteStudent('${classId}', '${studentName}')">Delete</button>
       `;
         reportCard.style.display = 'block';
       });
@@ -302,6 +314,8 @@
 
 </body>
 
-<marquee>This website is developed by Deepak Kumar Vaishya!!</marquee>
+<marquee behavior="scroll" direction="right" style="font-size: 17px; color: pink;">
+  📚 This website is developed by Deepak Kumar Vaishy . 📚
+</marquee>
 
 </html>
