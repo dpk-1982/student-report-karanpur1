@@ -213,7 +213,7 @@
           const marks = data.subjects[subject];
           total += marks;
           maxTotal += 50;
-          rows += `<tr><td>${subject}</td><td>${marks}</td></tr>`;
+          rows += `<tr style= "color: black;><td>${subject}</td><td>${marks}</td></tr>`;
         }
         const percent = ((total / maxTotal) * 100).toFixed(2);
         reportCard.innerHTML = `
