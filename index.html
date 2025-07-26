@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <title>Primary School Karanpur</title>
@@ -9,14 +8,14 @@
   <style>
     body {
       font-family: 'Comic Neue', cursive;
-      background: linear-gradient(to right, #f7b733, #fc4a1a);
+      background: linear-gradient(to right, #BF40FF, #7DDACB);
       color: #fff;
       padding: 20px;
       overflow-x: hidden;
     }
 
     h1 {
-      font-size: 60px;
+      font-size: 80px;
       text-align: center;
       color: #6b0f01;
       background: yellow;
@@ -33,17 +32,9 @@
     }
 
     @keyframes pulse {
-      0% {
-        transform: scale(1);
-      }
-
-      50% {
-        transform: scale(1.03);
-      }
-
-      100% {
-        transform: scale(1);
-      }
+      0% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+      100% { transform: scale(1); }
     }
 
     marquee {
@@ -51,8 +42,7 @@
       margin: 10px 0;
     }
 
-    select,
-    input {
+    select, input {
       padding: 10px;
       margin: 5px 0;
       border-radius: 8px;
@@ -70,8 +60,7 @@
       margin-top: 10px;
     }
 
-    .admin-form,
-    .report-card {
+    .admin-form, .report-card {
       background: #fff;
       color: black;
       border-radius: 15px;
@@ -81,15 +70,8 @@
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     table {
@@ -98,9 +80,8 @@
       margin-top: 10px;
     }
 
-    th,
-    td {
-      border: 1px solid #ccc;
+    th, td {
+      border: 2px solid #ccc;
       padding: 10px;
       text-align: center;
     }
@@ -111,7 +92,7 @@
 
     .admin-login-box {
       margin-top: 20px;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255,255,255,0.2);
       padding: 20px;
       border-radius: 10px;
     }
@@ -130,13 +111,28 @@
       display: flex;
       gap: 10px;
     }
+
+    #messageBox {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #4CAF50;
+      color: #fff;
+      padding: 15px 30px;
+      border-radius: 10px;
+      display: none;
+      font-weight: bold;
+      font-size: 18px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      z-index: 1000;
+    }
   </style>
 </head>
-
 <body>
 
   <marquee behavior="scroll" direction="left" style="color: #07e2ee;">
-    🎓📚 Welcome to Primary School Karanpur 📚🎓
+    🎓📚 Welcome to Primary School Karanpur . Learn with joy !!📚🎓
   </marquee>
 
   <h1>Primary School Karanpur</h1>
@@ -194,33 +190,28 @@
     <label>Roll Number:</label>
     <input type="number" id="rollInput" required />
 
-    <label>Subjects and Marks:</label>
+    <label>Subjects and Marks (Format: OM/MM):</label>
     <div id="subjectsContainer"></div>
     <button onclick="addSubjectInput()">➕ Add Subject</button>
 
     <label>Rank in Class:</label>
-    <input type="number" id="rankInput" required />
+    <input type="number" id="rankInput" required disabled />
 
     <button onclick="saveStudent()">💾 Save</button>
     <button onclick="deleteStudent()">🗑️ Delete</button>
   </div>
 
   <marquee behavior="scroll" direction="right" style="color: pink;">
-    📚 This website is developed by Deepak Kumar Vaishy 📚
+    📚 This website is developed by Deepak Kumar Vaishy. 📚
   </marquee>
+
+  <div id="messageBox"></div>
 
   <!-- Firebase + App Script -->
   <script type="module">
-    import {
-      initializeApp
-    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import {
-      getDatabase,
-      ref,
-      set,
-      get,
-      remove
-    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getDatabase, ref, set, get, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
     const firebaseConfig = {
       apiKey: "AIzaSyBXcBGbfxZ0kU0vqbZvsB_eD7nRBdmRAVI",
       authDomain: "deeapk1281.firebaseapp.com",
@@ -230,17 +221,69 @@
       messagingSenderId: "1033114222578",
       appId: "1:1033114222578:web:c60b948ecacf60888a356b"
     };
+
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
+
     const classSelect = document.getElementById('classSelect');
     const studentSelect = document.getElementById('studentSelect');
     const reportCard = document.getElementById('reportCard');
+
     const adminFormSection = document.getElementById('adminFormSection');
     const loginBox = document.getElementById('loginBox');
+
     const adminClassSelect = document.getElementById('adminClassSelect');
     const adminStudentSelect = document.getElementById('adminStudentSelect');
-    // Admin Login
-    window.adminLogin = function() {
+
+    function showMessage(text, color = '#4CAF50') {
+      const box = document.getElementById('messageBox');
+      box.textContent = text;
+      box.style.background = color;
+      box.style.display = 'block';
+      setTimeout(() => {
+        box.style.opacity = '1';
+        box.style.transition = 'opacity 0.5s';
+      }, 100);
+      setTimeout(() => {
+        box.style.opacity = '0';
+        setTimeout(() => {
+          box.style.display = 'none';
+          box.style.opacity = '1';
+        }, 500);
+      }, 3000);
+    }
+
+    function getRankStyle(rank) {
+      if (rank === 1) return 'background: gold; color: black;font-size: 20px; font-weight: bold;';
+      if (rank === 2) return 'background: silver; color: black; font-weight: bold;';
+      if (rank === 3) return 'background: #cd7f32; color: white; font-weight: bold;';
+      return '';
+    }
+
+    async function calculateRanks(classId) {
+      const snapshot = await get(ref(db, `students/${classId}`));
+      if (!snapshot.exists()) return;
+      const students = snapshot.val();
+      const scores = [];
+
+      for (let name in students) {
+        let totalOM = 0, totalMM = 0;
+        for (let subject in students[name].subjects) {
+          const [om, mm] = students[name].subjects[subject].split("/").map(Number);
+          totalOM += om;
+          totalMM += mm;
+        }
+        const percent = totalMM > 0 ? totalOM / totalMM : 0;
+        scores.push({ name, percent });
+      }
+
+      scores.sort((a, b) => b.percent - a.percent);
+      for (let i = 0; i < scores.length; i++) {
+        await set(ref(db, `students/${classId}/${scores[i].name}/rank`), i + 1);
+      }
+    }
+
+    window.adminLogin = function () {
       const password = document.getElementById('adminPassword').value;
       if (password === "admin123") {
         loginBox.style.display = 'none';
@@ -249,59 +292,70 @@
         alert("Incorrect password!");
       }
     };
-    // Populate students
-    window.populateStudents = function() {
+
+    window.populateStudents = function () {
       const classId = classSelect.value;
       studentSelect.innerHTML = '<option value="">--Select Student--</option>';
       if (!classId) return;
+
       get(ref(db, 'students/' + classId)).then(snapshot => {
         if (snapshot.exists()) {
           const students = snapshot.val();
-          for (let name in students) {
+          const studentArray = Object.entries(students).map(([name, data]) => ({
+            name,
+            rank: data.rank || 0
+          }));
+          studentArray.sort((a, b) => a.rank - b.rank);
+          for (let student of studentArray) {
             let opt = document.createElement('option');
-            opt.value = name;
-            opt.textContent = name;
+            opt.value = student.name;
+            opt.textContent = `${student.name} (Rank ${student.rank || '-'})`;
             studentSelect.appendChild(opt);
           }
         }
       });
       reportCard.style.display = 'none';
     };
-    // Show report
-    window.showReport = function() {
+
+    window.showReport = function () {
       const classId = classSelect.value;
       const studentName = studentSelect.value;
       if (!classId || !studentName) return;
+
       get(ref(db, `students/${classId}/${studentName}`)).then(snapshot => {
         if (!snapshot.exists()) return;
         const data = snapshot.val();
-        let rows = '',
-          total = 0;
+        let rows = '', totalObtained = 0, totalMax = 0;
+
         for (let subject in data.subjects) {
-          let marks = data.subjects[subject];
-          total += marks;
-          rows += `<tr><td>${subject}</td><td>${marks}</td></tr>`;
+          let [om, mm] = data.subjects[subject].split("/").map(Number);
+          totalObtained += om;
+          totalMax += mm;
+          rows += `<tr><td>${subject}</td><td>${om}/${mm}</td></tr>`;
         }
-        const percent = (total / (Object.keys(data.subjects).length * 50) * 100).toFixed(2);
+
+        const percent = ((totalObtained / totalMax) * 100).toFixed(2);
+
         reportCard.innerHTML = `
-          <h3 style="text-align:center; color: #007acc;">📘 Report Card</h3>
+          <h3 style="text-align:center; font-size: 30px; color: #007acc;">📘 Report Card 📘</h3>
           <p><strong>Student Name:</strong> ${studentName}</p>
           <p><strong>Father's Name:</strong> ${data.father}</p>
           <p><strong>Roll:</strong> ${data.roll}</p>
           <p><strong>Class:</strong> ${classId}</p>
           <table><tr><th>Subject</th><th>Marks</th></tr>${rows}</table>
-          <p><strong>Total Marks:</strong> ${total}</p>
+          <p><strong>Total Marks:</strong> ${totalObtained}/${totalMax}</p>
           <p><strong>Percentage:</strong> ${percent}%</p>
-          <p><strong>Rank:</strong> ${data.rank}</p>
+          <p><strong>Rank:</strong> <span style="${getRankStyle(data.rank)}">${data.rank}</span></p>
         `;
         reportCard.style.display = 'block';
       });
     };
-    // Fetch students for admin
-    window.fetchClassStudents = function() {
+
+    window.fetchClassStudents = function () {
       const classId = adminClassSelect.value;
       adminStudentSelect.innerHTML = '<option value="">--New Student--</option>';
       if (!classId) return;
+
       get(ref(db, 'students/' + classId)).then(snapshot => {
         if (snapshot.exists()) {
           const students = snapshot.val();
@@ -314,11 +368,12 @@
         }
       });
     };
-    // Load student into form
-    window.loadStudentData = function() {
+
+    window.loadStudentData = function () {
       const classId = adminClassSelect.value;
       const studentName = adminStudentSelect.value;
       if (!classId || !studentName) return;
+
       get(ref(db, `students/${classId}/${studentName}`)).then(snapshot => {
         if (snapshot.exists()) {
           const data = snapshot.val();
@@ -335,56 +390,60 @@
         }
       });
     };
-    // Add subject input
-    window.addSubjectInput = function(sub = '', marks = '') {
+
+    window.addSubjectInput = function (sub = '', marks = '') {
       const div = document.createElement('div');
       div.className = 'subject-pair';
       div.innerHTML = `
         <input type="text" placeholder="Subject" value="${sub}" />
-        <input type="number" placeholder="Marks" value="${marks}" />
+        <input type="text" placeholder="OM/MM" value="${marks}" />
       `;
       document.getElementById('subjectsContainer').appendChild(div);
     };
-    // Save student
-    window.saveStudent = function() {
+
+    window.saveStudent = function () {
       const classId = adminClassSelect.value;
       const name = document.getElementById('nameInput').value.trim();
       const father = document.getElementById('fatherInput').value.trim();
       const roll = +document.getElementById('rollInput').value;
-      const rank = +document.getElementById('rankInput').value;
       const pairs = document.querySelectorAll('.subject-pair');
+
       const subjects = {};
       for (let pair of pairs) {
         const sub = pair.children[0].value.trim();
-        const mark = +pair.children[1].value;
-        if (sub && !isNaN(mark)) {
-          subjects[sub] = mark;
+        const markInput = pair.children[1].value.trim();
+        if (sub && markInput.includes("/")) {
+          const [om, mm] = markInput.split("/").map(Number);
+          if (!isNaN(om) && !isNaN(mm)) {
+            subjects[sub] = `${om}/${mm}`;
+          }
         }
       }
+
       if (!classId || !name) return alert("Fill all required fields.");
-      set(ref(db, `students/${classId}/${name}`), {
-        father,
-        roll,
-        subjects,
-        rank
-      }).then(() => {
-        alert("Student data saved!");
-        fetchClassStudents();
-      });
+
+      const newStudentData = { father, roll, subjects, rank: 0 };
+
+      set(ref(db, `students/${classId}/${name}`), newStudentData)
+        .then(() => calculateRanks(classId))
+        .then(() => {
+          showMessage("✅ Student data saved and rank updated!");
+          fetchClassStudents();
+        });
     };
-    // Delete
-    window.deleteStudent = function() {
+
+    window.deleteStudent = function () {
       const classId = adminClassSelect.value;
       const name = document.getElementById('nameInput').value.trim();
       if (!classId || !name) return alert("Select class and student.");
+
       if (confirm(`Delete ${name}?`)) {
         remove(ref(db, `students/${classId}/${name}`)).then(() => {
-          alert("Deleted.");
+          showMessage("🗑️ Student deleted!", "#f44336");
           fetchClassStudents();
         });
       }
     };
   </script>
 </body>
-
 </html>
