@@ -1,3 +1,4 @@
+<!-- ⬇️ Your full original HTML code starts here (only animation code added) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,14 +9,16 @@
   <style>
     body {
       font-family: 'Comic Neue', cursive;
+      font-size:20px;
+      text-align: left;
       background: linear-gradient(to right, #BF40FF, #7DDACB);
       color: #fff;
-      padding: 20px;
+      padding: 25px;
       overflow-x: hidden;
     }
 
     h1 {
-      font-size: 80px;
+      font-size: 35px;
       text-align: center;
       color: #6b0f01;
       background: yellow;
@@ -27,7 +30,7 @@
     h2 {
       text-align: center;
       color: white;
-      font-size: 30px;
+      font-size: 35px;
       margin-top: -10px;
     }
 
@@ -38,11 +41,12 @@
     }
 
     marquee {
-      font-size: 25px;
+      font-size: 30px;
       margin: 10px 0;
     }
 
     select, input {
+      font-size:25px;
       padding: 10px;
       margin: 5px 0;
       border-radius: 8px;
@@ -51,11 +55,12 @@
     }
 
     button {
+      font-size:25px;
       padding: 10px 20px;
       background: #1e90ff;
       color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
       margin-top: 10px;
     }
@@ -81,8 +86,8 @@
     }
 
     th, td {
-      border: 2px solid #ccc;
-      padding: 10px;
+      border: 4px solid #ccc;
+      padding: 16px;
       text-align: center;
     }
 
@@ -131,12 +136,12 @@
 </head>
 <body>
 
-  <marquee behavior="scroll" direction="left" style="color: #07e2ee;">
-    🎓📚 Welcome to Primary School Karanpur . Learn with joy !!📚🎓
+  <marquee behavior="scroll" direction="left" style="color: brown;">
+    🎓📚 Welcome to Primary School Karanpur . !! Learn With Joy !!📚🎓
   </marquee>
 
   <h1>Primary School Karanpur</h1>
-  <h2>Block - Behjam, Lakhimpur-Kheri</h2>
+  <h2><u>Block - Behjam, Lakhimpur-Kheri</u></h2>
 
   <!-- Class and Student Selection -->
   <label for="classSelect">Select Class:</label>
@@ -155,10 +160,10 @@
   </select>
 
   <div class="report-card" id="reportCard" style="display:none;"></div>
-
+  
   <!-- Admin Login -->
   <div class="admin-login-box" id="loginBox">
-    <h3>Admin Login</h3>
+    <h3> <u>Admin Login</u> </h3>
     <input type="password" id="adminPassword" placeholder="Enter Admin Password" />
     <button onclick="adminLogin()">Login</button>
   </div>
@@ -201,7 +206,7 @@
     <button onclick="deleteStudent()">🗑️ Delete</button>
   </div>
 
-  <marquee behavior="scroll" direction="right" style="color: pink;">
+  <marquee behavior="scroll" direction="right" style="color: black;">
     📚 This website is developed by Deepak Kumar Vaishy. 📚
   </marquee>
 
@@ -337,10 +342,10 @@
         const percent = ((totalObtained / totalMax) * 100).toFixed(2);
 
         reportCard.innerHTML = `
-          <h3 style="text-align:center; font-size: 30px; color: #007acc;">📘 Report Card 📘</h3>
-          <p><strong>Student Name:</strong> ${studentName}</p>
+          <h3 style="text-align:center; font-size: 50px; color: #007acc;">📘 <u> Monthly Report Card</u> 📘</h3>
+          <p><strong>Student's Name:</strong> ${studentName}</p>
           <p><strong>Father's Name:</strong> ${data.father}</p>
-          <p><strong>Roll:</strong> ${data.roll}</p>
+          <p><strong>Roll Number:  </strong> ${data.roll}</p>
           <p><strong>Class:</strong> ${classId}</p>
           <table><tr><th>Subject</th><th>Marks</th></tr>${rows}</table>
           <p><strong>Total Marks:</strong> ${totalObtained}/${totalMax}</p>
@@ -348,6 +353,8 @@
           <p><strong>Rank:</strong> <span style="${getRankStyle(data.rank)}">${data.rank}</span></p>
         `;
         reportCard.style.display = 'block';
+
+        if (percent > 85) playCelebration(); // 🎉 Added celebration condition here
       });
     };
 
@@ -444,6 +451,17 @@
         });
       }
     };
+
+    // 🎉 Celebration function added here
+    function playCelebration() {
+      const confetti = document.createElement('div');
+      confetti.innerHTML = `<img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdG1lamFhcnhxcDYyM2hiOTZ0ZzlscnlrdXBoOTQ3Z294Y2Vjd3owMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/7M7gp0Q9flKtzl4MaN/giphy.gif" style="position: fixed; top: 50%; left: 86%; transform: translateX(-30%); width: 350px; z-index: 9999;" />`;
+      document.body.appendChild(confetti);
+      setTimeout(() => confetti.remove(), 7000);
+
+      const audio = new Audio("https://www.soundjay.com/human/applause-01.mp3");
+      audio.play();
+    }
   </script>
 </body>
 </html>
