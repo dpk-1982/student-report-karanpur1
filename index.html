@@ -2,79 +2,93 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Report Card System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0">
+    <title>Smart Report Card System - Primary School Karanpur</title>
+    <meta name="description" content="Digital Report Card System for Primary School Karanpur - View student performance and manage academic records">
+    <meta name="theme-color" content="#667eea">
+    
+    <!-- Optimized CDN Loading -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     
-    <!-- Beautiful Google Fonts -->
+    <!-- Optimized Google Fonts - Reduced to essential fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:wght@200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Comfortaa:wght@300;400;500;600;700&family=Quicksand:wght@300;400;500;600;700&family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@400;500;600;700&family=Comfortaa:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Beautiful Font Families */
+        /* Optimized Font System */
+        * {
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: 'Nunito', 'Poppins', sans-serif;
-            font-weight: 500;
+            font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+            font-weight: 400;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         
         .font-primary {
-            font-family: 'Fredoka', 'Nunito', cursive;
+            font-family: 'Nunito', sans-serif;
             font-weight: 600;
         }
         
         .font-heading {
-            font-family: 'Comfortaa', 'Poppins', cursive;
+            font-family: 'Comfortaa', sans-serif;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .font-elegant {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .font-display {
+            font-family: 'Comfortaa', sans-serif;
             font-weight: 700;
             letter-spacing: 2px;
         }
         
-        .font-elegant {
-            font-family: 'Raleway', 'Poppins', sans-serif;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-        
-        .font-playful {
-            font-family: 'Quicksand', 'Nunito', sans-serif;
-            font-weight: 600;
-        }
-        
-        .font-display {
-            font-family: 'Fredoka', 'Comfortaa', cursive;
-            font-weight: 700;
-            letter-spacing: 3px;
-        }
-        
-        /* Enhanced Text Shadows for Better Readability */
+        /* Optimized Text Shadows */
         .text-shadow-soft {
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
         }
         
         .text-shadow-bold {
-            text-shadow: 3px 3px 10px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
         }
         
         .text-shadow-glow {
-            text-shadow: 0 0 20px rgba(255,255,255,0.8), 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 0 0 10px rgba(255,255,255,0.6), 1px 1px 2px rgba(0,0,0,0.3);
         }
         
-        /* Fun Animations for Kids */
+        /* Performance-Optimized Animations */
         @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-30px); }
-            60% { transform: translateY(-15px); }
+            0%, 20%, 50%, 80%, 100% { 
+                transform: translateY(0) translateZ(0); 
+            }
+            40% { 
+                transform: translateY(-15px) translateZ(0); 
+            }
+            60% { 
+                transform: translateY(-8px) translateZ(0); 
+            }
         }
         
         @keyframes wiggle {
-            0%, 7% { transform: rotateZ(0); }
-            15% { transform: rotateZ(-15deg); }
-            20% { transform: rotateZ(10deg); }
-            25% { transform: rotateZ(-10deg); }
-            30% { transform: rotateZ(6deg); }
-            35% { transform: rotateZ(-4deg); }
-            40%, 100% { transform: rotateZ(0); }
+            0%, 100% { 
+                transform: rotate(0deg) translateZ(0); 
+            }
+            25% { 
+                transform: rotate(-3deg) translateZ(0); 
+            }
+            75% { 
+                transform: rotate(3deg) translateZ(0); 
+            }
         }
         
         @keyframes rainbow {
@@ -84,36 +98,64 @@
         }
         
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+            0%, 100% { 
+                transform: translateY(0px) translateZ(0); 
+            }
+            50% { 
+                transform: translateY(-10px) translateZ(0); 
+            }
         }
         
         @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            0%, 100% { 
+                transform: scale(1) translateZ(0); 
+            }
+            50% { 
+                transform: scale(1.02) translateZ(0); 
+            }
         }
         
         @keyframes slideIn {
-            from { transform: translateX(-100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+            from { 
+                transform: translateX(-50px) translateZ(0); 
+                opacity: 0; 
+            }
+            to { 
+                transform: translateX(0) translateZ(0); 
+                opacity: 1; 
+            }
         }
         
         @keyframes fadeInUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            from { 
+                transform: translateY(20px) translateZ(0); 
+                opacity: 0; 
+            }
+            to { 
+                transform: translateY(0) translateZ(0); 
+                opacity: 1; 
+            }
         }
         
-        @keyframes sparkle {
-            0%, 100% { opacity: 0; transform: scale(0); }
-            50% { opacity: 1; transform: scale(1); }
+        /* Report Card Limited Animations - Only for 5 seconds */
+        .report-card-bounce {
+            animation: bounce 2s ease-in-out;
+            animation-iteration-count: 2; /* Only 2 cycles = ~4 seconds */
         }
         
-        @keyframes colorShift {
-            0% { filter: hue-rotate(0deg); }
-            25% { filter: hue-rotate(90deg); }
-            50% { filter: hue-rotate(180deg); }
-            75% { filter: hue-rotate(270deg); }
-            100% { filter: hue-rotate(360deg); }
+        .report-card-wiggle {
+            animation: wiggle 2s ease-in-out;
+            animation-iteration-count: 2; /* Only 2 cycles = ~4 seconds */
+        }
+        
+        .report-card-pulse {
+            animation: pulse 2s ease-in-out;
+            animation-iteration-count: 2; /* Only 2 cycles = ~4 seconds */
+        }
+        
+        .report-card-float {
+            animation: float 3s ease-in-out;
+            animation-iteration-count: 1; /* Only 1 cycle = ~3 seconds */
         }
         
         /* School Box Animations */
@@ -372,291 +414,329 @@
             animation-delay: 1s;
         }
         
-        /* Mobile-First Responsive Design - ENHANCED */
-        @media (max-width: 640px) {
+        /* Universal Device Optimization */
+        
+        /* Base responsive settings */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Mobile-First Design (320px and up) */
+        @media screen and (max-width: 767px) {
             body {
                 font-size: 14px;
-                line-height: 1.4;
+                line-height: 1.5;
+                overflow-x: hidden;
             }
             
-            .container {
-                padding-left: 8px;
-                padding-right: 8px;
-            }
-            
-            /* Improved touch targets */
-            button, select, input {
+            /* Touch-optimized interactions */
+            button, select, input, a {
                 min-height: 44px;
                 min-width: 44px;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
             }
             
-            /* Better text readability on mobile */
-            h1, h2, h3, h4, h5, h6 {
-                line-height: 1.2;
-                word-wrap: break-word;
+            /* Prevent zoom on form inputs */
+            input, select, textarea {
+                font-size: 16px !important;
+                border-radius: 8px;
             }
             
-            /* Prevent horizontal scroll */
-            * {
-                max-width: 100%;
-                box-sizing: border-box;
+            /* Mobile spacing */
+            .container {
+                padding: 0 12px;
             }
             
-            /* Improved spacing for mobile */
-            .mobile-spacing-sm {
-                margin: 4px 0;
-                padding: 4px;
-            }
+            /* Mobile text scaling */
+            h1 { font-size: 1.5rem; }
+            h2 { font-size: 1.25rem; }
+            h3 { font-size: 1.125rem; }
             
-            .mobile-spacing-md {
-                margin: 8px 0;
-                padding: 8px;
-            }
-            
-            .mobile-spacing-lg {
-                margin: 12px 0;
-                padding: 12px;
-            }
-            
-            /* Mobile Navigation */
-            .mobile-nav {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                padding: 10px;
-                z-index: 1000;
-                border-top: 3px solid #fff;
-                box-shadow: 0 -5px 20px rgba(0,0,0,0.3);
-            }
-            
-            .mobile-nav button {
-                width: 100%;
-                margin: 5px 0;
-                padding: 12px;
-                font-size: 14px;
-                border-radius: 15px;
-            }
-            
-            /* Mobile Cards */
-            .mobile-card {
-                margin: 8px;
-                padding: 16px;
-                border-radius: 20px;
-                box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            }
-            
-            /* Mobile Table */
+            /* Mobile table optimization */
             .mobile-table {
-                display: block;
-                width: 100%;
                 overflow-x: auto;
-                white-space: nowrap;
                 -webkit-overflow-scrolling: touch;
+                border-radius: 8px;
             }
             
             .mobile-table table {
-                min-width: 100%;
-                font-size: 12px;
+                min-width: 600px;
+                font-size: 13px;
             }
             
             .mobile-table th,
             .mobile-table td {
-                padding: 8px 4px;
-                text-align: center;
-                min-width: 80px;
+                padding: 8px 6px;
+                white-space: nowrap;
             }
             
-            /* Mobile Form */
-            .mobile-form input,
-            .mobile-form select {
-                font-size: 16px; /* Prevents zoom on iOS */
-                padding: 12px;
-                border-radius: 12px;
-                width: 100%;
-                margin-bottom: 10px;
+            /* Reduce animation complexity on mobile */
+            * {
+                animation-duration: 0.3s !important;
+                transition-duration: 0.3s !important;
             }
             
-            /* Mobile Grid */
-            .mobile-grid {
-                display: grid;
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-            
-            @media (min-width: 480px) {
-                .mobile-grid {
-                    grid-template-columns: 1fr 1fr;
-                }
-            }
-            
-            /* Touch-friendly buttons */
-            .touch-button {
-                min-height: 44px;
-                min-width: 44px;
-                padding: 12px 16px;
-                font-size: 14px;
-                border-radius: 12px;
-                touch-action: manipulation;
-            }
-            
-            /* Mobile animations - reduced for performance */
-            .mobile-animate {
-                animation-duration: 1s;
-                animation-iteration-count: 1;
-            }
-            
-            /* Simplified celebrations on mobile */
-            .confetti-container {
-                opacity: 0.7;
-            }
-            
-            .confetti-piece,
-            .star-burst,
-            .firework,
-            .shower-drop {
-                animation-duration: 1.5s;
-                opacity: 0.6;
-            }
-            
-            /* Mobile-specific spacing */
-            .mobile-spacing {
-                margin: 8px 0;
-                padding: 8px;
-            }
-            
-            /* Mobile text sizes */
-            .mobile-text-sm { font-size: 12px; }
-            .mobile-text-base { font-size: 14px; }
-            .mobile-text-lg { font-size: 16px; }
-            .mobile-text-xl { font-size: 18px; }
-            .mobile-text-2xl { font-size: 20px; }
-            .mobile-text-3xl { font-size: 24px; }
+            /* Mobile-specific utilities */
+            .mobile-hidden { display: none !important; }
+            .mobile-block { display: block !important; }
+            .mobile-flex { display: flex !important; }
         }
         
-        /* Tablet styles */
-        @media (min-width: 641px) and (max-width: 1024px) {
+        /* Tablet Portrait (768px - 1023px) */
+        @media screen and (min-width: 768px) and (max-width: 1023px) {
+            body {
+                font-size: 15px;
+            }
+            
+            .container {
+                padding: 0 20px;
+            }
+            
+            /* Tablet grid layouts */
             .tablet-grid {
+                display: grid;
                 grid-template-columns: repeat(2, 1fr);
                 gap: 16px;
             }
             
-            .tablet-text {
+            /* Tablet text scaling */
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+            h3 { font-size: 1.25rem; }
+        }
+        
+        /* Desktop and Large Screens (1024px+) */
+        @media screen and (min-width: 1024px) {
+            body {
                 font-size: 16px;
+            }
+            
+            .container {
+                padding: 0 24px;
+            }
+            
+            /* Desktop hover effects */
+            .hover-scale:hover {
+                transform: scale(1.05);
+            }
+            
+            .hover-shadow:hover {
+                box-shadow: 0 10px 25px rgba(0,0,0,0.15);
             }
         }
         
-        /* Fun Table Styles - Enhanced for Mobile */
+        /* High DPI Displays */
+        @media screen and (-webkit-min-device-pixel-ratio: 2),
+               screen and (min-resolution: 192dpi) {
+            /* Optimize for retina displays */
+            .text-shadow-soft {
+                text-shadow: 0.5px 0.5px 1px rgba(0,0,0,0.2);
+            }
+        }
+        
+        /* Landscape Mobile Optimization */
+        @media screen and (max-height: 500px) and (orientation: landscape) {
+            /* Reduce vertical spacing in landscape */
+            .py-8 { padding-top: 1rem; padding-bottom: 1rem; }
+            .py-6 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+            .my-8 { margin-top: 1rem; margin-bottom: 1rem; }
+            .my-6 { margin-top: 0.75rem; margin-bottom: 0.75rem; }
+        }
+        
+        /* Optimized Table Styles */
         .fun-table {
             border-collapse: separate;
             border-spacing: 0;
-            border-radius: 15px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             width: 100%;
-            font-size: 16px;
-        }
-        
-        @media (min-width: 640px) {
-            .fun-table {
-                border-radius: 20px;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-                font-size: 18px;
-            }
+            font-size: 14px;
+            background: white;
         }
         
         .fun-table th {
-            background: linear-gradient(45deg, #ff6b35, #f7931e, #06d6a0);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            font-size: 16px;
+            font-size: 14px;
             padding: 12px 8px;
-            font-weight: bold;
+            font-weight: 600;
             text-align: center;
-        }
-        
-        @media (min-width: 480px) {
-            .fun-table th {
-                font-size: 18px;
-                padding: 14px 10px;
-            }
-        }
-        
-        @media (min-width: 640px) {
-            .fun-table th {
-                font-size: 22px;
-                padding: 18px 16px;
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .fun-table th {
-                font-size: 26px;
-                padding: 28px;
-            }
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
         
         .fun-table td {
             padding: 10px 8px;
-            transition: all 0.3s ease;
-            border-bottom: 1px solid #f0f0f0;
-            font-size: 15px;
+            transition: background-color 0.2s ease;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 13px;
             text-align: center;
-        }
-        
-        @media (min-width: 480px) {
-            .fun-table td {
-                padding: 12px 10px;
-                font-size: 16px;
-                border-bottom: 2px solid #f0f0f0;
-            }
-        }
-        
-        @media (min-width: 640px) {
-            .fun-table td {
-                padding: 16px 12px;
-                font-size: 18px;
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .fun-table td {
-                padding: 24px;
-                font-size: 22px;
-            }
+            vertical-align: middle;
         }
         
         .fun-table tr:hover td {
-            background: linear-gradient(45deg, #ffeaa7, #fab1a0);
+            background-color: #f8fafc;
         }
         
-        @media (min-width: 640px) {
-            .fun-table tr:hover td {
-                transform: scale(1.02);
+        /* Responsive table scaling */
+        @media screen and (min-width: 768px) {
+            .fun-table {
+                font-size: 16px;
+                border-radius: 16px;
+                box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+            }
+            
+            .fun-table th {
+                font-size: 16px;
+                padding: 16px 12px;
+            }
+            
+            .fun-table td {
+                font-size: 15px;
+                padding: 14px 12px;
             }
         }
         
-        /* Marquee Animation */
+        @media screen and (min-width: 1024px) {
+            .fun-table {
+                font-size: 18px;
+                border-radius: 20px;
+            }
+            
+            .fun-table th {
+                font-size: 18px;
+                padding: 20px 16px;
+            }
+            
+            .fun-table td {
+                font-size: 17px;
+                padding: 18px 16px;
+            }
+            
+            .fun-table tr:hover td {
+                transform: translateY(-1px);
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+        }
+        
+        /* Optimized Utility Classes */
+        
+        /* Performance-optimized animations */
+        .bounce { 
+            animation: bounce 2s ease-in-out infinite;
+            will-change: transform;
+        }
+        .wiggle { 
+            animation: wiggle 3s ease-in-out infinite;
+            will-change: transform;
+        }
+        .float { 
+            animation: float 4s ease-in-out infinite;
+            will-change: transform;
+        }
+        .pulse { 
+            animation: pulse 2s ease-in-out infinite;
+            will-change: transform;
+        }
+        .slide-in { 
+            animation: slideIn 0.6s ease-out;
+            will-change: transform, opacity;
+        }
+        .fade-in-up { 
+            animation: fadeInUp 0.5s ease-out;
+            will-change: transform, opacity;
+        }
+        
+        /* Optimized gradient backgrounds */
+        .rainbow-bg {
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+            background-size: 400% 400%;
+            animation: rainbow 8s ease infinite;
+        }
+        
+        /* Button styles */
+        .magic-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: white;
+            font-weight: 600;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .magic-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+        }
+        
+        .magic-button:active {
+            transform: translateY(0);
+        }
+        
+        /* Card styles */
+        .cute-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+        
+        .cute-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+        }
+        
+        /* Message styles */
+        .success-message, .error-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            z-index: 1000;
+            animation: slideIn 0.5s ease-out;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .success-message {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        
+        .error-message {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+        
+        /* Marquee optimization */
         @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
+            0% { transform: translate3d(100%, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
         }
         
         .animate-marquee {
-            animation: marquee 20s linear infinite;
+            animation: marquee 25s linear infinite;
+            will-change: transform;
         }
         
         .marquee-container {
             width: 100%;
             overflow: hidden;
+            white-space: nowrap;
         }
-
-        /* Theme Colors */
-        .theme-pink { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); }
-        .theme-blue { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
-        .theme-green { background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%); }
-        .theme-orange { background: linear-gradient(135deg, #fad0c4 0%, #ffd1ff 100%); }
-        .theme-purple { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        
+        /* Responsive marquee */
+        @media screen and (max-width: 767px) {
+            .animate-marquee {
+                animation-duration: 20s;
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen rainbow-bg">
@@ -678,306 +758,233 @@
     <!-- Celebration Effects Container for High Achievers -->
     <div id="celebrationContainer" class="confetti-container hidden"></div>
 
-    <!-- Header -->
-    <div class="text-center py-4 sm:py-8 px-2 sm:px-4 sparkle-container">
-        
-
-        <!-- SIMPLE ELEGANT SCHOOL NAME - MOBILE OPTIMIZED -->
-        <div class="mb-6 sm:mb-8 md:mb-12 text-center px-2">
-            <div class="bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 md:p-8 mx-auto max-w-4xl border-2 border-blue-200">
-                <h1 class="text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-blue-800 mb-3 sm:mb-4 leading-tight">
-                    Primary School Karanpur
+    <!-- Optimized Header -->
+    <header class="text-center py-6 px-4">
+        <!-- School Name Section -->
+        <div class="mb-8 px-4">
+            <div class="bg-white rounded-2xl shadow-lg p-6 mx-auto max-w-4xl border border-blue-200">
+                <h1 class="text-2xl md:text-4xl lg:text-6xl font-heading text-blue-800 mb-4 leading-tight tracking-wider px-4" style="font-size: clamp(1.5rem, 8vw, 4rem); letter-spacing: 0.1em; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
+                    PRIMARY SCHOOL KARANPUR
                 </h1>
-                <div class="w-16 sm:w-24 h-0.5 sm:h-1 bg-blue-500 mx-auto rounded-full"></div>
+                <div class="w-20 h-1 bg-blue-500 mx-auto rounded-full"></div>
             </div>
         </div>
 
-        <!-- Location Info Boxes - MOBILE OPTIMIZED -->
-        <div class="mb-4 sm:mb-6 flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 px-2">
-            <!-- Block Box -->
-            <div class="bg-white rounded-2xl sm:rounded-3xl px-4 sm:px-6 py-3 sm:py-4 shadow-xl sm:shadow-2xl border-3 sm:border-4 border-green-400 transform hover:scale-105 transition-all duration-300 flex-1 max-w-sm mx-auto sm:mx-0" style="background: linear-gradient(135deg, #ffffff 0%, #f0fff4 100%); box-shadow: 0 10px 25px rgba(0,0,0,0.2), 0 0 0 3px #4ade80, inset 0 0 15px rgba(74,222,128,0.1);">
-                <p class="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-elegant font-bold text-center" style="background: linear-gradient(135deg, #16a34a, #059669, #0d9488); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); animation: wiggle 2s ease-in-out infinite; line-height: 1.2;">
+        <!-- Location Info -->
+        <div class="mb-6 flex flex-col sm:flex-row justify-center gap-4 px-4">
+            <!-- Block Info -->
+            <div class="bg-white rounded-2xl px-6 py-4 shadow-lg border-2 border-green-400 hover-scale transition-all duration-300 flex-1 max-w-sm mx-auto" style="background: linear-gradient(135deg, #ffffff 0%, #f0fff4 100%);">
+                <p class="text-lg font-elegant font-bold text-center text-green-700">
                     📍 Block: Behjam 📍
                 </p>
             </div>
             
-            <!-- District Box -->
-            <div class="bg-white rounded-2xl sm:rounded-3xl px-4 sm:px-6 py-3 sm:py-4 shadow-xl sm:shadow-2xl border-3 sm:border-4 border-blue-400 transform hover:scale-105 transition-all duration-300 flex-1 max-w-sm mx-auto sm:mx-0" style="background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%); box-shadow: 0 10px 25px rgba(0,0,0,0.2), 0 0 0 3px #60a5fa, inset 0 0 15px rgba(96,165,250,0.1);">
-                <p class="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-elegant font-bold text-center" style="background: linear-gradient(135deg, #2563eb, #1d4ed8, #1e40af); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); animation: float 3s ease-in-out infinite; line-height: 1.2;">
+            <!-- District Info -->
+            <div class="bg-white rounded-2xl px-6 py-4 shadow-lg border-2 border-blue-400 hover-scale transition-all duration-300 flex-1 max-w-sm mx-auto" style="background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);">
+                <p class="text-lg font-elegant font-bold text-center text-blue-700">
                     🏛️ Lakhimpur-Kheri 🏛️
                 </p>
             </div>
         </div>
         
-        <!-- MOBILE-FIRST NAVIGATION -->
-        <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-6 px-2">
-            <button id="studentBtn" class="magic-button py-3 sm:py-4 px-4 sm:px-6 md:px-8 rounded-full text-sm sm:text-lg md:text-xl font-primary wiggle text-shadow-bold w-full sm:w-auto" style="letter-spacing: 1px sm:letter-spacing: 2px; min-height: 48px;">
+        <!-- Navigation Buttons -->
+        <div class="flex flex-col sm:flex-row justify-center gap-4 px-4">
+            <button id="studentBtn" class="magic-button py-4 px-8 text-lg font-primary hover-shadow w-full sm:w-auto">
                 ✨📊 VIEW REPORT CARD 📊✨
             </button>
-            <button id="adminBtn" class="magic-button py-3 sm:py-4 px-4 sm:px-6 md:px-8 rounded-full text-sm sm:text-lg md:text-xl font-primary float text-shadow-bold w-full sm:w-auto" style="letter-spacing: 1px sm:letter-spacing: 2px; min-height: 48px;">
+            <button id="adminBtn" class="magic-button py-4 px-8 text-lg font-primary hover-shadow w-full sm:w-auto">
                 🚀👨‍💼 ADMIN PANEL 👨‍💼🚀
             </button>
         </div>
-        
-        <!-- Mobile Navigation (Hidden - keeping for compatibility) -->
-        <div class="hidden">
-            <button id="studentBtnMobile" class="magic-button touch-button mobile-text-base font-primary wiggle w-full mb-2 text-shadow-bold">
-                ✨📊 VIEW REPORT CARD 📊✨
-            </button>
-            <button id="adminBtnMobile" class="magic-button touch-button mobile-text-base font-primary float w-full text-shadow-bold">
-                🚀👨‍💼 ADMIN PANEL 👨‍💼🚀
-            </button>
-        </div>
-    </div>
+    </header>
 
-    <!-- Student Section - MOBILE OPTIMIZED -->
-    <div id="studentSection" class="container mx-auto px-2 sm:px-4 md:px-6 max-w-7xl mb-16 sm:mb-20 md:mb-0">
-        <!-- Magical Container with Enhanced Animations - MOBILE OPTIMIZED -->
-        <div class="relative overflow-hidden transform hover:scale-102 sm:hover:scale-105 transition-all duration-700 slide-in sparkle-container" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%); background-size: 400% 400%; animation: rainbow 6s ease infinite, float 4s ease-in-out infinite; border-radius: 20px sm:border-radius: 30px; padding: 4px sm:padding: 6px; box-shadow: 0 15px 40px rgba(0,0,0,0.3), 0 0 0 4px rgba(255,255,255,0.3), 0 0 60px rgba(102,126,234,0.2); border: 4px sm:border: 8px solid transparent; background-clip: padding-box;">
+    <!-- Optimized Student Section -->
+    <main id="studentSection" class="container mx-auto px-4 max-w-6xl mb-20">
+        <!-- Student Selection Container -->
+        <div class="relative overflow-hidden rainbow-bg rounded-2xl p-1 shadow-lg hover-scale transition-all duration-500">
             
-            <!-- Floating Magical Elements Around Container -->
-            <div class="absolute -top-4 -left-4 w-12 h-12 bg-gradient-to-r from-yellow-300 to-pink-400 rounded-full opacity-80 animate-bounce" style="animation: floatAround1 10s ease-in-out infinite; box-shadow: 0 0 20px rgba(255,193,7,0.6);"></div>
-            <div class="absolute -top-6 -right-6 w-10 h-10 bg-gradient-to-r from-purple-400 to-blue-500 rounded-full opacity-75 animate-pulse" style="animation: floatAround2 12s ease-in-out infinite; box-shadow: 0 0 25px rgba(147,51,234,0.7);"></div>
-            <div class="absolute -bottom-4 -left-6 w-14 h-14 bg-gradient-to-r from-green-400 to-cyan-400 rounded-full opacity-70" style="animation: floatAround3 14s ease-in-out infinite; box-shadow: 0 0 30px rgba(34,197,94,0.5);"></div>
-            <div class="absolute -bottom-6 -right-4 w-8 h-8 bg-gradient-to-r from-red-400 to-orange-500 rounded-full opacity-85" style="animation: floatAround4 11s ease-in-out infinite; box-shadow: 0 0 15px rgba(239,68,68,0.6);"></div>
+            <!-- Decorative Elements -->
+            <div class="absolute top-4 left-4 w-8 h-8 bg-yellow-300 rounded-full opacity-60 bounce mobile-hidden"></div>
+            <div class="absolute top-6 right-6 w-6 h-6 bg-pink-300 rounded-full opacity-50 pulse mobile-hidden"></div>
+            <div class="absolute bottom-4 left-6 w-10 h-10 bg-blue-300 rounded-full opacity-40 float mobile-hidden"></div>
+            <div class="absolute bottom-6 right-4 w-7 h-7 bg-green-300 rounded-full opacity-45 wiggle mobile-hidden"></div>
             
-            <!-- Sparkle Effects -->
-            <div class="absolute top-8 left-12 text-3xl opacity-90 animate-bounce" style="animation: sparkleRotate 5s linear infinite; filter: drop-shadow(0 0 10px rgba(255,215,0,0.8));">✨</div>
-            <div class="absolute top-12 right-16 text-2xl opacity-85 animate-pulse" style="animation: sparkleRotate 6s linear infinite reverse; filter: drop-shadow(0 0 8px rgba(255,20,147,0.7));">⭐</div>
-            <div class="absolute bottom-16 left-8 text-4xl opacity-80" style="animation: sparkleRotate 7s linear infinite; filter: drop-shadow(0 0 12px rgba(0,191,255,0.8));">🌟</div>
-            <div class="absolute bottom-8 right-12 text-2xl opacity-90" style="animation: sparkleRotate 4s linear infinite reverse; filter: drop-shadow(0 0 10px rgba(50,205,50,0.7));">💫</div>
-            <div class="absolute top-1/2 left-4 text-xl opacity-70 animate-bounce" style="animation-delay: 1s; filter: drop-shadow(0 0 8px rgba(255,105,180,0.6));">🎯</div>
-            <div class="absolute top-1/3 right-6 text-xl opacity-75 animate-pulse" style="animation-delay: 1.5s; filter: drop-shadow(0 0 8px rgba(138,43,226,0.6));">🎨</div>
-            
-            <!-- Inner Container with Glass Effect -->
-            <div class="relative bg-white/95 backdrop-blur-xl rounded-3xl p-4 sm:p-6 md:p-10 shadow-2xl border border-white/30" style="background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(248,250,252,0.98) 100%); box-shadow: inset 0 0 60px rgba(255,255,255,0.1), 0 25px 50px rgba(0,0,0,0.15);">
+            <!-- Main Content -->
+            <div class="relative bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl">
                 
-                <!-- Magical Title with Enhanced Styling - MOBILE OPTIMIZED -->
-                <div class="relative mb-4 sm:mb-6 md:mb-8 lg:mb-10 text-center overflow-hidden">
-                    
-                    <!-- Background Glow Effect -->
-                    <div class="absolute inset-0 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 opacity-15 sm:opacity-20 blur-lg sm:blur-xl rounded-xl sm:rounded-2xl animate-pulse"></div>
-                    
-                    <!-- Title Container -->
-                    <div class="relative bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 transform hover:scale-102 sm:hover:scale-105 transition-all duration-500" style="background-size: 300% 300%; animation: rainbow 8s ease infinite; box-shadow: 0 10px 25px rgba(0,0,0,0.15), inset 0 0 0 2px rgba(255,255,255,0.3);">
-                        
-                        <!-- Floating Icons Around Title - Smaller on Mobile -->
-                        <div class="absolute -top-1 -left-1 sm:-top-2 sm:-left-2 text-lg sm:text-2xl animate-bounce" style="animation-delay: 0s; filter: drop-shadow(0 0 8px rgba(255,215,0,0.8));">📚</div>
-                        <div class="absolute -top-1 -right-1 sm:-top-3 sm:-right-1 text-base sm:text-xl animate-bounce" style="animation-delay: 0.3s; filter: drop-shadow(0 0 6px rgba(255,20,147,0.7));">🎓</div>
-                        <div class="absolute -bottom-1 -left-1 sm:-bottom-2 sm:-left-1 text-lg sm:text-2xl animate-bounce" style="animation-delay: 0.6s; filter: drop-shadow(0 0 8px rgba(0,191,255,0.8));">👦</div>
-                        <div class="absolute -bottom-1 -right-1 sm:-bottom-3 sm:-right-2 text-base sm:text-xl animate-bounce" style="animation-delay: 0.9s; filter: drop-shadow(0 0 6px rgba(50,205,50,0.7));">✨</div>
-                        
-                        <h2 class="text-base sm:text-lg md:text-2xl lg:text-4xl xl:text-5xl font-display font-bold text-white relative z-10 leading-tight" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.6); letter-spacing: 1px sm:letter-spacing: 2px md:letter-spacing: 3px; animation: bounce 3s ease-in-out infinite;">
+                <!-- Title Section -->
+                <div class="text-center mb-8">
+                    <div class="bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl p-4 mb-4">
+                        <h2 class="text-xl md:text-2xl lg:text-3xl font-display text-white mb-2">
                             🌟✨ SELECT STUDENT DETAILS ✨🌟
                         </h2>
-                        
-                        <!-- Subtitle -->
-                        <p class="text-xs sm:text-sm md:text-base lg:text-lg text-white/90 mt-2 font-elegant relative z-10 leading-tight" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.2); animation: pulse 4s ease-in-out infinite;">
+                        <p class="text-sm md:text-base text-white/90 font-elegant">
                             🎯 Choose Class & Student to View Report Card 🎯
                         </p>
-                        
-                        <!-- Decorative Line -->
-                        <div class="w-16 sm:w-24 md:w-32 h-0.5 sm:h-1 bg-gradient-to-r from-yellow-300 via-pink-300 to-blue-300 mx-auto mt-2 sm:mt-3 rounded-full" style="animation: pulse 2s ease-in-out infinite;"></div>
                     </div>
                 </div>
                 
-                <!-- Enhanced Form Fields Container - MOBILE OPTIMIZED -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-10">
+                <!-- Form Fields -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     
-                    <!-- Class Selection Field -->
-                    <div class="relative group">
-                        <!-- Field Container with Magical Border - MOBILE OPTIMIZED -->
-                        <div class="relative overflow-hidden rounded-xl sm:rounded-2xl p-1 bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-500 transform hover:scale-102 sm:hover:scale-105 transition-all duration-500" style="background-size: 300% 300%; animation: rainbow 10s ease infinite;">
-                            
-                            <!-- Inner Container -->
-                            <div class="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-6 relative z-10" style="background: linear-gradient(135deg, #fef7ff 0%, #f3e8ff 100%);">
+                    <!-- Class Selection -->
+                    <div class="relative">
+                        <div class="bg-gradient-to-r from-pink-400 to-purple-500 rounded-xl p-1 hover-scale transition-all duration-300">
+                            <div class="bg-white rounded-lg p-4" style="background: linear-gradient(135deg, #fef7ff 0%, #f3e8ff 100%);">
                                 
-                                <!-- Floating Icon - Smaller on Mobile -->
-                                <div class="absolute -top-2 -right-2 sm:-top-3 sm:-right-3 w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-r from-pink-400 to-purple-500 rounded-full flex items-center justify-center text-white text-sm sm:text-xl font-bold shadow-lg animate-bounce" style="animation-delay: 0.2s; box-shadow: 0 0 15px rgba(236,72,153,0.4);">
+                                <!-- Icon -->
+                                <div class="absolute -top-2 -right-2 w-10 h-10 bg-gradient-to-r from-pink-400 to-purple-500 rounded-full flex items-center justify-center text-white text-lg font-bold shadow-lg bounce">
                                     📚
                                 </div>
                                 
-                                <!-- Label with Enhanced Styling -->
-                                <label class="block text-xs sm:text-sm md:text-lg lg:text-xl font-bold mb-2 sm:mb-3 md:mb-4 relative leading-tight" style="background: linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-shadow: 0 0 20px rgba(236,72,153,0.2); animation: wiggle 4s ease-in-out infinite;">
+                                <!-- Label -->
+                                <label class="block text-lg font-bold mb-3 text-purple-700">
                                     🌟📚 SELECT CLASS LEVEL 📚🌟
                                 </label>
                                 
-                                <!-- Select Field with Magic Styling -->
-                                <select id="classSelect" class="w-full p-3 sm:p-4 md:p-5 text-sm sm:text-base md:text-lg lg:text-xl font-bold rounded-lg sm:rounded-xl border-0 focus:outline-none transition-all duration-500 cursor-pointer transform hover:scale-101 sm:hover:scale-102" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%); box-shadow: 0 8px 20px rgba(0,0,0,0.12), inset 0 0 0 2px rgba(255,255,255,0.3), 0 0 0 2px rgba(236,72,153,0.15); backdrop-filter: blur(8px); color: #7c3aed; min-height: 48px;">
-                                    <option value="" style="background: #fef7ff; color: #7c3aed;">🎯 Choose Your Class</option>
-                                    <option value="1" style="background: #fef7ff; color: #7c3aed;">🌟 Class 1 - Foundation</option>
-                                    <option value="2" style="background: #fef7ff; color: #7c3aed;">🌟 Class 2 - Explorer</option>
-                                    <option value="3" style="background: #fef7ff; color: #7c3aed;">🌟 Class 3 - Achiever</option>
-                                    <option value="4" style="background: #fef7ff; color: #7c3aed;">🌟 Class 4 - Leader</option>
-                                    <option value="5" style="background: #fef7ff; color: #7c3aed;">🌟 Class 5 - Champion</option>
+                                <!-- Select Field -->
+                                <select id="classSelect" class="w-full p-4 text-base font-bold rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300 cursor-pointer" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); color: #7c3aed;">
+                                    <option value="">🎯 Choose Your Class</option>
+                                    <option value="1">🌟 Class 1 - Foundation</option>
+                                    <option value="2">🌟 Class 2 - Explorer</option>
+                                    <option value="3">🌟 Class 3 - Achiever</option>
+                                    <option value="4">🌟 Class 4 - Leader</option>
+                                    <option value="5">🌟 Class 5 - Champion</option>
                                 </select>
-                                
-                                <!-- Decorative Elements - Smaller on Mobile -->
-                                <div class="absolute bottom-1 left-1 sm:bottom-2 sm:left-2 w-2 h-2 sm:w-3 sm:h-3 bg-pink-300 rounded-full opacity-60 animate-pulse"></div>
-                                <div class="absolute top-1/2 left-0.5 sm:left-1 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-300 rounded-full opacity-50 animate-bounce"></div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Student Selection Field -->
-                    <div class="relative group">
-                        <!-- Field Container with Magical Border - MOBILE OPTIMIZED -->
-                        <div class="relative overflow-hidden rounded-xl sm:rounded-2xl p-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 transform hover:scale-102 sm:hover:scale-105 transition-all duration-500" style="background-size: 300% 300%; animation: rainbow 12s ease infinite reverse;">
-                            
-                            <!-- Inner Container -->
-                            <div class="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-6 relative z-10" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);">
+                    <!-- Student Selection -->
+                    <div class="relative">
+                        <div class="bg-gradient-to-r from-cyan-400 to-blue-500 rounded-xl p-1 hover-scale transition-all duration-300">
+                            <div class="bg-white rounded-lg p-4" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);">
                                 
-                                <!-- Floating Icon - Smaller on Mobile -->
-                                <div class="absolute -top-2 -right-2 sm:-top-3 sm:-right-3 w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full flex items-center justify-center text-white text-sm sm:text-xl font-bold shadow-lg animate-bounce" style="animation-delay: 0.5s; box-shadow: 0 0 15px rgba(34,211,238,0.4);">
+                                <!-- Icon -->
+                                <div class="absolute -top-2 -right-2 w-10 h-10 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full flex items-center justify-center text-white text-lg font-bold shadow-lg bounce">
                                     👦
                                 </div>
                                 
-                                <!-- Label with Enhanced Styling -->
-                                <label class="block text-xs sm:text-sm md:text-lg lg:text-xl font-bold mb-2 sm:mb-3 md:mb-4 relative leading-tight" style="background: linear-gradient(135deg, #22d3ee, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-shadow: 0 0 20px rgba(34,211,238,0.2); animation: pulse 4s ease-in-out infinite;">
+                                <!-- Label -->
+                                <label class="block text-lg font-bold mb-3 text-blue-700">
                                     ✨👦 SELECT STUDENT NAME 👦✨
                                 </label>
                                 
-                                <!-- Select Field with Magic Styling -->
-                                <select id="studentSelect" class="w-full p-3 sm:p-4 md:p-5 text-sm sm:text-base md:text-lg lg:text-xl font-bold rounded-lg sm:rounded-xl border-0 focus:outline-none transition-all duration-500 cursor-pointer transform hover:scale-101 sm:hover:scale-102 disabled:opacity-60 disabled:cursor-not-allowed" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 50%, #d299c2 100%); box-shadow: 0 8px 20px rgba(0,0,0,0.12), inset 0 0 0 2px rgba(255,255,255,0.3), 0 0 0 2px rgba(34,211,238,0.15); backdrop-filter: blur(8px); color: #1e40af; min-height: 48px;" disabled>
-                                    <option value="" style="background: #f0f9ff; color: #1e40af;">🎯 First select a class above</option>
+                                <!-- Select Field -->
+                                <select id="studentSelect" class="w-full p-4 text-base font-bold rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); color: #1e40af;" disabled>
+                                    <option value="">🎯 First select a class above</option>
                                 </select>
-                                
-                                <!-- Decorative Elements - Smaller on Mobile -->
-                                <div class="absolute bottom-1 right-1 sm:bottom-2 sm:right-2 w-2 h-2 sm:w-3 sm:h-3 bg-cyan-300 rounded-full opacity-60 animate-pulse"></div>
-                                <div class="absolute top-1/2 right-0.5 sm:right-1 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-300 rounded-full opacity-50 animate-bounce"></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Magical Footer Message - MOBILE OPTIMIZED -->
-                <div class="mt-4 sm:mt-6 md:mt-8 text-center relative">
-                    <div class="bg-gradient-to-r from-yellow-200 via-pink-200 to-purple-200 rounded-xl sm:rounded-2xl p-2 sm:p-3 md:p-4 transform hover:scale-102 sm:hover:scale-105 transition-all duration-300" style="box-shadow: 0 6px 15px rgba(0,0,0,0.08), inset 0 0 0 1px rgba(255,255,255,0.4);">
-                        <p class="text-xs sm:text-sm md:text-base lg:text-lg font-bold leading-tight" style="background: linear-gradient(135deg, #f59e0b, #ec4899, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: pulse 3s ease-in-out infinite;">
+                <!-- Footer Message -->
+                <div class="mt-8 text-center">
+                    <div class="bg-gradient-to-r from-yellow-200 via-pink-200 to-purple-200 rounded-xl p-4 hover-scale transition-all duration-300">
+                        <p class="text-lg font-bold text-purple-700">
                             🎉 Ready to explore your academic journey? Select your details above! 🎉
                         </p>
                     </div>
                 </div>
-                
-                <!-- Corner Decorative Elements -->
-                <div class="absolute top-4 left-4 w-6 h-6 bg-gradient-to-r from-yellow-300 to-orange-400 rounded-full opacity-30 animate-pulse"></div>
-                <div class="absolute top-6 right-8 w-4 h-4 bg-gradient-to-r from-pink-300 to-red-400 rounded-full opacity-40 animate-bounce"></div>
-                <div class="absolute bottom-8 left-6 w-5 h-5 bg-gradient-to-r from-green-300 to-teal-400 rounded-full opacity-35" style="animation: float 4s ease-in-out infinite;"></div>
-                <div class="absolute bottom-4 right-4 w-7 h-7 bg-gradient-to-r from-blue-300 to-purple-400 rounded-full opacity-25" style="animation: float 5s ease-in-out infinite reverse;"></div>
             </div>
         </div>
 
         <!-- Report Card Display -->
-        <div id="reportCard" class="hidden mt-3 sm:mt-6">
-            <!-- Compact Magical Report Card Container -->
-            <div class="relative overflow-hidden" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); border-radius: 15px; padding: 3px; box-shadow: 0 10px 25px rgba(0,0,0,0.2), 0 0 0 3px rgba(255,255,255,0.1); animation: float 4s ease-in-out infinite;">
+        <div id="reportCard" class="hidden mt-6">
+            <!-- Report Card Container -->
+            <div class="relative overflow-hidden rainbow-bg rounded-2xl p-1 shadow-lg float">
                 
-                <!-- Simplified Background Elements -->
-                <div class="absolute inset-0 overflow-hidden rounded-xl">
-                    <div class="absolute -top-3 -left-3 w-12 h-12 bg-gradient-to-r from-yellow-300 to-pink-300 rounded-full opacity-15 animate-pulse"></div>
-                    <div class="absolute -bottom-3 -right-3 w-16 h-16 bg-gradient-to-r from-blue-300 to-purple-300 rounded-full opacity-15" style="animation: float 6s ease-in-out infinite reverse;"></div>
+                <!-- Background Elements -->
+                <div class="absolute inset-0 overflow-hidden rounded-xl mobile-hidden">
+                    <div class="absolute top-4 left-4 w-8 h-8 bg-yellow-300 rounded-full opacity-20 pulse"></div>
+                    <div class="absolute bottom-4 right-4 w-10 h-10 bg-blue-300 rounded-full opacity-15 bounce"></div>
                 </div>
 
-                <div class="relative bg-white rounded-xl p-2 sm:p-4 shadow-xl backdrop-filter backdrop-blur-lg border border-white/20">
+                <div class="relative bg-white rounded-xl p-4 shadow-xl">
                     
-                    <!-- Compact Header -->
-                    <div class="text-center mb-3 sm:mb-4 relative overflow-hidden" style="background: linear-gradient(135deg, #ff6b6b 0%, #feca57 25%, #48dbfb 50%, #ff9ff3 75%, #54a0ff 100%); background-size: 300% 300%; animation: rainbow 4s ease infinite; border-radius: 12px; padding: 8px 16px; box-shadow: 0 6px 15px rgba(0,0,0,0.15), inset 0 0 0 2px rgba(255,255,255,0.3);">
-                        
-                        <!-- Minimal Floating Stars -->
-                        <div class="absolute top-1 left-2 text-sm animate-bounce" style="animation-delay: 0s;">⭐</div>
-                        <div class="absolute top-1 right-2 text-sm animate-bounce" style="animation-delay: 0.5s;">✨</div>
-                        <div class="absolute bottom-1 left-3 text-sm animate-bounce" style="animation-delay: 1s;">🌟</div>
-                        <div class="absolute bottom-1 right-3 text-sm animate-bounce" style="animation-delay: 1.5s;">💫</div>
-                        
-                        <h2 class="text-base sm:text-2xl md:text-3xl font-display mb-1 sm:mb-2 text-white relative z-10 text-shadow-glow" style="letter-spacing: 1px; animation: bounce 2s infinite;">
-                            🏆✨ REPORT CARD ✨🏆
-                        </h2>
-                        <p class="text-xs sm:text-base md:text-lg font-elegant text-white relative z-10 text-shadow-bold" style="animation: pulse 3s ease-in-out infinite;">
-                            🌟 Academic Excellence Report 🌟
-                        </p>
+                    <!-- Header -->
+                    <div class="text-center mb-6">
+                        <div class="bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl p-4 mb-4">
+                            <h2 class="text-xl md:text-2xl font-display text-white mb-2">
+                                🏆✨ REPORT CARD ✨🏆
+                            </h2>
+                            <p class="text-sm md:text-base text-white/90 font-elegant">
+                                🌟 Academic Excellence Report 🌟
+                            </p>
+                        </div>
                     </div>
                     
-                    <!-- Compact Student Info Cards -->
-                    <div id="studentInfo" class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 mb-3 sm:mb-4">
-                        <!-- Student info will be populated here with animations -->
+                    <!-- Student Info Cards -->
+                    <div id="studentInfo" class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                        <!-- Student info will be populated here -->
                     </div>
                     
-                    <!-- Compact Marks Table -->
-                    <div class="mb-3 sm:mb-4 relative">
-                        <div class="text-center mb-2 sm:mb-3">
-                            <h3 class="text-sm sm:text-lg md:text-xl font-heading bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-1 text-shadow-soft" style="animation: wiggle 3s ease-in-out infinite;">
+                    <!-- Marks Table -->
+                    <div class="mb-6">
+                        <div class="text-center mb-4">
+                            <h3 class="text-lg md:text-xl font-heading text-purple-700 mb-2">
                                 📚✨ SUBJECT PERFORMANCE ✨📚
                             </h3>
-                            <div class="w-16 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full" style="animation: pulse 2s ease-in-out infinite;"></div>
+                            <div class="w-20 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full"></div>
                         </div>
                         
-                        <div class="mobile-table overflow-x-auto rounded-lg sm:rounded-xl shadow-md sm:shadow-lg" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 2px;">
-                            <div class="bg-white rounded-md sm:rounded-lg overflow-hidden">
-                                <table class="fun-table w-full min-w-[280px] sm:min-w-[300px]">
+                        <div class="mobile-table overflow-x-auto rounded-xl shadow-lg bg-gradient-to-r from-purple-600 to-pink-600 p-1">
+                            <div class="bg-white rounded-lg overflow-hidden">
+                                <table class="fun-table w-full">
                                     <thead>
-                                        <tr style="background: linear-gradient(135deg, #ff6b6b 0%, #feca57 50%, #48dbfb 100%);">
-                                            <th class="mobile-animate text-xs sm:text-sm md:text-base lg:text-lg" style="animation: wiggle 2s ease-in-out infinite; animation-delay: 0s; padding: 8px 6px;">📖 SUBJECT</th>
-                                            <th class="mobile-animate text-xs sm:text-sm md:text-base lg:text-lg" style="animation: pulse 2s ease-in-out infinite; animation-delay: 0.3s; padding: 8px 6px;">📝 GOT</th>
-                                            <th class="mobile-animate text-xs sm:text-sm md:text-base lg:text-lg" style="animation: float 3s ease-in-out infinite; animation-delay: 0.6s; padding: 8px 6px;">🎯 MAX</th>
-                                            <th class="mobile-animate text-xs sm:text-sm md:text-base lg:text-lg" style="animation: bounce 2s ease-in-out infinite; animation-delay: 0.9s; padding: 8px 6px;">📊 %</th>
+                                        <tr>
+                                            <th>📖 SUBJECT</th>
+                                            <th>📝 GOT</th>
+                                            <th>🎯 MAX</th>
+                                            <th>📊 %</th>
                                         </tr>
                                     </thead>
                                     <tbody id="marksTable">
-                                        <!-- Marks will be populated here with animations -->
+                                        <!-- Marks will be populated here -->
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Compact Summary Cards -->
-                    <div class="mb-3 sm:mb-4">
-                        <div class="text-center mb-2 sm:mb-3">
-                            <h3 class="text-sm sm:text-lg md:text-xl font-heading bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-1 text-shadow-soft" style="animation: bounce 2s ease-in-out infinite;">
+                    <!-- Summary Cards -->
+                    <div class="mb-6">
+                        <div class="text-center mb-4">
+                            <h3 class="text-lg md:text-xl font-heading text-green-700 mb-2">
                                 📊🏆 OVERALL RESULT 🏆📊
                             </h3>
-                            <div class="w-20 h-0.5 bg-gradient-to-r from-green-500 to-blue-500 mx-auto rounded-full" style="animation: pulse 2s ease-in-out infinite;"></div>
+                            <div class="w-24 h-1 bg-gradient-to-r from-green-500 to-blue-500 mx-auto rounded-full"></div>
                         </div>
                         
-                        <div id="summary" class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
-                            <!-- Summary will be populated here with enhanced animations -->
-                        </div>
-                    </div>
-                    
-                    <!-- Compact Inspirational Quote Section -->
-                    <div class="relative overflow-hidden rounded-lg" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); padding: 2px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
-                        
-                        <!-- Minimal Floating Elements -->
-                        <div class="absolute top-1 left-1 text-xs animate-bounce" style="animation-delay: 0s;">🌟</div>
-                        <div class="absolute top-1 right-1 text-xs animate-bounce" style="animation-delay: 0.7s;">✨</div>
-                        <div class="absolute bottom-1 left-1 text-xs animate-bounce" style="animation-delay: 1.4s;">💫</div>
-                        <div class="absolute bottom-1 right-1 text-xs animate-bounce" style="animation-delay: 2.1s;">⭐</div>
-                        
-                        <div id="inspirationalQuote" class="bg-white rounded-md p-2 sm:p-3 text-center relative z-10 shadow-inner">
-                            <!-- Quote will be populated here with enhanced styling -->
+                        <div id="summary" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <!-- Summary will be populated here -->
                         </div>
                     </div>
                     
-                    <!-- Minimal Decorative Elements -->
-                    <div class="absolute top-1 left-1 w-3 h-3 bg-yellow-300 rounded-full opacity-40" style="animation: float 3s ease-in-out infinite;"></div>
-                    <div class="absolute top-2 right-2 w-2 h-2 bg-pink-300 rounded-full opacity-40" style="animation: float 4s ease-in-out infinite reverse;"></div>
-                    <div class="absolute bottom-1 left-2 w-3 h-3 bg-blue-300 rounded-full opacity-40" style="animation: pulse 3s ease-in-out infinite;"></div>
-                    <div class="absolute bottom-2 right-1 w-2 h-2 bg-green-300 rounded-full opacity-40" style="animation: bounce 2s ease-in-out infinite;"></div>
+                    <!-- Inspirational Quote -->
+                    <div class="bg-gradient-to-r from-orange-200 to-pink-200 rounded-xl p-1 shadow-lg">
+                        <div id="inspirationalQuote" class="bg-white rounded-lg p-4 text-center shadow-inner">
+                            <!-- Quote will be populated here -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
-    <!-- Admin Section - MOBILE OPTIMIZED -->
-    <div id="adminSection" class="hidden container mx-auto px-2 sm:px-4 md:px-6 max-w-7xl mb-16 sm:mb-20 md:mb-0">
-        <!-- Admin Login - MOBILE OPTIMIZED -->
-        <div id="adminLogin" class="cute-card p-4 sm:p-6 md:p-8 mx-auto max-w-sm sm:max-w-md sparkle-container">
-            <h2 class="text-base sm:text-lg md:text-2xl lg:text-3xl font-heading text-center text-white mb-4 sm:mb-6 wiggle text-shadow-glow leading-tight">🔐✨ Admin Access ✨🔐</h2>
-            <div class="mb-4 sm:mb-6">
-                <label class="block text-sm sm:text-base md:text-lg font-bold text-white mb-2">🔑 Password</label>
-                <input type="password" id="adminPassword" class="w-full p-3 sm:p-4 border-2 sm:border-3 border-white rounded-lg sm:rounded-xl text-sm sm:text-base md:text-lg focus:border-yellow-300 focus:outline-none transition-all duration-300 theme-orange" placeholder="✨ Enter admin password" style="min-height: 48px;">
+    <!-- Optimized Admin Section -->
+    <section id="adminSection" class="hidden container mx-auto px-4 max-w-6xl mb-20">
+        <!-- Admin Login -->
+        <div id="adminLogin" class="cute-card p-6 mx-auto max-w-md">
+            <h2 class="text-xl md:text-2xl font-heading text-center text-white mb-6">
+                🔐✨ Admin Access ✨🔐
+            </h2>
+            <div class="mb-6">
+                <label class="block text-base font-bold text-white mb-2">🔑 Password</label>
+                <input type="password" id="adminPassword" class="w-full p-4 border-2 border-white rounded-xl text-base focus:border-yellow-300 focus:outline-none transition-all duration-300" placeholder="✨ Enter admin password" style="background: linear-gradient(135deg, #fad0c4 0%, #ffd1ff 100%);">
             </div>
-            <button id="loginBtn" class="w-full magic-button py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl text-sm sm:text-base md:text-lg lg:text-xl font-bold pulse" style="min-height: 48px;">
+            <button id="loginBtn" class="w-full magic-button py-4 px-6 rounded-xl text-lg font-bold">
                 🚀✨ Login ✨🚀
             </button>
         </div>
@@ -1051,6 +1058,13 @@
                     <button id="saveStudentBtn" class="w-full magic-button py-4 sm:py-6 px-6 sm:px-8 rounded-2xl text-lg sm:text-2xl font-bold bounce disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-400" disabled>
                         ✨🌟 Save Student & Marks 🌟✨
                     </button>
+                    
+                    <!-- Debug Database Button -->
+                    <div class="mt-4 text-center">
+                        <button id="fetchDatabaseBtn" class="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-bold py-3 px-6 rounded-xl transform hover:scale-105 transition-all duration-300 shadow-lg">
+                            🔍📊 Fetch All Database Data 📊🔍
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1099,68 +1113,68 @@
             marks: {
                 class1: {
                     "alice_johnson_1": {
-                        "Mathematics": { obtained: 95, maximum: 100 },
-                        "English": { obtained: 88, maximum: 100 },
-                        "Science": { obtained: 92, maximum: 100 },
-                        "Social Studies": { obtained: 85, maximum: 100 }
+                        "Mathematics": { obtained: 9, maximum: 10 },
+                        "English": { obtained: 8, maximum: 10 },
+                        "Science": { obtained: 9, maximum: 10 },
+                        "Social Studies": { obtained: 8, maximum: 10 }
                     },
                     "bob_smith_1": {
-                        "Mathematics": { obtained: 78, maximum: 100 },
-                        "English": { obtained: 82, maximum: 100 },
-                        "Science": { obtained: 75, maximum: 100 },
-                        "Social Studies": { obtained: 80, maximum: 100 }
+                        "Mathematics": { obtained: 7, maximum: 10 },
+                        "English": { obtained: 8, maximum: 10 },
+                        "Science": { obtained: 7, maximum: 10 },
+                        "Social Studies": { obtained: 8, maximum: 10 }
                     },
                     "charlie_brown_1": {
-                        "Mathematics": { obtained: 65, maximum: 100 },
-                        "English": { obtained: "Absent", maximum: 100 },
-                        "Science": { obtained: 68, maximum: 100 },
-                        "Social Studies": { obtained: 72, maximum: 100 }
+                        "Mathematics": { obtained: 6, maximum: 10 },
+                        "English": { obtained: "Absent", maximum: 10 },
+                        "Science": { obtained: 6, maximum: 10 },
+                        "Social Studies": { obtained: 7, maximum: 10 }
                     }
                 },
                 class2: {
                     "diana_wilson_2": {
-                        "Mathematics": { obtained: 90, maximum: 100 },
-                        "English": { obtained: 94, maximum: 100 },
-                        "Science": { obtained: 87, maximum: 100 },
-                        "Social Studies": { obtained: 91, maximum: 100 },
-                        "Art": { obtained: 96, maximum: 100 }
+                        "Mathematics": { obtained: 9, maximum: 10 },
+                        "English": { obtained: 9, maximum: 10 },
+                        "Science": { obtained: 8, maximum: 10 },
+                        "Social Studies": { obtained: 9, maximum: 10 },
+                        "Art": { obtained: 9, maximum: 10 }
                     },
                     "edward_davis_2": {
-                        "Mathematics": { obtained: 73, maximum: 100 },
-                        "English": { obtained: 79, maximum: 100 },
-                        "Science": { obtained: 76, maximum: 100 },
-                        "Social Studies": { obtained: 74, maximum: 100 },
-                        "Art": { obtained: 85, maximum: 100 }
+                        "Mathematics": { obtained: 7, maximum: 10 },
+                        "English": { obtained: 7, maximum: 10 },
+                        "Science": { obtained: 7, maximum: 10 },
+                        "Social Studies": { obtained: 7, maximum: 10 },
+                        "Art": { obtained: 8, maximum: 10 }
                     },
                     "fiona_miller_2": {
-                        "Mathematics": { obtained: 82, maximum: 100 },
-                        "English": { obtained: 86, maximum: 100 },
-                        "Science": { obtained: 84, maximum: 100 },
-                        "Social Studies": { obtained: 88, maximum: 100 },
-                        "Art": { obtained: 90, maximum: 100 }
+                        "Mathematics": { obtained: 8, maximum: 10 },
+                        "English": { obtained: 8, maximum: 10 },
+                        "Science": { obtained: 8, maximum: 10 },
+                        "Social Studies": { obtained: 8, maximum: 10 },
+                        "Art": { obtained: 9, maximum: 10 }
                     }
                 },
                 class3: {
                     "george_taylor_3": {
-                        "Mathematics": { obtained: 88, maximum: 100 },
-                        "English": { obtained: 85, maximum: 100 },
-                        "Science": { obtained: 90, maximum: 100 },
-                        "Social Studies": { obtained: 87, maximum: 100 },
-                        "Computer": { obtained: 95, maximum: 100 }
+                        "Mathematics": { obtained: 8, maximum: 10 },
+                        "English": { obtained: 8, maximum: 10 },
+                        "Science": { obtained: 9, maximum: 10 },
+                        "Social Studies": { obtained: 8, maximum: 10 },
+                        "Computer": { obtained: 9, maximum: 10 }
                     },
                     "helen_anderson_3": {
-                        "Mathematics": { obtained: 92, maximum: 100 },
-                        "English": { obtained: 89, maximum: 100 },
-                        "Science": { obtained: 94, maximum: 100 },
-                        "Social Studies": { obtained: 91, maximum: 100 },
-                        "Computer": { obtained: 88, maximum: 100 }
+                        "Mathematics": { obtained: 9, maximum: 10 },
+                        "English": { obtained: 8, maximum: 10 },
+                        "Science": { obtained: 9, maximum: 10 },
+                        "Social Studies": { obtained: 9, maximum: 10 },
+                        "Computer": { obtained: 8, maximum: 10 }
                     },
                     "ivan_thomas_3": {
-                        "Mathematics": { obtained: 77, maximum: 100 },
-                        "English": { obtained: 74, maximum: 100 },
-                        "Science": { obtained: 79, maximum: 100 },
-                        "Social Studies": { obtained: 76, maximum: 100 },
-                        "Computer": { obtained: 82, maximum: 100 }
+                        "Mathematics": { obtained: 7, maximum: 10 },
+                        "English": { obtained: 7, maximum: 10 },
+                        "Science": { obtained: 7, maximum: 10 },
+                        "Social Studies": { obtained: 7, maximum: 10 },
+                        "Computer": { obtained: 8, maximum: 10 }
                     }
                 }
             }
@@ -1197,7 +1211,8 @@
             fatherName: document.getElementById('fatherName'),
             subjectsContainer: document.getElementById('subjectsContainer'),
             addSubjectBtn: document.getElementById('addSubjectBtn'),
-            saveStudentBtn: document.getElementById('saveStudentBtn')
+            saveStudentBtn: document.getElementById('saveStudentBtn'),
+            fetchDatabaseBtn: document.getElementById('fetchDatabaseBtn')
         };
 
         // Utility Functions
@@ -1416,18 +1431,34 @@
         elements.studentBtn.addEventListener('click', showStudentSection);
         elements.adminBtn.addEventListener('click', showAdminSection);
 
-        // Mobile Navigation
-        document.getElementById('studentBtnMobile').addEventListener('click', showStudentSection);
-        document.getElementById('adminBtnMobile').addEventListener('click', showAdminSection);
-
         // Admin Login
         elements.loginBtn.addEventListener('click', () => {
-            if (elements.adminPassword.value === ADMIN_PASSWORD) {
+            const password = elements.adminPassword.value.trim();
+            console.log('Login attempt with password:', password);
+            
+            if (password === ADMIN_PASSWORD) {
+                console.log('Password correct, showing admin dashboard');
                 elements.adminLogin.classList.add('hidden');
                 elements.adminDashboard.classList.remove('hidden');
-                addSubjectRow(); // Add initial subject row
+                showMessage('✅ Welcome Admin! Dashboard loaded successfully!');
+                
+                // Clear the password field
+                elements.adminPassword.value = '';
+                
+                // Initialize admin dashboard
+                initializeAdminDashboard();
             } else {
-                showMessage('❌ Incorrect password!', 'error');
+                console.log('Password incorrect');
+                showMessage('❌ Incorrect password! Please try again.', 'error');
+                elements.adminPassword.value = '';
+                elements.adminPassword.focus();
+            }
+        });
+
+        // Allow Enter key to login
+        elements.adminPassword.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                elements.loginBtn.click();
             }
         });
 
@@ -1493,31 +1524,31 @@
                     return;
                 }
 
-                // Display student info with enhanced animations
+                // Display student info with limited animations (5 seconds only)
                 elements.studentInfo.innerHTML = `
                     <div class="relative overflow-hidden rounded-2xl transform hover:scale-105 transition-all duration-500" style="background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%); padding: 3px; box-shadow: 0 8px 20px rgba(0,0,0,0.2); animation: slideIn 0.8s ease-out;">
                         <div class="bg-white rounded-xl p-3 sm:p-4 text-center relative z-10">
-                            <div class="absolute top-1 right-1 text-lg animate-bounce">👦</div>
-                            <h3 class="text-sm sm:text-lg font-bold text-orange-700 mb-2" style="animation: wiggle 2s ease-in-out infinite;">✨ STUDENT NAME ✨</h3>
+                            <div class="absolute top-1 right-1 text-lg report-card-bounce">👦</div>
+                            <h3 class="text-sm sm:text-lg font-bold text-orange-700 mb-2 report-card-wiggle">✨ STUDENT NAME ✨</h3>
                             <p class="text-xs sm:text-base font-bold text-orange-800 bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">${studentData.name}</p>
                         </div>
-                        <div class="absolute -top-1 -left-1 w-4 h-4 bg-yellow-300 rounded-full opacity-60 animate-pulse"></div>
+                        <div class="absolute -top-1 -left-1 w-4 h-4 bg-yellow-300 rounded-full opacity-60 report-card-pulse"></div>
                     </div>
                     <div class="relative overflow-hidden rounded-2xl transform hover:scale-105 transition-all duration-500" style="background: linear-gradient(135deg, #a8e6cf 0%, #88d8a3 100%); padding: 3px; box-shadow: 0 8px 20px rgba(0,0,0,0.2); animation: slideIn 0.8s ease-out; animation-delay: 0.2s;">
                         <div class="bg-white rounded-xl p-3 sm:p-4 text-center relative z-10">
-                            <div class="absolute top-1 right-1 text-lg animate-bounce" style="animation-delay: 0.5s;">👨</div>
-                            <h3 class="text-sm sm:text-lg font-bold text-green-700 mb-2" style="animation: pulse 2s ease-in-out infinite;">💚 FATHER'S NAME 💚</h3>
+                            <div class="absolute top-1 right-1 text-lg report-card-bounce" style="animation-delay: 0.5s;">👨</div>
+                            <h3 class="text-sm sm:text-lg font-bold text-green-700 mb-2 report-card-pulse">💚 FATHER'S NAME 💚</h3>
                             <p class="text-xs sm:text-base font-bold text-green-800 bg-gradient-to-r from-green-500 to-teal-500 bg-clip-text text-transparent">${studentData.fatherName}</p>
                         </div>
-                        <div class="absolute -bottom-1 -right-1 w-3 h-3 bg-green-300 rounded-full opacity-60 animate-bounce"></div>
+                        <div class="absolute -bottom-1 -right-1 w-3 h-3 bg-green-300 rounded-full opacity-60 report-card-bounce"></div>
                     </div>
                     <div class="relative overflow-hidden rounded-2xl transform hover:scale-105 transition-all duration-500" style="background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%); padding: 3px; box-shadow: 0 8px 20px rgba(0,0,0,0.2); animation: slideIn 0.8s ease-out; animation-delay: 0.4s;">
                         <div class="bg-white rounded-xl p-3 sm:p-4 text-center relative z-10">
-                            <div class="absolute top-1 right-1 text-lg animate-bounce" style="animation-delay: 1s;">📚</div>
-                            <h3 class="text-sm sm:text-lg font-bold text-blue-700 mb-2" style="animation: float 3s ease-in-out infinite;">💙 CLASS LEVEL 💙</h3>
+                            <div class="absolute top-1 right-1 text-lg report-card-bounce" style="animation-delay: 1s;">📚</div>
+                            <h3 class="text-sm sm:text-lg font-bold text-blue-700 mb-2 report-card-float">💙 CLASS LEVEL 💙</h3>
                             <p class="text-xs sm:text-base font-bold text-blue-800 bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">Class ${classNum}</p>
                         </div>
-                        <div class="absolute -top-1 -right-1 w-5 h-5 bg-blue-300 rounded-full opacity-60" style="animation: float 4s ease-in-out infinite;"></div>
+                        <div class="absolute -top-1 -right-1 w-5 h-5 bg-blue-300 rounded-full opacity-60 report-card-float"></div>
                     </div>
                 `;
 
@@ -1588,22 +1619,22 @@
                             <tr class="bg-gradient-to-r ${rowGradient} hover:scale-102 transition-all duration-300 border-b-1 sm:border-b-2 border-white mobile-animate" style="animation: fadeInUp 0.6s ease-out; animation-delay: ${animationDelay}s; animation-fill-mode: both;">
                                 <td class="text-purple-800 relative">
                                     <div class="flex items-center justify-center">
-                                        <span class="mr-1 text-lg sm:text-2xl animate-bounce" style="animation-delay: ${animationDelay + 0.5}s;">📖</span>
+                                        <span class="mr-1 text-lg sm:text-2xl report-card-bounce" style="animation-delay: ${animationDelay + 0.5}s;">📖</span>
                                         <span class="text-base sm:text-lg md:text-xl font-bold">${subject}</span>
                                     </div>
                                 </td>
                                 <td class="text-center">
-                                    <div class="${marks.obtained === 'Absent' ? 'bg-gray-500' : 'bg-blue-500'} text-white px-3 py-2 rounded-full inline-block transform hover:scale-110 transition-all duration-300 text-base sm:text-lg md:text-xl font-bold mobile-animate" style="animation: pulse 2s ease-in-out infinite; animation-delay: ${animationDelay + 0.2}s;">
+                                    <div class="${marks.obtained === 'Absent' ? 'bg-gradient-to-r from-gray-500 to-gray-600' : 'bg-gradient-to-r from-blue-500 to-indigo-500'} text-white px-3 py-2 rounded-full inline-block transform hover:scale-110 transition-all duration-300 text-base sm:text-lg md:text-xl font-bold mobile-animate report-card-pulse" style="animation-delay: ${animationDelay + 0.2}s;">
                                         ${obtainedDisplay}
                                     </div>
                                 </td>
                                 <td class="text-center">
-                                    <div class="bg-green-500 text-white px-3 py-2 rounded-full inline-block transform hover:scale-110 transition-all duration-300 text-base sm:text-lg md:text-xl font-bold mobile-animate" style="animation: pulse 2s ease-in-out infinite; animation-delay: ${animationDelay + 0.4}s;">
+                                    <div class="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-3 py-2 rounded-full inline-block transform hover:scale-110 transition-all duration-300 text-base sm:text-lg md:text-xl font-bold mobile-animate report-card-pulse" style="animation-delay: ${animationDelay + 0.4}s;">
                                         ${marks.maximum}
                                     </div>
                                 </td>
                                 <td class="text-center">
-                                    <div class="${marks.obtained === 'Absent' ? 'bg-gradient-to-r from-gray-500 to-gray-600' : 'bg-gradient-to-r from-purple-500 to-pink-500'} text-white px-3 py-2 rounded-full inline-block transform hover:scale-110 transition-all duration-300 text-base sm:text-lg md:text-xl font-bold mobile-animate" style="animation: wiggle 2s ease-in-out infinite; animation-delay: ${animationDelay + 0.6}s;">
+                                    <div class="${marks.obtained === 'Absent' ? 'bg-gradient-to-r from-gray-500 to-gray-600' : 'bg-gradient-to-r from-purple-500 to-pink-500'} text-white px-3 py-2 rounded-full inline-block transform hover:scale-110 transition-all duration-300 text-base sm:text-lg md:text-xl font-bold mobile-animate report-card-wiggle" style="animation-delay: ${animationDelay + 0.6}s;">
                                         ${marks.obtained === 'Absent' ? 'Absent' : percentage + '%'}
                                     </div>
                                 </td>
@@ -1638,69 +1669,69 @@
                     <div class="relative overflow-hidden rounded-2xl transform hover:scale-105 transition-all duration-500" style="background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 50%, #fd79a8 100%); padding: 3px; box-shadow: 0 10px 25px rgba(0,0,0,0.3), 0 0 0 2px rgba(255,255,255,0.2); animation: slideIn 0.8s ease-out;">
                         
                         <!-- Floating Elements -->
-                        <div class="absolute top-1 left-1 text-lg animate-bounce">📊</div>
-                        <div class="absolute top-1 right-1 text-sm animate-bounce" style="animation-delay: 0.5s;">✨</div>
-                        <div class="absolute bottom-1 left-1 text-sm animate-bounce" style="animation-delay: 1s;">💯</div>
+                        <div class="absolute top-1 left-1 text-lg report-card-bounce">📊</div>
+                        <div class="absolute top-1 right-1 text-sm report-card-bounce" style="animation-delay: 0.5s;">✨</div>
+                        <div class="absolute bottom-1 left-1 text-sm report-card-bounce" style="animation-delay: 1s;">💯</div>
                         
                         <div class="bg-white rounded-xl p-3 sm:p-4 text-center relative z-10 shadow-inner">
                             <div class="mb-2">
-                                <div class="text-xl sm:text-2xl animate-bounce mb-1">📊✨</div>
-                                <h3 class="text-sm sm:text-lg font-bold text-orange-700 mb-2" style="animation: wiggle 2s ease-in-out infinite;">TOTAL MARKS</h3>
+                                <div class="text-xl sm:text-2xl mb-1 report-card-bounce">📊✨</div>
+                                <h3 class="text-sm sm:text-lg font-bold text-orange-700 mb-2 report-card-wiggle">TOTAL MARKS</h3>
                             </div>
-                            <div class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-3 py-2 rounded-xl transform hover:scale-105 transition-all duration-300" style="animation: pulse 2s ease-in-out infinite;">
+                            <div class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-3 py-2 rounded-xl transform hover:scale-105 transition-all duration-300 report-card-pulse">
                                 <p class="text-lg sm:text-2xl font-extrabold">${totalObtained}/${totalMaximum}</p>
                             </div>
                         </div>
                         
                         <!-- Decorative circles -->
-                        <div class="absolute -top-1 -left-1 w-6 h-6 bg-yellow-300 rounded-full opacity-40 animate-pulse"></div>
-                        <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-pink-300 rounded-full opacity-40" style="animation: float 3s ease-in-out infinite;"></div>
+                        <div class="absolute -top-1 -left-1 w-6 h-6 bg-yellow-300 rounded-full opacity-40 report-card-pulse"></div>
+                        <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-pink-300 rounded-full opacity-40 report-card-float"></div>
                     </div>
                     
                     <div class="relative overflow-hidden rounded-2xl transform hover:scale-105 transition-all duration-500" style="background: linear-gradient(135deg, #a8e6cf 0%, #88d8a3 50%, #52c41a 100%); padding: 3px; box-shadow: 0 10px 25px rgba(0,0,0,0.3), 0 0 0 2px rgba(255,255,255,0.2); animation: slideIn 0.8s ease-out; animation-delay: 0.2s;">
                         
                         <!-- Floating Elements -->
-                        <div class="absolute top-1 left-1 text-lg animate-bounce" style="animation-delay: 0.3s;">📈</div>
-                        <div class="absolute top-1 right-1 text-sm animate-bounce" style="animation-delay: 0.8s;">🌟</div>
-                        <div class="absolute bottom-1 right-1 text-sm animate-bounce" style="animation-delay: 1.3s;">💚</div>
+                        <div class="absolute top-1 left-1 text-lg report-card-bounce" style="animation-delay: 0.3s;">📈</div>
+                        <div class="absolute top-1 right-1 text-sm report-card-bounce" style="animation-delay: 0.8s;">🌟</div>
+                        <div class="absolute bottom-1 right-1 text-sm report-card-bounce" style="animation-delay: 1.3s;">💚</div>
                         
                         <div class="bg-white rounded-xl p-3 sm:p-4 text-center relative z-10 shadow-inner">
                             <div class="mb-2">
-                                <div class="text-xl sm:text-2xl animate-bounce mb-1" style="animation-delay: 0.5s;">${performanceEmoji}</div>
-                                <h3 class="text-sm sm:text-lg font-bold text-green-700 mb-2" style="animation: pulse 2s ease-in-out infinite;">PERCENTAGE</h3>
+                                <div class="text-xl sm:text-2xl mb-1 report-card-bounce" style="animation-delay: 0.5s;">${performanceEmoji}</div>
+                                <h3 class="text-sm sm:text-lg font-bold text-green-700 mb-2 report-card-pulse">PERCENTAGE</h3>
                             </div>
-                            <div class="bg-gradient-to-r from-green-500 to-teal-500 text-white px-3 py-2 rounded-xl transform hover:scale-105 transition-all duration-300 ${overallPercentage >= 85 ? 'gold-glow' : ''}" style="animation: ${overallPercentage >= 85 ? 'celebration 2s ease-in-out infinite' : 'wiggle 2s ease-in-out infinite'};">
+                            <div class="bg-gradient-to-r from-green-500 to-teal-500 text-white px-3 py-2 rounded-xl transform hover:scale-105 transition-all duration-300 ${overallPercentage >= 85 ? 'gold-glow' : ''} ${overallPercentage >= 85 ? 'celebration' : 'report-card-wiggle'}">
                                 <p class="text-lg sm:text-2xl font-extrabold">${overallPercentage}%</p>
                                 <p class="text-xs sm:text-sm font-bold mt-1 capitalize">${performanceLevel}</p>
                             </div>
                         </div>
                         
                         <!-- Decorative circles -->
-                        <div class="absolute -top-1 -right-1 w-5 h-5 bg-green-300 rounded-full opacity-40" style="animation: float 4s ease-in-out infinite;"></div>
-                        <div class="absolute -bottom-1 -left-1 w-3 h-3 bg-teal-300 rounded-full opacity-40 animate-bounce"></div>
+                        <div class="absolute -top-1 -right-1 w-5 h-5 bg-green-300 rounded-full opacity-40 report-card-float"></div>
+                        <div class="absolute -bottom-1 -left-1 w-3 h-3 bg-teal-300 rounded-full opacity-40 report-card-bounce"></div>
                     </div>
                     
                     <div class="relative overflow-hidden rounded-2xl transform hover:scale-105 transition-all duration-500" style="background: linear-gradient(135deg, #74b9ff 0%, #0984e3 50%, #6c5ce7 100%); padding: 3px; box-shadow: 0 10px 25px rgba(0,0,0,0.3), 0 0 0 2px rgba(255,255,255,0.2); animation: slideIn 0.8s ease-out; animation-delay: 0.4s;">
                         
                         <!-- Floating Elements -->
-                        <div class="absolute top-1 left-1 text-lg animate-bounce" style="animation-delay: 0.6s;">🥇</div>
-                        <div class="absolute top-1 right-1 text-sm animate-bounce" style="animation-delay: 1.1s;">💫</div>
-                        <div class="absolute bottom-1 left-1 text-sm animate-bounce" style="animation-delay: 1.6s;">🎯</div>
+                        <div class="absolute top-1 left-1 text-lg report-card-bounce" style="animation-delay: 0.6s;">🥇</div>
+                        <div class="absolute top-1 right-1 text-sm report-card-bounce" style="animation-delay: 1.1s;">💫</div>
+                        <div class="absolute bottom-1 left-1 text-sm report-card-bounce" style="animation-delay: 1.6s;">🎯</div>
                         
                         <div class="bg-white rounded-xl p-3 sm:p-4 text-center relative z-10 shadow-inner">
                             <div class="mb-2">
-                                <div class="text-xl sm:text-2xl animate-bounce mb-1" style="animation-delay: 0.7s;">${rankEmoji}</div>
-                                <h3 class="text-sm sm:text-lg font-bold text-blue-700 mb-2" style="animation: float 3s ease-in-out infinite;">CLASS RANK</h3>
+                                <div class="text-xl sm:text-2xl mb-1 report-card-bounce" style="animation-delay: 0.7s;">${rankEmoji}</div>
+                                <h3 class="text-sm sm:text-lg font-bold text-blue-700 mb-2 report-card-float">CLASS RANK</h3>
                             </div>
-                            <div class="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-3 py-2 rounded-xl transform hover:scale-105 transition-all duration-300 ${rank <= 3 ? 'trophy-bounce' : ''}" style="animation: ${rank <= 3 ? 'celebration 2s ease-in-out infinite' : 'pulse 2s ease-in-out infinite'};">
+                            <div class="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-3 py-2 rounded-xl transform hover:scale-105 transition-all duration-300 ${rank <= 3 ? 'trophy-bounce' : ''} ${rank <= 3 ? 'celebration' : 'report-card-pulse'}">
                                 <p class="text-lg sm:text-2xl font-extrabold">#${rank}</p>
                                 <p class="text-xs sm:text-sm font-bold mt-1">${rank === 1 ? 'First Place!' : rank <= 3 ? 'Top 3!' : rank <= 5 ? 'Top 5!' : 'Keep Going!'}</p>
                             </div>
                         </div>
                         
                         <!-- Decorative circles -->
-                        <div class="absolute -top-1 -left-1 w-4 h-4 bg-blue-300 rounded-full opacity-40 animate-pulse"></div>
-                        <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-purple-300 rounded-full opacity-40" style="animation: float 5s ease-in-out infinite reverse;"></div>
+                        <div class="absolute -top-1 -left-1 w-4 h-4 bg-blue-300 rounded-full opacity-40 report-card-pulse"></div>
+                        <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-purple-300 rounded-full opacity-40 report-card-float"></div>
                     </div>
                 `;
 
@@ -1708,9 +1739,9 @@
                 const inspirationalQuote = getInspirationalQuote(parseFloat(overallPercentage), rank);
                 document.getElementById('inspirationalQuote').innerHTML = `
                     <div class="mb-2 relative">
-                        <!-- Animated Title -->
+                        <!-- Static Title -->
                         <div class="text-center relative">
-                            <h3 class="relative text-sm sm:text-lg font-bold mb-2" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: wiggle 3s ease-in-out infinite;">
+                            <h3 class="relative text-sm sm:text-lg font-bold mb-2" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
                                 ${inspirationalQuote.emoji} WORDS OF INSPIRATION ${inspirationalQuote.emoji}
                             </h3>
                         </div>
@@ -1724,7 +1755,7 @@
                             
                             <!-- Only the Main Highlighted Text -->
                             <div class="text-center">
-                                <div class="text-xl sm:text-2xl mb-2 animate-bounce">${inspirationalQuote.emoji}</div>
+                                <div class="text-xl sm:text-2xl mb-2">${inspirationalQuote.emoji}</div>
                                 
                                 <!-- Main Inspirational Quote - Larger Font -->
                                 <p class="text-base sm:text-lg md:text-xl font-bold leading-relaxed" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.4;">
@@ -1910,7 +1941,7 @@
                             const marks = marksData[subject];
                             addSubjectRow(subject, marks.obtained, marks.maximum);
                         } else {
-                            addSubjectRow(subject, '', '100');
+                            addSubjectRow(subject, '', '10');
                         }
                     });
                     
@@ -1989,7 +2020,7 @@
                                placeholder="Max" 
                                min="1" 
                                max="1000"
-                               value="${maximum}">
+                               value="${maximum || '10'}">
                     </div>
                     
                     <!-- Remove Button -->
@@ -2052,14 +2083,45 @@
             subjectCount = 0;
             
             // Add the three default subjects
-            addSubjectRow('Hindi', '', '100');
-            addSubjectRow('English', '', '100');
-            addSubjectRow('Mathematics', '', '100');
+            addSubjectRow('Hindi', '', '10');
+            addSubjectRow('English', '', '10');
+            addSubjectRow('Mathematics', '', '10');
+        }
+
+        // Initialize Admin Dashboard
+        function initializeAdminDashboard() {
+            console.log('Initializing admin dashboard...');
+            
+            // Reset all form elements
+            elements.adminClassSelect.value = '';
+            elements.adminStudentSelect.value = '';
+            elements.adminStudentSelect.disabled = true;
+            elements.deleteStudentBtn.disabled = true;
+            elements.studentName.value = '';
+            elements.fatherName.value = '';
+            elements.studentName.disabled = true;
+            elements.fatherName.disabled = true;
+            elements.addSubjectBtn.disabled = true;
+            elements.saveStudentBtn.disabled = true;
+            
+            // Update placeholders
+            elements.studentName.placeholder = "First select a class to enable editing";
+            elements.fatherName.placeholder = "First select a class to enable editing";
+            
+            // Clear subjects container
+            elements.subjectsContainer.innerHTML = '';
+            subjectCount = 0;
+            
+            // Disable subjects container
+            elements.subjectsContainer.style.opacity = '0.5';
+            elements.subjectsContainer.style.pointerEvents = 'none';
+            
+            console.log('Admin dashboard initialized successfully');
         }
 
         // Add Subject Button
         elements.addSubjectBtn.addEventListener('click', () => {
-            addSubjectRow();
+            addSubjectRow('', '', '10');
         });
 
         // Delete Student (Enhanced to handle both demo and user-input students)
@@ -2111,6 +2173,11 @@
                     showMessage(`❌ Failed to delete ${studentName}! Please try again.`, 'error');
                 }
             }
+        });
+
+        // Fetch Database Button
+        elements.fetchDatabaseBtn.addEventListener('click', async () => {
+            await fetchAllFirebaseData();
         });
 
         // Save Student
@@ -2188,172 +2255,150 @@
             }
         });
 
+        // Fetch All Firebase Database Function
+        async function fetchAllFirebaseData() {
+            try {
+                console.log('🔄 Fetching all Firebase database data...');
+                showMessage('🔄 Loading database data...', 'info');
+                
+                const [studentsSnapshot, marksSnapshot] = await Promise.all([
+                    db.ref('students').once('value'),
+                    db.ref('marks').once('value')
+                ]);
+                
+                const studentsData = studentsSnapshot.val();
+                const marksData = marksSnapshot.val();
+                
+                console.log('📊 Complete Students Data:', studentsData);
+                console.log('📊 Complete Marks Data:', marksData);
+                
+                // Display detailed summary
+                let totalStudents = 0;
+                let classBreakdown = {};
+                
+                if (studentsData) {
+                    Object.keys(studentsData).forEach(classKey => {
+                        if (studentsData[classKey]) {
+                            const classStudentCount = Object.keys(studentsData[classKey]).length;
+                            totalStudents += classStudentCount;
+                            classBreakdown[classKey] = classStudentCount;
+                        }
+                    });
+                }
+                
+                console.log('📈 Class-wise Student Count:', classBreakdown);
+                console.log('📊 Total Students in Database:', totalStudents);
+                
+                // Show detailed success message
+                let classDetails = '';
+                Object.keys(classBreakdown).forEach(classKey => {
+                    classDetails += `${classKey}: ${classBreakdown[classKey]} students, `;
+                });
+                
+                showMessage(`✅ Database loaded! Found ${totalStudents} students (${classDetails.slice(0, -2)})`);
+                
+                return {
+                    students: studentsData,
+                    marks: marksData,
+                    totalStudents: totalStudents,
+                    classBreakdown: classBreakdown
+                };
+                
+            } catch (error) {
+                console.error('❌ Error fetching Firebase data:', error);
+                showMessage('❌ Error loading database data!', 'error');
+                return null;
+            }
+        }
+
         // Initialize with sample data on first load
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('Smart Report Card System initialized');
+        document.addEventListener('DOMContentLoaded', async () => {
+            console.log('🚀 Smart Report Card System initialized');
+            
+            // Show initial section (student section by default)
+            showStudentSection();
+            
+            // Fetch all database data on load
+            await fetchAllFirebaseData();
             
             // Check if database is empty and auto-restore sample data in background (non-blocking)
             setTimeout(async () => {
                 try {
                     const studentsSnapshot = await db.ref('students').once('value');
                     if (!studentsSnapshot.exists()) {
-                        console.log('Database is empty, restoring sample data...');
+                        console.log('📦 Database is empty, restoring sample data...');
                         await restoreSampleData();
+                        console.log('✅ Sample data restored successfully');
+                        // Fetch data again after restoring
+                        await fetchAllFirebaseData();
                     }
                 } catch (error) {
-                    console.error('Error checking database:', error);
+                    console.error('❌ Error checking database:', error);
                 }
             }, 100);
         });
     </script>
 
-    <!-- Developer Credit Marquee at Bottom -->
-    <div class="fixed bottom-0 left-0 right-0 z-50 overflow-hidden" style="background: linear-gradient(45deg, #0f172a, #1e293b, #334155, #475569); background-size: 400% 400%; animation: rainbow 3s ease infinite; border-top: 4px solid #fbbf24; box-shadow: 0 -10px 30px rgba(0,0,0,0.5);">
+    <!-- Optimized Bottom Marquee -->
+    <footer class="fixed bottom-0 left-0 right-0 z-50 overflow-hidden bg-gradient-to-r from-slate-800 to-slate-700 border-t-2 border-yellow-400 shadow-lg">
         
-        <!-- Animated Background Elements -->
-        <div class="absolute inset-0 overflow-hidden">
-            <div class="absolute -top-2 left-10 w-8 h-8 bg-yellow-400 rounded-full opacity-30 animate-bounce"></div>
-            <div class="absolute -top-1 right-20 w-6 h-6 bg-orange-400 rounded-full opacity-40 animate-pulse"></div>
-            <div class="absolute -top-3 left-1/3 w-4 h-4 bg-amber-400 rounded-full opacity-35" style="animation: float 4s ease-in-out infinite;"></div>
-            <div class="absolute -top-2 right-1/3 w-5 h-5 bg-yellow-300 rounded-full opacity-30" style="animation: float 3s ease-in-out infinite reverse;"></div>
+        <!-- Background Elements -->
+        <div class="absolute inset-0 overflow-hidden mobile-hidden">
+            <div class="absolute top-1 left-8 w-4 h-4 bg-yellow-400 rounded-full opacity-40 bounce"></div>
+            <div class="absolute top-2 right-12 w-3 h-3 bg-orange-400 rounded-full opacity-30 pulse"></div>
         </div>
         
-        <!-- Main Marquee Container -->
-        <div class="relative py-3 sm:py-4 overflow-hidden">
+        <!-- Marquee Content -->
+        <div class="py-3 overflow-hidden">
             <div class="marquee-container">
-                <div class="whitespace-nowrap animate-marquee">
+                <div class="animate-marquee text-yellow-300 font-display">
                     
-                    <!-- Sparkle Effects -->
-                    <span class="inline-block text-2xl sm:text-3xl animate-bounce mr-4 text-yellow-400" style="animation-delay: 0s; filter: drop-shadow(0 0 10px rgba(251,191,36,0.8));">✨</span>
-                    <span class="inline-block text-xl sm:text-2xl animate-bounce mr-2 text-orange-400" style="animation-delay: 0.2s; filter: drop-shadow(0 0 8px rgba(251,146,60,0.8));">🌟</span>
-                    <span class="inline-block text-lg sm:text-xl animate-bounce mr-4 text-amber-400" style="animation-delay: 0.4s; filter: drop-shadow(0 0 6px rgba(245,158,11,0.8));">💫</span>
-                    
-                    <!-- Main Welcome Text -->
-                    <span class="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-display text-yellow-300 mr-8 relative" style="text-shadow: 3px 3px 6px rgba(0,0,0,0.9), 0 0 30px rgba(253,224,71,0.9), 0 0 40px rgba(253,224,71,0.7); letter-spacing: 3px; animation: pulse 2s ease-in-out infinite;">
-                        🌟✨ Welcome to Primary School Karanpur , The place where students Learn with JOY !! ✨🌟
+                    <!-- Welcome Message -->
+                    <span class="text-lg md:text-xl mr-8">
+                        ✨ Welcome to Primary School Karanpur - Where Students Learn with JOY! ✨
                     </span>
                     
-                    <!-- More Sparkle Effects -->
-                    <span class="inline-block text-2xl sm:text-3xl animate-bounce mr-4 text-yellow-400" style="animation-delay: 0.6s; filter: drop-shadow(0 0 10px rgba(251,191,36,0.8));">⭐</span>
-                    <span class="inline-block text-xl sm:text-2xl animate-bounce mr-2 text-orange-400" style="animation-delay: 0.8s; filter: drop-shadow(0 0 8px rgba(251,146,60,0.8));">🎯</span>
-                    <span class="inline-block text-lg sm:text-xl animate-bounce mr-4 text-amber-400" style="animation-delay: 1s; filter: drop-shadow(0 0 6px rgba(245,158,11,0.8));">🏆</span>
+                    <!-- Separator -->
+                    <span class="text-base mr-4">🌟</span>
                     
-                    <!-- Repeated Text for Continuous Effect -->
-                    <span class="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-display text-yellow-300 mr-8 relative" style="text-shadow: 3px 3px 6px rgba(0,0,0,0.9), 0 0 30px rgba(253,224,71,0.9), 0 0 40px rgba(253,224,71,0.7); letter-spacing: 3px; animation: wiggle 3s ease-in-out infinite;">
-                        📚💫 Excellence in Education, Building Future Leaders 💫📚
+                    <!-- Excellence Message -->
+                    <span class="text-lg md:text-xl mr-8">
+                        📚 Excellence in Education, Building Future Leaders 📚
                     </span>
                     
-                    <!-- Final Sparkle Effects -->
-                    <span class="inline-block text-2xl sm:text-3xl animate-bounce mr-4 text-yellow-400" style="animation-delay: 1.2s; filter: drop-shadow(0 0 10px rgba(251,191,36,0.8));">🌈</span>
-                    <span class="inline-block text-xl sm:text-2xl animate-bounce mr-2 text-orange-400" style="animation-delay: 1.4s; filter: drop-shadow(0 0 8px rgba(251,146,60,0.8));">💎</span>
-                    <span class="inline-block text-lg sm:text-xl animate-bounce mr-8 text-amber-400" style="animation-delay: 1.6s; filter: drop-shadow(0 0 6px rgba(245,158,11,0.8));">🎨</span>
+                    <!-- Separator -->
+                    <span class="text-base mr-4">💫</span>
                     
-                    <!-- Third Repetition -->
-                    <span class="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-display text-yellow-300 mr-8 relative" style="text-shadow: 3px 3px 6px rgba(0,0,0,0.9), 0 0 30px rgba(253,224,71,0.9), 0 0 40px rgba(253,224,71,0.7); letter-spacing: 3px; animation: bounce 2s ease-in-out infinite;">
-                        🎓🌈 Where Dreams Take Flight & Knowledge Shines Bright 🌈🎓
+                    <!-- Dreams Message -->
+                    <span class="text-lg md:text-xl mr-8">
+                        🎓 Where Dreams Take Flight & Knowledge Shines Bright 🎓
                     </span>
                     
                 </div>
             </div>
         </div>
         
-        <!-- Decorative Border Animation -->
-        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-400 via-orange-400 to-amber-400" style="animation: pulse 1.5s ease-in-out infinite;"></div>
+        <!-- Top Border -->
+        <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-yellow-400 to-orange-400"></div>
         
-        <!-- Floating Elements -->
-        <div class="absolute top-1 left-4 text-lg text-yellow-400 opacity-80 animate-bounce" style="animation-delay: 0.3s; filter: drop-shadow(0 0 8px rgba(251,191,36,0.6));">💻</div>
-        <div class="absolute top-2 right-8 text-sm text-orange-400 opacity-70 animate-bounce" style="animation-delay: 0.7s; filter: drop-shadow(0 0 6px rgba(251,146,60,0.6));">🚀</div>
-        <div class="absolute top-1 left-1/2 text-base text-amber-400 opacity-60 animate-bounce" style="animation-delay: 1.1s; filter: drop-shadow(0 0 8px rgba(245,158,11,0.6));">⚡</div>
-        
-    </div>
+    </footer>
 
-    <!-- Add bottom padding to main content to prevent overlap with fixed marquee -->
+    <!-- Bottom Padding for Fixed Footer -->
     <style>
         body {
-            padding-bottom: 60px; /* Adjust based on marquee height */
+            padding-bottom: 60px;
         }
         
-        @media (min-width: 640px) {
+        @media screen and (min-width: 768px) {
             body {
-                padding-bottom: 80px;
+                padding-bottom: 70px;
             }
         }
         
-        /* Enhanced marquee animation for smoother effect */
-        @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-        
-        .animate-marquee {
-            animation: marquee 25s linear infinite;
-        }
-        
-        /* Pause animation on hover for better readability */
+        /* Pause marquee on hover */
         .marquee-container:hover .animate-marquee {
             animation-play-state: paused;
         }
-        
-        /* Glowing text effect for developer credit */
-        .developer-glow {
-            text-shadow: 
-                0 0 5px rgba(255,255,255,0.8),
-                0 0 10px rgba(255,255,255,0.6),
-                0 0 15px rgba(255,255,255,0.4),
-                0 0 20px rgba(102, 126, 234, 0.8),
-                0 0 35px rgba(102, 126, 234, 0.6),
-                0 0 40px rgba(102, 126, 234, 0.4);
-        }
-        
-        /* Mobile responsiveness for marquee - ENHANCED */
-        @media (max-width: 640px) {
-            .animate-marquee {
-                animation-duration: 20s;
-            }
-            
-            body {
-                padding-bottom: 80px;
-            }
-            
-            /* Smaller marquee text on mobile */
-            .marquee-container .animate-marquee {
-                font-size: 14px;
-            }
-            
-            /* Reduce marquee height on mobile */
-            .fixed.bottom-0 {
-                padding: 8px 0;
-            }
-            
-            /* Hide some decorative elements on very small screens */
-            @media (max-width: 480px) {
-                .absolute.top-1, .absolute.top-2 {
-                    display: none;
-                }
-                
-                body {
-                    padding-bottom: 70px;
-                }
-            }
-        }
-        
-        /* Tablet responsiveness */
-        @media (min-width: 641px) and (max-width: 1024px) {
-            .animate-marquee {
-                animation-duration: 22s;
-            }
-        }
-        
-        /* Desktop enhancement */
-        @media (min-width: 1025px) {
-            .animate-marquee {
-                animation-duration: 30s;
-            }
-            
-            body {
-                padding-bottom: 90px;
-            }
-        }
     </style>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96a7c0ae732f3e57',t:'MTc1NDQxMjE5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96a852b037185522',t:'MTc1NDQxODE3OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
