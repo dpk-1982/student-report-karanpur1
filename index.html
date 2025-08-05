@@ -17,9 +17,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@400;500;600;700&family=Comfortaa:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Optimized Font System */
+        /* Ultra-Optimized Performance System */
         * {
             box-sizing: border-box;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            -webkit-perspective: 1000;
+            perspective: 1000;
         }
         
         body {
@@ -28,6 +32,19 @@
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            overflow-x: hidden;
+        }
+        
+        /* Hardware acceleration for smooth performance */
+        .hardware-accelerated {
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            -webkit-perspective: 1000;
+            perspective: 1000;
         }
         
         .font-primary {
@@ -66,73 +83,66 @@
             text-shadow: 0 0 10px rgba(255,255,255,0.6), 1px 1px 2px rgba(0,0,0,0.3);
         }
         
-        /* Performance-Optimized Animations */
+        /* Ultra-Smooth Performance Animations */
         @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { 
-                transform: translateY(0) translateZ(0); 
+            0%, 100% { 
+                transform: translate3d(0, 0, 0); 
             }
-            40% { 
-                transform: translateY(-15px) translateZ(0); 
-            }
-            60% { 
-                transform: translateY(-8px) translateZ(0); 
+            50% { 
+                transform: translate3d(0, -8px, 0); 
             }
         }
         
         @keyframes wiggle {
             0%, 100% { 
-                transform: rotate(0deg) translateZ(0); 
+                transform: rotate3d(0, 0, 1, 0deg); 
             }
-            25% { 
-                transform: rotate(-3deg) translateZ(0); 
-            }
-            75% { 
-                transform: rotate(3deg) translateZ(0); 
+            50% { 
+                transform: rotate3d(0, 0, 1, 2deg); 
             }
         }
         
         @keyframes rainbow {
             0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
         }
         
         @keyframes float {
             0%, 100% { 
-                transform: translateY(0px) translateZ(0); 
+                transform: translate3d(0, 0, 0); 
             }
             50% { 
-                transform: translateY(-10px) translateZ(0); 
+                transform: translate3d(0, -5px, 0); 
             }
         }
         
         @keyframes pulse {
             0%, 100% { 
-                transform: scale(1) translateZ(0); 
+                transform: scale3d(1, 1, 1); 
             }
             50% { 
-                transform: scale(1.02) translateZ(0); 
+                transform: scale3d(1.01, 1.01, 1); 
             }
         }
         
         @keyframes slideIn {
             from { 
-                transform: translateX(-50px) translateZ(0); 
+                transform: translate3d(-30px, 0, 0); 
                 opacity: 0; 
             }
             to { 
-                transform: translateX(0) translateZ(0); 
+                transform: translate3d(0, 0, 0); 
                 opacity: 1; 
             }
         }
         
         @keyframes fadeInUp {
             from { 
-                transform: translateY(20px) translateZ(0); 
+                transform: translate3d(0, 15px, 0); 
                 opacity: 0; 
             }
             to { 
-                transform: translateY(0) translateZ(0); 
+                transform: translate3d(0, 0, 0); 
                 opacity: 1; 
             }
         }
@@ -307,15 +317,43 @@
             animation: fireworks 2s ease-out infinite;
         }
         
-        /* Fun Classes */
-        .bounce { animation: bounce 2s infinite; }
-        .wiggle { animation: wiggle 2s ease-in-out infinite; }
-        .float { animation: float 3s ease-in-out infinite; }
-        .pulse { animation: pulse 2s ease-in-out infinite; }
-        .slide-in { animation: slideIn 0.8s ease-out; }
-        .fade-in-up { animation: fadeInUp 0.6s ease-out; }
-        .sparkle { animation: sparkle 1.5s ease-in-out infinite; }
-        .color-shift { animation: colorShift 4s linear infinite; }
+        /* Ultra-Smooth Animation Classes */
+        .bounce { 
+            animation: bounce 3s ease-in-out infinite; 
+            will-change: transform;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+        }
+        .wiggle { 
+            animation: wiggle 4s ease-in-out infinite; 
+            will-change: transform;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+        }
+        .float { 
+            animation: float 4s ease-in-out infinite; 
+            will-change: transform;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+        }
+        .pulse { 
+            animation: pulse 3s ease-in-out infinite; 
+            will-change: transform;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+        }
+        .slide-in { 
+            animation: slideIn 0.6s ease-out; 
+            will-change: transform, opacity;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+        }
+        .fade-in-up { 
+            animation: fadeInUp 0.5s ease-out; 
+            will-change: transform, opacity;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+        }
         
         /* Rainbow Background */
         .rainbow-bg {
@@ -416,17 +454,37 @@
         
         /* Universal Device Optimization */
         
-        /* Base responsive settings */
+        /* Base responsive settings with performance boost */
         html {
             scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-size-adjust: 100%;
         }
         
-        /* Mobile-First Design (320px and up) */
+        /* Performance optimizations for all elements */
+        img, video {
+            max-width: 100%;
+            height: auto;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+        
+        /* Smooth transitions for interactive elements */
+        button, select, input, a, .hover-scale, .hover-shadow {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+        }
+        
+        /* Ultra-Smooth Mobile Design (320px and up) */
         @media screen and (max-width: 767px) {
             body {
                 font-size: 14px;
                 line-height: 1.5;
                 overflow-x: hidden;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
             }
             
             /* Touch-optimized interactions */
@@ -435,12 +493,16 @@
                 min-width: 44px;
                 touch-action: manipulation;
                 -webkit-tap-highlight-color: transparent;
+                -webkit-user-select: none;
+                user-select: none;
             }
             
             /* Prevent zoom on form inputs */
             input, select, textarea {
                 font-size: 16px !important;
                 border-radius: 8px;
+                -webkit-appearance: none;
+                appearance: none;
             }
             
             /* Mobile spacing */
@@ -458,6 +520,7 @@
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
                 border-radius: 8px;
+                scroll-behavior: smooth;
             }
             
             .mobile-table table {
@@ -471,16 +534,31 @@
                 white-space: nowrap;
             }
             
-            /* Reduce animation complexity on mobile */
+            /* Optimized animations for mobile */
             * {
-                animation-duration: 0.3s !important;
+                animation-duration: 0.4s !important;
                 transition-duration: 0.3s !important;
+                will-change: auto;
+            }
+            
+            /* Disable complex animations on mobile */
+            .report-card-bounce,
+            .report-card-wiggle,
+            .report-card-pulse,
+            .report-card-float {
+                animation: none !important;
             }
             
             /* Mobile-specific utilities */
             .mobile-hidden { display: none !important; }
             .mobile-block { display: block !important; }
             .mobile-flex { display: flex !important; }
+            
+            /* Reduce GPU usage on mobile */
+            .rainbow-bg {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+                animation: none !important;
+            }
         }
         
         /* Tablet Portrait (768px - 1023px) */
@@ -714,27 +792,68 @@
             background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
         }
         
-        /* Marquee optimization */
+        /* Ultra-Smooth Marquee optimization */
         @keyframes marquee {
             0% { transform: translate3d(100%, 0, 0); }
             100% { transform: translate3d(-100%, 0, 0); }
         }
         
         .animate-marquee {
-            animation: marquee 25s linear infinite;
+            animation: marquee 30s linear infinite;
             will-change: transform;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
         
         .marquee-container {
             width: 100%;
             overflow: hidden;
             white-space: nowrap;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
         }
         
-        /* Responsive marquee */
+        /* Responsive marquee with performance optimization */
         @media screen and (max-width: 767px) {
             .animate-marquee {
-                animation-duration: 20s;
+                animation-duration: 25s;
+            }
+        }
+        
+        /* Reduce motion for users who prefer it */
+        @media (prefers-reduced-motion: reduce) {
+            .animate-marquee {
+                animation-duration: 60s;
+            }
+            
+            .bounce, .wiggle, .float, .pulse {
+                animation: none;
+            }
+        }
+        
+        /* Low-power mode for older devices */
+        @media screen and (max-width: 480px) {
+            .rainbow-bg {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+                animation: none !important;
+            }
+            
+            .celebration, .gold-glow, .trophy-bounce {
+                animation: none !important;
+            }
+            
+            .confetti-container {
+                display: none !important;
+            }
+        }
+        
+        /* Battery optimization */
+        @media (prefers-reduced-motion: reduce), (max-width: 480px) {
+            * {
+                animation-duration: 0s !important;
+                transition-duration: 0.2s !important;
             }
         }
     </style>
@@ -742,9 +861,9 @@
 <body class="min-h-screen rainbow-bg">
     
     <!-- Welcome Marquee -->
-    <div class="overflow-hidden border-b-4 border-yellow-400 shadow-lg" style="background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #533483); background-size: 400% 400%; animation: rainbow 4s ease infinite; padding: 12px 0;">
-        <div class="marquee-container">
-            <div class="marquee-text text-lg sm:text-2xl font-bold whitespace-nowrap animate-marquee text-yellow-300" style="text-shadow: 3px 3px 6px rgba(0,0,0,0.9), 0 0 30px rgba(255,215,0,0.8), 0 0 40px rgba(255,215,0,0.6); letter-spacing: 2px;">
+    <div class="overflow-hidden border-b-4 border-yellow-400 shadow-lg hardware-accelerated" style="background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #533483); background-size: 400% 400%; animation: rainbow 6s ease infinite; padding: 12px 0;">
+        <div class="marquee-container hardware-accelerated">
+            <div class="marquee-text text-lg sm:text-2xl font-bold whitespace-nowrap animate-marquee text-yellow-300 hardware-accelerated" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8), 0 0 20px rgba(255,215,0,0.6); letter-spacing: 2px;">
                 🚀👨‍💻 This site is developed by Mr. Deepak Kumar Vaishy 👨‍💻🚀 
                 💻✨ This site is developed by Mr. Deepak Kumar Vaishy ✨💻 
                 🎓🌟 This site is developed by Mr. Deepak Kumar Vaishy 🌟🎓 
@@ -798,10 +917,10 @@
         </div>
     </header>
 
-    <!-- Optimized Student Section -->
-    <main id="studentSection" class="container mx-auto px-4 max-w-6xl mb-20">
+    <!-- Ultra-Optimized Student Section -->
+    <main id="studentSection" class="container mx-auto px-4 max-w-6xl mb-20 hardware-accelerated">
         <!-- Student Selection Container -->
-        <div class="relative overflow-hidden rainbow-bg rounded-2xl p-1 shadow-lg hover-scale transition-all duration-500">
+        <div class="relative overflow-hidden rainbow-bg rounded-2xl p-1 shadow-lg hover-scale transition-all duration-300 hardware-accelerated">
             
             <!-- Decorative Elements -->
             <div class="absolute top-4 left-4 w-8 h-8 bg-yellow-300 rounded-full opacity-60 bounce mobile-hidden"></div>
@@ -973,10 +1092,10 @@
         </div>
     </main>
 
-    <!-- Optimized Admin Section -->
-    <section id="adminSection" class="hidden container mx-auto px-4 max-w-6xl mb-20">
+    <!-- Ultra-Optimized Admin Section -->
+    <section id="adminSection" class="hidden container mx-auto px-4 max-w-6xl mb-20 hardware-accelerated">
         <!-- Admin Login -->
-        <div id="adminLogin" class="cute-card p-6 mx-auto max-w-md">
+        <div id="adminLogin" class="cute-card p-6 mx-auto max-w-md hardware-accelerated">
             <h2 class="text-xl md:text-2xl font-heading text-center text-white mb-6">
                 🔐✨ Admin Access ✨🔐
             </h2>
@@ -2339,19 +2458,19 @@
         });
     </script>
 
-    <!-- Optimized Bottom Marquee -->
-    <footer class="fixed bottom-0 left-0 right-0 z-50 overflow-hidden bg-gradient-to-r from-slate-800 to-slate-700 border-t-2 border-yellow-400 shadow-lg">
+    <!-- Ultra-Optimized Bottom Marquee -->
+    <footer class="fixed bottom-0 left-0 right-0 z-50 overflow-hidden bg-gradient-to-r from-slate-800 to-slate-700 border-t-2 border-yellow-400 shadow-lg hardware-accelerated">
         
         <!-- Background Elements -->
         <div class="absolute inset-0 overflow-hidden mobile-hidden">
-            <div class="absolute top-1 left-8 w-4 h-4 bg-yellow-400 rounded-full opacity-40 bounce"></div>
-            <div class="absolute top-2 right-12 w-3 h-3 bg-orange-400 rounded-full opacity-30 pulse"></div>
+            <div class="absolute top-1 left-8 w-4 h-4 bg-yellow-400 rounded-full opacity-40 bounce hardware-accelerated"></div>
+            <div class="absolute top-2 right-12 w-3 h-3 bg-orange-400 rounded-full opacity-30 pulse hardware-accelerated"></div>
         </div>
         
         <!-- Marquee Content -->
-        <div class="py-3 overflow-hidden">
-            <div class="marquee-container">
-                <div class="animate-marquee text-yellow-300 font-display">
+        <div class="py-3 overflow-hidden hardware-accelerated">
+            <div class="marquee-container hardware-accelerated">
+                <div class="animate-marquee text-yellow-300 font-display hardware-accelerated">
                     
                     <!-- Welcome Message -->
                     <span class="text-lg md:text-xl mr-8">
@@ -2400,5 +2519,5 @@
             animation-play-state: paused;
         }
     </style>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96a852b037185522',t:'MTc1NDQxODE3OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96a85f1264a0a09b',t:'MTc1NDQxODY4Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
