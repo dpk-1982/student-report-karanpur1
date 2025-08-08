@@ -3,78 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Report Card System</title>
+    <title>🌈 Primary School Karanpur🌈</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-    
-    <!-- Beautiful Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:wght@200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Comfortaa:wght@300;400;500;600;700&family=Quicksand:wght@300;400;500;600;700&family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
     <style>
-        /* Beautiful Font Families */
-        body {
-            font-family: 'Nunito', 'Poppins', sans-serif;
-            font-weight: 400;
-        }
-        
-        .font-primary {
-            font-family: 'Fredoka', 'Nunito', cursive;
-            font-weight: 500;
-        }
-        
-        .font-heading {
-            font-family: 'Comfortaa', 'Poppins', cursive;
-            font-weight: 500;
-            letter-spacing: 2px;
-        }
-        
-        .font-elegant {
-            font-family: 'Raleway', 'Poppins', sans-serif;
-            font-weight: 500;
-            letter-spacing: 1px;
-        }
-        
-        .font-playful {
-            font-family: 'Quicksand', 'Nunito', sans-serif;
-            font-weight: 500;
-        }
-        
-        .font-display {
-            font-family: 'Fredoka', 'Comfortaa', cursive;
-            font-weight: 600;
-            letter-spacing: 3px;
-        }
-        
-        /* Enhanced Text Shadows for Better Readability */
-        .text-shadow-soft {
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .text-shadow-bold {
-            text-shadow: 3px 3px 10px rgba(0,0,0,0.3);
-        }
-        
-        .text-shadow-glow {
-            text-shadow: 0 0 20px rgba(255,255,255,0.8), 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        /* Fun Animations for Kids */
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
             40% { transform: translateY(-30px); }
             60% { transform: translateY(-15px); }
         }
         
-        @keyframes wiggle {
-            0%, 7% { transform: rotateZ(0); }
-            15% { transform: rotateZ(-10deg); }
-            20% { transform: rotateZ(5deg); }
-            25% { transform: rotateZ(-5deg); }
-            30% { transform: rotateZ(4deg); }
-            35% { transform: rotateZ(-2deg); }
-            40%, 100% { transform: rotateZ(0); }
+        @keyframes sparkle {
+            0% { transform: scale(0) rotate(0deg); opacity: 0; }
+            50% { transform: scale(1) rotate(180deg); opacity: 1; }
+            100% { transform: scale(0) rotate(360deg); opacity: 0; }
         }
         
         @keyframes rainbow {
@@ -88,762 +31,356 @@
             50% { transform: translateY(-20px); }
         }
         
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 150, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(255, 0, 150, 0.8), 0 0 60px rgba(0, 255, 255, 0.5); }
         }
         
-        @keyframes slideIn {
-            from { transform: translateX(-100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        .celebration {
+            animation: bounce 2s infinite, glow 3s infinite;
         }
         
-        @keyframes fadeInUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        
-        @keyframes sparkle {
-            0%, 100% { opacity: 0; transform: scale(0); }
-            50% { opacity: 1; transform: scale(1); }
-        }
-        
-        @keyframes colorShift {
-            0% { filter: hue-rotate(0deg); }
-            25% { filter: hue-rotate(90deg); }
-            50% { filter: hue-rotate(180deg); }
-            75% { filter: hue-rotate(270deg); }
-            100% { filter: hue-rotate(360deg); }
-        }
-        
-        /* Special Celebration Animations for High Achievers (85%+) */
-        @keyframes celebration {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            25% { transform: scale(1.1) rotate(-5deg); }
-            50% { transform: scale(1.2) rotate(5deg); }
-            75% { transform: scale(1.1) rotate(-3deg); }
-        }
-        
-        @keyframes confetti {
-            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-        }
-        
-        @keyframes starBurst {
-            0% { transform: scale(0) rotate(0deg); opacity: 1; }
-            50% { transform: scale(1.5) rotate(180deg); opacity: 0.8; }
-            100% { transform: scale(0) rotate(360deg); opacity: 0; }
-        }
-        
-        @keyframes goldGlow {
-            0%, 100% { box-shadow: 0 0 20px #ffd700, 0 0 40px #ffd700, 0 0 60px #ffd700; }
-            50% { box-shadow: 0 0 40px #ffd700, 0 0 80px #ffd700, 0 0 120px #ffd700; }
-        }
-        
-        @keyframes fireworks {
-            0% { transform: scale(0); opacity: 1; }
-            50% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(1.5); opacity: 0; }
-        }
-        
-        @keyframes shower {
-            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-        }
-        
-        .shower-drop {
+        .sparkle {
             position: absolute;
-            width: 8px;
-            height: 20px;
-            background: linear-gradient(to bottom, #4facfe 0%, #00f2fe 100%);
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            animation: shower 2s linear infinite;
-            opacity: 0.8;
-        }
-        
-        @keyframes trophy-bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0) scale(1); }
-            40% { transform: translateY(-30px) scale(1.1); }
-            60% { transform: translateY(-15px) scale(1.05); }
-        }
-        
-        /* High Achiever Classes */
-        .celebration { animation: celebration 2s ease-in-out infinite; }
-        .gold-glow { animation: goldGlow 2s ease-in-out infinite; }
-        .trophy-bounce { animation: trophy-bounce 2s ease-in-out infinite; }
-        
-        /* Confetti Container */
-        .confetti-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1000;
-            overflow: hidden;
-        }
-        
-        .confetti-piece {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            animation: confetti 3s linear infinite;
-        }
-        
-        .star-burst {
-            position: absolute;
-            font-size: 30px;
-            animation: starBurst 2s ease-out infinite;
-        }
-        
-        .firework {
-            position: absolute;
-            width: 20px;
-            height: 20px;
+            width: 25px;
+            height: 25px;
+            background: radial-gradient(circle, #ffd700, #ff6b6b, #4ecdc4, #45b7d1);
             border-radius: 50%;
-            animation: fireworks 2s ease-out infinite;
+            animation: sparkle 1.5s infinite;
         }
         
-        /* Fun Classes */
-        .bounce { animation: bounce 2s infinite; }
-        .wiggle { animation: wiggle 2s ease-in-out infinite; }
-        .float { animation: float 3s ease-in-out infinite; }
-        .pulse { animation: pulse 2s ease-in-out infinite; }
-        .slide-in { animation: slideIn 0.8s ease-out; }
-        .fade-in-up { animation: fadeInUp 0.6s ease-out; }
-        .sparkle { animation: sparkle 1.5s ease-in-out infinite; }
-        .color-shift { animation: colorShift 4s linear infinite; }
-        
-        /* Rainbow Background */
         .rainbow-bg {
-            background: linear-gradient(-45deg, #ff6b35, #f7931e, #ffd23f, #06d6a0, #118ab2, #073b4c, #e63946, #f77f00, #fcbf49);
+            background: linear-gradient(-45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff);
             background-size: 400% 400%;
             animation: rainbow 4s ease infinite;
         }
         
-        /* Magical Gradient Buttons */
-        .magic-button {
-            background: linear-gradient(45deg, #ff6b35, #f7931e, #06d6a0, #118ab2, #e63946, #f77f00);
-            background-size: 300% 300%;
+        .magical-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .magical-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+        }
+        
+        .neon-button {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            background-size: 400% 400%;
             animation: rainbow 3s ease infinite;
             border: none;
             color: white;
             font-weight: bold;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
         }
         
-        .magic-button:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+        .neon-button:hover {
+            animation-duration: 1s;
+            box-shadow: 0 0 30px rgba(255, 107, 107, 0.6);
+            transform: scale(1.05);
         }
         
-        /* Cute Cards */
-        .cute-card {
-            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 50%, #06d6a0 100%);
-            border-radius: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-            border: 3px solid #fff;
+        .floating-emoji {
+            animation: float 3s ease-in-out infinite;
         }
         
-        .cute-card:hover {
-            transform: translateY(0px) rotate(0deg);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        .slide-in {
+            animation: slideIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
-        /* Fun Messages */
-        .success-message {
-            position: static;
-            top: 50px;
-            right: 20px;
-            background: linear-gradient(45deg, #56ab2f, #a8e6cf);
-            color: white;
-            padding: 15px 20px;
-            border-radius: 20px;
-            box-shadow: 0 8px 25px rgba(0,0,3,0.2);
-            z-index: 1000;
-            animation: slideIn 0.5s ease-out, pulse 2s ease-in-out infinite;
-            font-weight: bold;
-            border: 3px solid #fff;
+        @keyframes slideIn {
+            from { transform: translateX(-100%) rotate(-10deg); opacity: 0; }
+            to { transform: translateX(0) rotate(0deg); opacity: 1; }
         }
         
-        .error-message {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(45deg, #ff416c, #ff4b2b);
-            color: white;
-            padding: 15px 20px;
-            border-radius: 20px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-            z-index: 1000;
-            animation: slideIn 0.5s ease-out, wiggle 1s ease-in-out;
-            font-weight: bold;
-            border: 3px solid #fff;
+        .slide-in-left {
+            animation: slideInLeft 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-
-
         
-        /* Sparkle Effects */
-        .sparkle-container {
+        .slide-in-right {
+            animation: slideInRight 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        @keyframes slideInLeft {
+            from { transform: translateX(-200%) rotate(-15deg); opacity: 0; }
+            to { transform: translateX(0) rotate(0deg); opacity: 1; }
+        }
+        
+        @keyframes slideInRight {
+            from { transform: translateX(200%) rotate(15deg); opacity: 0; }
+            to { transform: translateX(0) rotate(0deg); opacity: 1; }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: rainbow 3s ease infinite;
+            background-size: 400% 400%;
+        }
+        
+        .super-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            border: 3px solid transparent;
+            background-clip: padding-box;
             position: relative;
-            overflow: hidden;
         }
         
-        .sparkle-container::before,
-        .sparkle-container::after {
-            content: '✨';
+        .super-card::before {
+            content: '';
             position: absolute;
-            font-size: 15px;
-            animation: sparkle 4s ease-in-out infinite;
-        }
-        
-        .sparkle-container::before {
-            top: 10%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-        
-        .sparkle-container::after {
-            top: 70%;
-            right: 10%;
-            animation-delay: 1s;
-        }
-        
-        /* Mobile-First Responsive Design */
-        @media (max-width: 640px) {
-            body {
-                font-size: 14px;
-            }
-            
-            .container {
-                padding-left: 8px;
-                padding-right: 8px;
-            }
-            
-            /* Mobile Navigation */
-            .mobile-nav {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                padding: 10px;
-                z-index: 1000;
-                border-top: 3px solid #fff;
-                box-shadow: 0 -5px 20px rgba(0,0,0,0.3);
-            }
-            
-            .mobile-nav button {
-                width: 100%;
-                margin: 5px 0;
-                padding: 12px;
-                font-size: 14px;
-                border-radius: 15px;
-            }
-            
-            /* Mobile Cards */
-            .mobile-card {
-                margin: 8px;
-                padding: 16px;
-                border-radius: 20px;
-                box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            }
-            
-            /* Mobile Table */
-            .mobile-table {
-                display: block;
-                width: 100%;
-                overflow-x: auto;
-                white-space: nowrap;
-                -webkit-overflow-scrolling: touch;
-            }
-            
-            .mobile-table table {
-                min-width: 100%;
-                font-size: 12px;
-            }
-            
-            .mobile-table th,
-            .mobile-table td {
-                padding: 8px 4px;
-                text-align: center;
-                min-width: 80px;
-            }
-            
-            /* Mobile Form */
-            .mobile-form input,
-            .mobile-form select {
-                font-size: 16px; /* Prevents zoom on iOS */
-                padding: 12px;
-                border-radius: 12px;
-                width: 100%;
-                margin-bottom: 10px;
-            }
-            
-            /* Mobile Grid */
-            .mobile-grid {
-                display: grid;
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-            
-            @media (min-width: 480px) {
-                .mobile-grid {
-                    grid-template-columns: 1fr 1fr;
-                }
-            }
-            
-            /* Touch-friendly buttons */
-            .touch-button {
-                min-height: 44px;
-                min-width: 44px;
-                padding: 12px 16px;
-                font-size: 14px;
-                border-radius: 12px;
-                touch-action: manipulation;
-            }
-            
-            /* Mobile animations - reduced for performance */
-            .mobile-animate {
-                animation-duration: 1s;
-                animation-iteration-count: 1;
-            }
-            
-            /* Simplified celebrations on mobile */
-            .confetti-container {
-                opacity: 0.7;
-            }
-            
-            .confetti-piece,
-            .star-burst,
-            .firework,
-            .shower-drop {
-                animation-duration: 1.5s;
-                opacity: 0.6;
-            }
-            
-            /* Mobile-specific spacing */
-            .mobile-spacing {
-                margin: 8px 0;
-                padding: 8px;
-            }
-            
-            /* Mobile text sizes */
-            .mobile-text-sm { font-size: 12px; }
-            .mobile-text-base { font-size: 14px; }
-            .mobile-text-lg { font-size: 16px; }
-            .mobile-text-xl { font-size: 18px; }
-            .mobile-text-2xl { font-size: 20px; }
-            .mobile-text-3xl { font-size: 24px; }
-        }
-        
-        /* Tablet styles */
-        @media (min-width: 641px) and (max-width: 1024px) {
-            .tablet-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 16px;
-            }
-            
-            .tablet-text {
-                font-size: 16px;
-            }
-        }
-        
-        /* Fun Table Styles - Enhanced for Mobile */
-        .fun-table {
-            border-collapse: separate;
-            border-spacing: 0;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            width: 100%;
-            font-size: 12px;
-        }
-        
-        @media (min-width: 640px) {
-            .fun-table {
-                border-radius: 20px;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-                font-size: 14px;
-            }
-        }
-        
-        .fun-table th {
-            background: linear-gradient(45deg, #ff6b35, #f7931e, #06d6a0);
-            color: white;
-            font-size: 11px;
-            padding: 8px 4px;
-            font-weight: bold;
-            text-align: center;
-        }
-        
-        @media (min-width: 480px) {
-            .fun-table th {
-                font-size: 13px;
-                padding: 10px 6px;
-            }
-        }
-        
-        @media (min-width: 640px) {
-            .fun-table th {
-                font-size: 16px;
-                padding: 16px 12px;
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .fun-table th {
-                font-size: 20px;
-                padding: 24px;
-            }
-        }
-        
-        .fun-table td {
-            padding: 6px 4px;
-            transition: all 0.3s ease;
-            border-bottom: 1px solid #f0f0f0;
-            font-size: 11px;
-            text-align: center;
-        }
-        
-        @media (min-width: 480px) {
-            .fun-table td {
-                padding: 8px 6px;
-                font-size: 12px;
-                border-bottom: 2px solid #f0f0f0;
-            }
-        }
-        
-        @media (min-width: 640px) {
-            .fun-table td {
-                padding: 12px 8px;
-                font-size: 14px;
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .fun-table td {
-                padding: 20px;
-                font-size: 18px;
-            }
-        }
-        
-        .fun-table tr:hover td {
-            background: linear-gradient(45deg, #ffeaa7, #fab1a0);
-        }
-        
-        @media (min-width: 640px) {
-            .fun-table tr:hover td {
-                transform: scale(1.02);
-            }
-        }
-        
-        /* Marquee Animation */
-        @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-        
-        .animate-marquee {
-            animation: marquee 20s linear infinite;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3);
+            border-radius: inherit;
+            z-index: -1;
+            animation: rainbow 3s ease infinite;
+            background-size: 400% 400%;
         }
         
         .marquee-container {
             width: 100%;
             overflow: hidden;
         }
-
-        /* Theme Colors */
-        .theme-pink { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); }
-        .theme-blue { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
-        .theme-green { background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%); }
-        .theme-orange { background: linear-gradient(135deg, #fad0c4 0%, #ffd1ff 100%); }
-        .theme-purple { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        
+        .marquee-content {
+            display: flex;
+            animation: marquee 30s linear infinite;
+            will-change: transform;
+            white-space: nowrap;
+        }
+        
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        
+        .marquee-content:hover {
+            animation-play-state: paused;
+        }
     </style>
 </head>
-<body class="min-h-screen rainbow-bg">
-  
-  
-    
-        
+<body class="min-h-screen bg-gradient-to-br from-pink-400 via-purple-700 via-indigo-800 to-blue-900">
+    <!-- Floating Background Elements -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="floating-emoji absolute top-10 left-10 text-4xl">🌟</div>
+        <div class="floating-emoji absolute top-20 right-20 text-4xl" style="animation-delay: 1s;">⭐</div>
+        <div class="floating-emoji absolute bottom-20 left-20 text-4xl" style="animation-delay: 2s;">🎨</div>
+        <div class="floating-emoji absolute bottom-10 right-10 text-4xl" style="animation-delay: 0.5s;">🚀</div>
+        <div class="floating-emoji absolute top-1/2 left-1/4 text-3xl" style="animation-delay: 1.5s;">✨</div>
+        <div class="floating-emoji absolute top-1/3 right-1/3 text-3xl" style="animation-delay: 2.5s;">🎯</div>
+    </div>
+
     <!-- Welcome Marquee -->
-    <div class="bg-gradient-to-r from-orange-500 via-yellow-500 to-green-500 text-white py-3 sm:py-4 overflow-hidden border-b-4 border-white shadow-lg">
+    <div class="bg-gradient-to-r from-emerald-400 via-cyan-600 to-blue-600 py-4 shadow-xl border-b-4 border-yellow-400 overflow-hidden">
         <div class="marquee-container">
-            <div class="marquee-text text-lg sm:text-3xl font-bold whitespace-nowrap animate-marquee">
-                🌟✨ Welcome to Primary School Karanpur , The place where students Learn with JOY !! ✨🌟 
-                📚💫 Welcome to Primary School Karanpur , The place where students Learn with JOY !! 💫📚 
-                🎓🌈 Welcome to Primary School Karanpur , The place where students Learn with JOY !! 🌈🎓
+            <div class="marquee-content text-white text-xl md:text-2xl font-bold flex items-center space-x-8 whitespace-nowrap">
+                <span class="text-3xl animate-bounce">🏫</span>
+                <span class="drop-shadow-lg">Great Welcome to Primary School Karanpur</span>
+                <span class="text-3xl animate-pulse">🌟</span>
+                <span class="drop-shadow-lg">Block-: Behjam</span>
+                <span class="text-3xl animate-bounce">🏛️</span>
+                <span class="drop-shadow-lg">District :- Lakhimpur Kheri</span>
+                <span class="text-3xl animate-pulse">🎓</span>
+                <span class="drop-shadow-lg">Excellence in Education</span>
+                <span class="text-3xl animate-bounce">✨</span>
+                <span class="drop-shadow-lg">Nurturing Young Minds</span>
+                <span class="text-3xl animate-pulse">🌈</span>
+                <span class="text-3xl animate-bounce">🏫</span>
+                <span class="drop-shadow-lg">Great Welcome to Primary School Karanpur</span>
+                <span class="text-3xl animate-pulse">🌟</span>
+                <span class="drop-shadow-lg">Block-: Behjam</span>
+                <span class="text-3xl animate-bounce">🏛️</span>
+                <span class="drop-shadow-lg">District :- Lakhimpur Kheri</span>
+                <span class="text-3xl animate-pulse">🎓</span>
+                <span class="drop-shadow-lg">Excellence in Education</span>
+                <span class="text-3xl animate-bounce">✨</span>
+                <span class="drop-shadow-lg">Nurturing Young Minds</span>
+                <span class="text-3xl animate-pulse">🌈</span>
             </div>
         </div>
     </div>
 
-    <!-- Celebration Effects Container for High Achievers -->
-    <div id="celebrationContainer" class="confetti-container hidden"></div>
-
-    <!-- Header -->
-    <div class="text-center py-4 sm:py-8 px-2 sm:px-4 sparkle-container">
-        <h1 class="text-2xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-5xl font-display bounce mb-2 sm:mb-4 mobile-text-2xl" style="color: #ffffff; text-shadow: 4px 4px 0px #000000, 8px 8px 0px #333333, 2px 2px 10px rgba(0,0,0,0.8), 0 0 20px rgba(255,255,255,0.5); animation: bounce 1.5s ease-in-out infinite; transform: scale(1.05); font-weight: 900; letter-spacing: 3px; -webkit-text-stroke: 2px #000000;">
-            🌟🎉🏫✨ PRIMARY SCHOOL KARANPUR ✨🏫🎉🌟
-        </h1>
-        <p class="text-sm sm:text-lg md:text-2xl lg:text-3xl font-elegant mb-4 sm:mb-6 pulse mobile-text-base text-shadow-soft" style="background: linear-gradient(135deg, #ff6b35, #06d6a0, #118ab2, #01F8E7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-            🌟📍 Block : Behjam, Lakhimpur-Kheri 📍🌟
-        </p>
-        
-        <!-- Desktop Navigation -->
-        <div class="hidden sm:flex flex-col sm:flex-row justify-center gap-3 sm:gap-6">
-            <button id="studentBtn" class="magic-button py-3 sm:py-4 px-6 sm:px-8 rounded-full text-lg sm:text-xl font-primary wiggle text-shadow-bold" style="letter-spacing: 2px;">
-                ✨📊 VIEW REPORT CARD 📊✨
-            </button>
-            <button id="adminBtn" class="magic-button py-3 sm:py-4 px-6 sm:px-8 rounded-full text-lg sm:text-xl font-primary float text-shadow-bold" style="letter-spacing: 2px;">
-                🚀👨‍💼 ADMIN PANEL 👨‍💼🚀
-            </button>
-        </div>
-        
-        <!-- Mobile Navigation -->
-        <div class="sm:hidden mobile-nav">
-            <button id="studentBtnMobile" class="magic-button touch-button mobile-text-base font-primary wiggle w-full mb-2 text-shadow-bold">
-                ✨📊 VIEW REPORT CARD 📊✨
-            </button>
-            <button id="adminBtnMobile" class="magic-button touch-button mobile-text-base font-primary float w-full text-shadow-bold">
-                🚀👨‍💼 ADMIN PANEL 👨‍💼🚀
-            </button>
-        </div>
-    </div>
-  
-  
-  
-  
-  
-  
-  
-  
-
-    <!-- Student Section -->
-    <div id="studentSection" class="container mx-auto px-1 sm:px-2 md:px-4 max-w-7xl mb-20 sm:mb-0">
-        <div class="mobile-card p-3 sm:p-4 md:p-8 slide-in sparkle-container" style="background: linear-gradient(135deg, #ff6b35 0%, #f7931e 60%, #06d6a0 100%); border-radius: 20px sm:border-radius: 20px; box-shadow: 0 16px 30px rgba(0,0,8,0.3), inset 0 0 0 3px #ffffff, inset 0 0 0 6px rgba(255,255,255,0.2); border: 10px sm:border-8px solid #ffffff; transition: all 0.3s ease; backdrop-filter: blur(10px);">
-            <h2 class="text-base sm:text-xl md:text-2xl font-heading mb-3 sm:mb-4 md:mb-6 text-center  text-black drop-shadow-lg mobile-text-lg text-shadow-glow" style="letter-spacing: 2px; border: 2px sm:border-4px solid rgba(255,255,255,0.8); background: rgba(255,255,255,0.2); padding: 8px sm:padding-12px md:padding-16px; border-radius: 12px sm:border-radius-20px; backdrop-filter: blur(5px);">
-                ✨🌟 SELECT STUDENT DETAILS 🌟✨
-            </h2>
-            
-            <div class="mobile-grid md:grid-cols-2 gap-3 sm:gap-4 md:gap-6 mb-3 sm:mb-4 md:mb-6">
-                <div class="mobile-spacing">
-                    <label class="block text-sm sm:text-base md:text-lg lg:text-xl font-playful mb-2 text-white drop-shadow-lg mobile-text-base text-shadow-glow" style="letter-spacing: 1px; background: rgba(255,255,255,0.2); padding: 6px 12px sm:padding-8px-16px; border-radius: 50px sm:border-radius-15px; border: 2px sm:border-3px solid rgba(255,255,255,0.6); backdrop-filter: blur(5px);">🌟📚 CLASS 📚🌟</label>
-                    <select id="classSelect" class="mobile-form w-full p-3 sm:p-4 text-sm sm:text-base md:text-lg font-primary focus:outline-none transition-all duration-300 touch-button" style="border: 3px sm:border-6px solid #ffffff; border-radius: 12px sm:border-radius-30px; box-shadow: 0 6px 20px rgba(0,0,0,0.2), inset 0 0 0 2px rgba(255,255,255,0.5); background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); backdrop-filter: blur(5px);">
-                        <option value="">🎯 Select Class</option>
-                        <option value="1">🌟 Class 1</option>
-                        <option value="2">🌟 Class 2</option>
-                        <option value="3">🌟 Class 3</option>
-                        <option value="4">🌟 Class 4</option>
-                        <option value="5">🌟 Class 5</option>
-                    </select>
+    <!-- Navigation -->
+    <nav class="bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 shadow-2xl relative z-10 border-b-4 border-yellow-300">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col lg:flex-row justify-between items-center py-8 space-y-4 lg:space-y-0">
+                <div class="text-center lg:text-left">
+                    <h1 class="text-5xl lg:text-6xl font-extrabold text-white drop-shadow-2xl mb-2 animate-pulse">
+                        Primary School Karanpur
+                    </h1>
+                  <p class="text-2xl text-red-200 font-semibold drop-shadow-lg">
+                                              🎓 Block :- Behjam,    District :- Lakhimpur-Kheri 🌟
+                    </p>
+<!--                     <p class="text-xl text-yellow-200 font-semibold drop-shadow-lg">
+                        🎓 Where Learning Meets Magic! 🌟
+                    </p> -->
                 </div>
-                <div class="mobile-spacing">
-                    <label class="block text-sm sm:text-base md:text-lg lg:text-xl font-playful mb-2 text-white drop-shadow-lg mobile-text-base text-shadow-glow" style="letter-spacing: 1px; background: rgba(255,255,255,0.2); padding: 6px 12px sm:padding-8px-16px; border-radius: 10px sm:border-radius-15px; border: 2px sm:border-3px solid rgba(255,255,255,0.6); backdrop-filter: blur(5px);">✨👦 STUDENT NAME 👦✨</label>
-                    <select id="studentSelect" class="mobile-form w-full p-3 sm:p-4 text-sm sm:text-base md:text-lg font-primary focus:outline-none transition-all duration-300 touch-button" style="border: 3px sm:border-6px solid #ffffff; border-radius: 12px sm:border-radius-20px; box-shadow: 0 6px 20px rgba(0,0,0,0.2), inset 0 0 0 2px rgba(255,255,255,0.5); background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); backdrop-filter: blur(5px);" disabled>
-                        <option value="">🎯 First select a class</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <!-- Report Card Display -->
-        <div id="reportCard" class="hidden mt-4 sm:mt-8">
-            <!-- Magical Report Card Container -->
-            <div class="relative overflow-hidden" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); border-radius: 30px; padding: 8px; box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 0 8px rgba(255,255,255,0.1); animation: float 4s ease-in-out infinite;">
-                
-                <!-- Animated Background Elements -->
-                <div class="absolute inset-0 overflow-hidden rounded-3xl">
-                    <div class="absolute -top-10 -left-10 w-40 h-40 bg-gradient-to-r from-yellow-300 to-pink-300 rounded-full opacity-20 animate-pulse"></div>
-                    <div class="absolute -bottom-10 -right-10 w-60 h-60 bg-gradient-to-r from-blue-300 to-purple-300 rounded-full opacity-20" style="animation: float 6s ease-in-out infinite reverse;"></div>
-                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-r from-green-200 to-blue-200 rounded-full opacity-10" style="animation: pulse 8s ease-in-out infinite;"></div>
-                </div>
-
-                <div class="relative bg-white rounded-3xl p-4 sm:p-8 shadow-2xl backdrop-filter backdrop-blur-lg border border-white/20">
-                    
-                    <!-- Animated Header -->
-                    <div class="text-center mb-6 sm:mb-10 relative overflow-hidden" style="background: linear-gradient(135deg, #ff6b6b 0%, #feca57 25%, #48dbfb 50%, #ff9ff3 75%, #54a0ff 100%); background-size: 300% 300%; animation: rainbow 4s ease infinite; border-radius: 25px; padding: 20px 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.2), inset 0 0 0 3px rgba(255,255,255,0.3);">
-                        
-                        <!-- Floating Stars -->
-                        <div class="absolute top-2 left-4 text-2xl animate-bounce" style="animation-delay: 0s;">⭐</div>
-                        <div class="absolute top-4 right-6 text-xl animate-bounce" style="animation-delay: 0.5s;">✨</div>
-                        <div class="absolute bottom-2 left-8 text-lg animate-bounce" style="animation-delay: 1s;">🌟</div>
-                        <div class="absolute bottom-4 right-4 text-2xl animate-bounce" style="animation-delay: 1.5s;">💫</div>
-                        
-                        <h2 class="text-2xl sm:text-6xl font-display mb-3 sm:mb-6 text-white relative z-10 text-shadow-glow" style="letter-spacing: 4px; animation: bounce 2s infinite;">
-                            🏆✨ Monthly REPORT CARD ✨🏆
-                        </h2>
-                        <p class="text-lg sm:text-3xl font-elegant text-white relative z-10 text-shadow-bold" style="animation: pulse 3s ease-in-out infinite;">
-                            🌟 Academic Excellence Report 🌟
-                        </p>
-                        
-                        <!-- Animated Border -->
-                        <div class="absolute inset-0 rounded-3xl border-4 border-white/50" style="animation: pulse 2s ease-in-out infinite;"></div>
-                    </div>
-                    
-                    <!-- Student Info Cards with Staggered Animation -->
-                    <div id="studentInfo" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 mb-6 sm:mb-10">
-                        <!-- Student info will be populated here with animations -->
-                    </div>
-                    
-                    <!-- Enhanced Marks Table -->
-                    <div class="mb-6 sm:mb-10 relative">
-                        <div class="text-center mb-6">
-                            <h3 class="text-2xl sm:text-4xl font-heading bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2 text-shadow-soft" style="animation:  3s ease-in-out infinite;">
-                                📚✨ SUBJECT WISE PERFORMANCE ✨📚
-                            </h3>
-                            <div class="w-32 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full" style="animation: pulse 2s ease-in-out infinite;"></div>
-                        </div>
-                        
-                        <div class="mobile-table overflow-x-auto rounded-2xl sm:rounded-3xl shadow-xl sm:shadow-2xl" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 3px sm:padding-6px;">
-                            <div class="bg-white rounded-xl sm:rounded-2xl overflow-hidden">
-                                <table class="fun-table w-full min-w-[280px] sm:min-w-[300px]">
-                                    <thead>
-                                        <tr style="background: linear-gradient(135deg, #ff6b6b 0%, #feca57 50%, #48dbfb 100%);">
-                                            <th class="mobile-animate" style="animation: pulse 2s ease-in-out infinite; animation-delay: 0s;">📖 SUBJECT</th>
-                                            <th class="mobile-animate" style="animation: pulse 2s ease-in-out infinite; animation-delay: 0.3s;">📝 OBTAINED</th>
-                                            <th class="mobile-animate" style="animation: float 3s ease-in-out infinite; animation-delay: 0.6s;">🎯 MAXIMUM</th>
-                                            <th class="mobile-animate" style="animation: bounce 2s ease-in-out infinite; animation-delay: 0.9s;">📊 %</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="marksTable">
-                                        <!-- Marks will be populated here with animations -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Enhanced Summary Cards -->
-                    <div class="mb-6 sm:mb-10">
-                        <div class="text-center mb-6">
-                            <h3 class="text-2xl sm:text-4xl font-heading bg-gradient-to-r from-green-300 to-blue-600 bg-clip-text text-transparent mb-2 text-shadow-soft" style="animation: bounce 2s ease-in-out infinite;">
-                                📊🏆 OVERALL PERFORMANCE 🏆📊
-                            </h3>
-                            <div class="w-40 h-1 bg-gradient-to-r from-green-500 to-blue-500 mx-auto rounded-full" style="animation: pulse 2s ease-in-out infinite;"></div>
-                        </div>
-                        
-                        <div id="summary" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
-                            <!-- Summary will be populated here with enhanced animations -->
-                        </div>
-                    </div>
-                    
-                    <!-- Enhanced Inspirational Quote Section -->
-                    <div class="relative overflow-hidden rounded-3xl" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); padding: 6px; box-shadow: 0 15px 35px rgba(0,0,0,0.2);">
-                        
-                        <!-- Floating Elements -->
-                        <div class="absolute top-4 left-4 text-2xl animate-bounce" style="animation-delay: 0s;">🌟</div>
-                        <div class="absolute top-6 right-6 text-2xl animate-bounce" style="animation-delay: 0.7s;">✨</div>
-                        <div class="absolute bottom-4 left-6 text-2xl animate-bounce" style="animation-delay: 1.4s;">💫</div>
-                        <div class="absolute bottom-6 right-4 text-2xl animate-bounce" style="animation-delay: 2.1s;">⭐</div>
-                        
-                        <div id="inspirationalQuote" class="bg-white rounded-2xl p-6 sm:p-10 text-center relative z-10 shadow-inner">
-                            <!-- Quote will be populated here with enhanced styling -->
-                        </div>
-                    </div>
-                    
-                    <!-- Decorative Elements -->
-                    <div class="absolute top-4 left-4 w-8 h-8 bg-yellow-300 rounded-full opacity-60" style="animation: float 3s ease-in-out infinite;"></div>
-                    <div class="absolute top-8 right-8 w-6 h-6 bg-pink-300 rounded-full opacity-60" style="animation: float 4s ease-in-out infinite reverse;"></div>
-                    <div class="absolute bottom-4 left-8 w-10 h-10 bg-blue-300 rounded-full opacity-60" style="animation: pulse 3s ease-in-out infinite;"></div>
-                    <div class="absolute bottom-8 right-4 w-7 h-7 bg-green-300 rounded-full opacity-60" style="animation: bounce 2s ease-in-out infinite;"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Admin Section -->
-    <div id="adminSection" class="hidden container mx-auto px-1 sm:px-2 md:px-4 max-w-7xl mb-20 sm:mb-0">
-        <!-- Admin Login -->
-        <div id="adminLogin" class="mobile-card cute-card p-3 sm:p-4 md:p-8 mx-auto max-w-sm sm:max-w-md sparkle-container">
-            <h2 class="text-lg sm:text-xl md:text-3xl font-heading text-center text-white mb-3 sm:mb-4 md:mb-6 wiggle mobile-text-xl text-shadow-glow">🔐✨ Admin Access ✨🔐</h2>
-            <div class="mb-3 sm:mb-4 md:mb-6 mobile-spacing">
-                <label class="block text-sm sm:text-base md:text-lg font-bold text-white mb-2 mobile-text-base">🔑 Password</label>
-                <input type="password" id="adminPassword" class="mobile-form w-full p-3 sm:p-4 border-3 sm:border-4 border-white rounded-xl sm:rounded-2xl text-sm sm:text-base md:text-lg focus:border-yellow-300 focus:outline-none transition-all duration-300 theme-orange touch-button" placeholder="✨ Enter admin password">
-            </div>
-            <button id="loginBtn" class="w-full magic-button touch-button py-3 sm:py-4 px-4 sm:px-6 rounded-xl sm:rounded-2xl text-base sm:text-lg md:text-xl font-bold pulse mobile-text-lg">
-                🚀✨ Login ✨🚀
-            </button>
-        </div>
-
-        <!-- Admin Dashboard -->
-        <div id="adminDashboard" class="hidden">
-            <div class="cute-card p-4 sm:p-8 sparkle-container">
-                <h2 class="text-2xl sm:text-3xl font-bold text-center text-white mb-4 sm:mb-8 bounce color-shift">👨‍💼✨ Admin Dashboard ✨👨‍💼</h2>
-                
-                <!-- Student Management -->
-                <div class="bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200 p-4 sm:p-8 rounded-3xl shadow-lg mb-4 sm:mb-8 border-4 border-white sparkle-container">
-                    <h3 class="text-xl sm:text-3xl font-bold text-purple-800 mb-4 sm:mb-6 text-center pulse">🎓✨ Student & Marks Management ✨🎓</h3>
-                    
-                    <!-- Class Selection -->
-                    <div class="mb-4 sm:mb-6">
-                        <label class="block text-base sm:text-lg font-bold text-purple-700 mb-2">📚 Select Class</label>
-                        <select id="adminClassSelect" class="w-full p-3 sm:p-4 border-3 border-purple-300 rounded-xl text-base sm:text-lg font-bold focus:border-purple-500 focus:outline-none">
-                            <option value="">Choose Class</option>
-                            <option value="1">Class 1</option>
-                            <option value="2">Class 2</option>
-                            <option value="3">Class 3</option>
-                            <option value="4">Class 4</option>
-                            <option value="5">Class 5</option>
-                        </select>
-                    </div>
-
-                    <!-- Student Selection/Creation -->
-                    <div class="mb-4 sm:mb-6">
-                        <label class="block text-base sm:text-lg font-bold text-purple-700 mb-2">👦 Student</label>
-                        <div class="flex flex-col sm:flex-row gap-3 mb-3">
-                            <select id="adminStudentSelect" class="flex-1 p-3 sm:p-4 border-3 border-purple-300 rounded-xl text-base sm:text-lg font-bold focus:border-purple-500 focus:outline-none" disabled>
-                                <option value="">First select a class</option>
-                                <option value="new">➕ Add New Student</option>
-                            </select>
-                            <button id="deleteStudentBtn" class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 sm:py-4 px-4 sm:px-6 rounded-xl transform hover:scale-105 transition-all duration-300 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base" disabled>
-                                🗑️ Delete
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Student Details Form -->
-                    <div id="studentForm" class="mb-4 sm:mb-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 mb-3 sm:mb-4">
-                            <div>
-                                <label class="block text-base sm:text-lg font-bold text-purple-700 mb-2">👦 Student Name</label>
-                                <input type="text" id="studentName" placeholder="Enter student name" class="w-full p-3 sm:p-4 border-3 border-purple-300 rounded-xl text-base sm:text-lg font-bold focus:border-purple-500 focus:outline-none">
-                            </div>
-                            <div>
-                                <label class="block text-base sm:text-lg font-bold text-purple-700 mb-2">👨 Father's Name</label>
-                                <input type="text" id="fatherName" placeholder="Enter father's name" class="w-full p-3 sm:p-4 border-3 border-purple-300 rounded-xl text-base sm:text-lg font-bold focus:border-purple-500 focus:outline-none">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Subjects and Marks -->
-                    <div class="bg-white p-4 sm:p-6 rounded-2xl shadow-inner mb-4 sm:mb-6">
-                        <h4 class="text-lg sm:text-2xl font-bold text-purple-700 text-center mb-3 sm:mb-4">📖 Subjects & Marks</h4>
-                        
-                        <div id="subjectsContainer">
-                            <!-- Subject rows will be added here -->
-                        </div>
-                        
-                        <div class="text-center mt-3 sm:mt-4">
-                            <button id="addSubjectBtn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-full transform hover:scale-105 transition-all duration-300 text-sm sm:text-base">
-                                ➕ Add Subject
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Save Button -->
-                    <button id="saveStudentBtn" class="w-full magic-button py-4 sm:py-6 px-6 sm:px-8 rounded-2xl text-lg sm:text-2xl font-bold bounce">
-                        ✨🌟 Save Student & Marks 🌟✨
+                <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-6">
+                    <button onclick="showReportCard()" class="slide-in-left group relative overflow-hidden bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-500 hover:from-emerald-500 hover:via-cyan-500 hover:to-blue-600 text-white px-10 py-4 rounded-2xl font-bold text-lg shadow-2xl transform hover:scale-110 transition-all duration-300 border-2 border-white/30">
+                        <span class="relative z-10 flex items-center justify-center space-x-2">
+                            <span>📊</span>
+                            <span>View Report Cards</span>
+                            <span>🎓</span>
+                        </span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </button>
+                    <button onclick="showAdminPanel()" class="slide-in-right group relative overflow-hidden bg-gradient-to-r from-orange-400 via-red-400 to-pink-500 hover:from-orange-500 hover:via-red-500 hover:to-pink-600 text-white px-10 py-4 rounded-2xl font-bold text-lg shadow-2xl transform hover:scale-110 transition-all duration-300 border-2 border-white/30">
+                        <span class="relative z-10 flex items-center justify-center space-x-2">
+                            <span>⚙️</span>
+                            <span>Admin Panel</span>
+                            <span>👨‍💼</span>
+                        </span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Developer Credit Marquee -->
+    <div class="bg-gradient-to-r from-purple-500 via-pink-600 to-red-500 py-3 shadow-xl border-b-4 border-orange-400 overflow-hidden">
+        <div class="marquee-container">
+            <div class="marquee-content text-white text-lg md:text-xl font-bold flex items-center space-x-8 whitespace-nowrap">
+                <span class="text-2xl animate-spin">💻</span>
+                <span class="drop-shadow-lg">This site is developed by Deepak Kumar Vaishy !!</span>
+                <span class="text-2xl animate-pulse">🚀</span>
+                <span class="drop-shadow-lg">Making students to feel proud</span>
+                <span class="text-2xl animate-bounce">⭐</span>
+                <span class="drop-shadow-lg">Creating Digital Magic</span>
+                <span class="text-2xl animate-pulse">🎯</span>
+                <span class="drop-shadow-lg">Innovation & Excellence</span>
+                <span class="text-2xl animate-spin">🔥</span>
+                <span class="text-2xl animate-spin">💻</span>
+                <span class="drop-shadow-lg">This site is developed by Deepak Kumar Vaishy !!</span>
+                <span class="text-2xl animate-pulse">🚀</span>
+                <span class="drop-shadow-lg">Full Stack Developer</span>
+                <span class="text-2xl animate-bounce">⭐</span>
+                <span class="drop-shadow-lg">Creating Digital Magic</span>
+                <span class="text-2xl animate-pulse">🎯</span>
+                <span class="drop-shadow-lg">Innovation & Excellence</span>
+                <span class="text-2xl animate-spin">🔥</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report Card Section -->
+    <div id="reportCardSection" class="container mx-auto px-4 py-8">
+        <div class="super-card rounded-3xl shadow-2xl p-8 magical-card text-gray-800">
+            <div class="text-center mb-12">
+                <h2 class="text-6xl lg:text-6xl font-extrabold text-white drop-shadow-2xl mb-4 animate-bounce">
+                    🎓 Student Report Card 📚
+                </h2>
+                <div class="w-32 h-1 bg-gradient-to-r from-yellow-400 via-pink-400 to-purple-400 mx-auto rounded-full mb-4"></div>
+                <p class="text-2xl text-white/90 font-semibold drop-shadow-lg">
+                    ✨ Discover Amazing Academic Achievements! 🌟
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+                <div class="bg-white bg-opacity-20 p-6 rounded-2xl backdrop-blur-sm">
+                    <label class="block text-xl font-bold text-gray-800 mb-4 drop-shadow">🏫 Select Class:</label>
+                    <select id="classSelect" onchange="loadStudents()" class="w-full p-4 border-3 border-pink-300 rounded-2xl focus:border-yellow-400 focus:outline-none transition-all duration-300 text-lg font-semibold bg-gradient-to-r from-pink-100 to-purple-100">
+                        <option value="">🌟 Choose Your Class 🌟</option>
+                        <option value="1">Class 1 🌱 (Little Sprouts)</option>
+                        <option value="2">Class 2 🌿 (Growing Leaves)</option>
+                        <option value="3">Class 3 🌳 (Strong Trees)</option>
+                        <option value="4">Class 4 🌲 (Tall Pines)</option>
+                        <option value="5">Class 5 🎋 (Wise Bamboo)</option>
+                    </select>
+                </div>
+                
+                <div class="bg-white bg-opacity-20 p-6 rounded-2xl backdrop-blur-sm">
+                    <label class="block text-xl font-bold text-gray-800 mb-4 drop-shadow">👦 Select Student:</label>
+                    <select id="studentSelect" onchange="loadReportCard()" class="w-full p-4 border-3 border-blue-300 rounded-2xl focus:border-green-400 focus:outline-none transition-all duration-300 text-lg font-semibold bg-gradient-to-r from-blue-100 to-green-100">
+                        <option value="">✨ Choose Amazing Student ✨</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div id="reportCardDisplay" class="hidden">
+                <!-- Report card will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel Section -->
+    <div id="adminSection" class="container mx-auto px-4 py-8 hidden">
+        <div class="super-card rounded-3xl shadow-2xl p-8 magical-card text-gray-800">
+            <div class="text-center mb-12">
+                <h2 class="text-6xl lg:text-7xl font-extrabold text-white drop-shadow-2xl mb-4 animate-pulse">
+                    🔐 Super Admin Panel 🛡️
+                </h2>
+                <div class="w-40 h-1 bg-gradient-to-r from-red-400 via-orange-400 to-yellow-400 mx-auto rounded-full mb-4"></div>
+                <p class="text-2xl text-white/90 font-semibold drop-shadow-lg">
+                    ⚡ Manage Students with Magical Powers! 🎯
+                </p>
+            </div>
+            
+            <!-- Password Protection -->
+            <div id="passwordSection" class="text-center">
+                <div class="max-w-lg mx-auto bg-gradient-to-br from-white/30 to-white/10 p-10 rounded-3xl backdrop-blur-lg border-2 border-white/20 shadow-2xl">
+                    <div class="text-8xl mb-6 animate-bounce">🔒</div>
+                    <h3 class="text-3xl font-bold text-white mb-2 drop-shadow-lg">Security Gate</h3>
+                    <p class="text-lg text-white/80 mb-8 drop-shadow">Enter the magical password to continue</p>
+                    <input type="password" id="adminPassword" placeholder="🔑 Enter Secret Code..." class="w-full p-5 border-3 border-yellow-300 rounded-2xl focus:border-pink-400 focus:outline-none focus:ring-4 focus:ring-pink-200 transition-all duration-300 mb-8 text-xl font-semibold text-center bg-gradient-to-r from-yellow-50 to-pink-50 shadow-lg">
+                    <button onclick="checkPassword()" class="group relative overflow-hidden bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 hover:from-green-500 hover:via-blue-600 hover:to-purple-700 text-white px-12 py-5 rounded-2xl text-xl font-bold transition-all duration-300 transform hover:scale-105 shadow-2xl border-2 border-white/30">
+                        <span class="relative z-10 flex items-center justify-center space-x-3">
+                            <span>🔓</span>
+                            <span>Open Magical Door</span>
+                            <span>✨</span>
+                        </span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Admin Controls -->
+            <div id="adminControls" class="hidden">
+                <div class="grid md:grid-cols-3 gap-8 mb-12">
+                    <button onclick="showAddStudent()" class="group relative overflow-hidden bg-gradient-to-br from-emerald-400 via-teal-500 to-cyan-600 hover:from-emerald-500 hover:via-teal-600 hover:to-cyan-700 text-white p-8 rounded-3xl transition-all duration-500 transform hover:scale-110 hover:rotate-1 text-xl font-bold shadow-2xl border-2 border-white/20">
+                        <div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="relative z-10 text-center">
+                            <div class="text-4xl mb-3 animate-bounce">➕</div>
+                            <h3 class="text-2xl font-extrabold mb-2">Add New Student</h3>
+                            <p class="text-sm opacity-90">Create magical profiles</p>
+                            <div class="text-3xl mt-2">🌟</div>
+                        </div>
+                    </button>
+                    <button onclick="showEditStudent()" class="group relative overflow-hidden bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 hover:from-amber-500 hover:via-orange-600 hover:to-red-600 text-white p-8 rounded-3xl transition-all duration-500 transform hover:scale-110 hover:rotate-1 text-xl font-bold shadow-2xl border-2 border-white/20">
+                        <div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="relative z-10 text-center">
+                            <div class="text-4xl mb-3 animate-pulse">✏️</div>
+                            <h3 class="text-2xl font-extrabold mb-2">Edit Student</h3>
+                            <p class="text-sm opacity-90">Update information</p>
+                            <div class="text-3xl mt-2">📝</div>
+                        </div>
+                    </button>
+                    <button onclick="showDeleteStudent()" class="group relative overflow-hidden bg-gradient-to-br from-rose-400 via-pink-500 to-purple-600 hover:from-rose-500 hover:via-pink-600 hover:to-purple-700 text-white p-8 rounded-3xl transition-all duration-500 transform hover:scale-110 hover:rotate-1 text-xl font-bold shadow-2xl border-2 border-white/20">
+                        <div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="relative z-10 text-center">
+                            <div class="text-4xl mb-3 animate-bounce">🗑️</div>
+                            <h3 class="text-2xl font-extrabold mb-2">Remove Student</h3>
+                            <p class="text-sm opacity-90">Careful deletion</p>
+                            <div class="text-3xl mt-2">🚫</div>
+                        </div>
+                    </button>
+                </div>
+                
+                <div id="adminForms">
+                    <!-- Admin forms will be displayed here -->
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Firebase Configuration
+        // Firebase configuration with your provided details
         const firebaseConfig = {
             apiKey: "AIzaSyBXcBGbfxZ0kU0vqbZvsB_eD7nRBdmRAVI",
             authDomain: "deeapk1281.firebaseapp.com",
@@ -856,1083 +393,990 @@
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
+        const database = firebase.database();
 
-        // Configuration
-        const ADMIN_PASSWORD = "admin123";
-        let currentStudentId = null;
-        let subjectCount = 0;
+        // Global variables to store current data
+        let currentStudents = {};
+        let currentStudentData = null;
 
-        // Sample Data for Recovery
-        const sampleData = {
-            students: {
-                class1: {
-                    "alice_johnson_1": { name: "Alice Johnson", fatherName: "Robert Johnson" },
-                    "bob_smith_1": { name: "Bob Smith", fatherName: "Michael Smith" },
-                    "charlie_brown_1": { name: "Charlie Brown", fatherName: "David Brown" }
-                },
-                class2: {
-                    "diana_wilson_2": { name: "Diana Wilson", fatherName: "James Wilson" },
-                    "edward_davis_2": { name: "Edward Davis", fatherName: "William Davis" },
-                    "fiona_miller_2": { name: "Fiona Miller", fatherName: "Thomas Miller" }
-                },
-                class3: {
-                    "george_taylor_3": { name: "George Taylor", fatherName: "Richard Taylor" },
-                    "helen_anderson_3": { name: "Helen Anderson", fatherName: "Charles Anderson" },
-                    "ivan_thomas_3": { name: "Ivan Thomas", fatherName: "Joseph Thomas" }
-                }
-            },
-            marks: {
-                class1: {
-                    "alice_johnson_1": {
-                        "Mathematics": { obtained: 95, maximum: 100 },
-                        "English": { obtained: 88, maximum: 100 },
-                        "Science": { obtained: 92, maximum: 100 },
-                        "Social Studies": { obtained: 85, maximum: 100 }
-                    },
-                    "bob_smith_1": {
-                        "Mathematics": { obtained: 78, maximum: 100 },
-                        "English": { obtained: 82, maximum: 100 },
-                        "Science": { obtained: 75, maximum: 100 },
-                        "Social Studies": { obtained: 80, maximum: 100 }
-                    },
-                    "charlie_brown_1": {
-                        "Mathematics": { obtained: 65, maximum: 100 },
-                        "English": { obtained: 70, maximum: 100 },
-                        "Science": { obtained: 68, maximum: 100 },
-                        "Social Studies": { obtained: 72, maximum: 100 }
+        // Navigation functions
+        function showReportCard() {
+            document.getElementById('reportCardSection').classList.remove('hidden');
+            document.getElementById('adminSection').classList.add('hidden');
+        }
+
+        function showAdminPanel() {
+            document.getElementById('reportCardSection').classList.add('hidden');
+            document.getElementById('adminSection').classList.remove('hidden');
+        }
+
+        // Load students based on selected class from Firebase
+        function loadStudents() {
+            const classSelect = document.getElementById('classSelect');
+            const studentSelect = document.getElementById('studentSelect');
+            const selectedClass = classSelect.value;
+            
+            studentSelect.innerHTML = '<option value="">✨ Choose Amazing Student ✨</option>';
+            document.getElementById('reportCardDisplay').classList.add('hidden');
+            
+            if (!selectedClass) return;
+            
+            // Show loading message
+            studentSelect.innerHTML = '<option value="">🔄 Loading students...</option>';
+            
+            // Comprehensive search across all possible database paths
+            database.ref().once('value')
+                .then((snapshot) => {
+                    const allData = snapshot.val();
+                    console.log("Complete database structure:", allData);
+                    
+                    let students = null;
+                    
+                    if (allData) {
+                        // Search strategy 1: Direct class path
+                        if (allData.students && allData.students[`class${selectedClass}`]) {
+                            students = allData.students[`class${selectedClass}`];
+                            console.log(`Found students in students/class${selectedClass}:`, students);
+                        }
+                        // Search strategy 2: Alternative class structure
+                        else if (allData[`class${selectedClass}`]) {
+                            students = allData[`class${selectedClass}`];
+                            console.log(`Found students in class${selectedClass}:`, students);
+                        }
+                        // Search strategy 3: Nested class structure
+                        else if (allData.students && allData.students.class && allData.students.class[selectedClass]) {
+                            students = allData.students.class[selectedClass];
+                            console.log(`Found students in students/class/${selectedClass}:`, students);
+                        }
+                        // Search strategy 4: Deep search for any student with matching class
+                        else {
+                            students = {};
+                            const searchForStudents = (obj, path = '') => {
+                                if (obj && typeof obj === 'object') {
+                                    Object.keys(obj).forEach(key => {
+                                        const value = obj[key];
+                                        if (value && typeof value === 'object') {
+                                            // Check if this looks like a student object
+                                            if (value.name && value.class && value.class == selectedClass) {
+                                                students[key] = value;
+                                                console.log(`Found student ${value.name} at path: ${path}/${key}`);
+                                            } else {
+                                                // Recursively search deeper
+                                                searchForStudents(value, `${path}/${key}`);
+                                            }
+                                        }
+                                    });
+                                }
+                            };
+                            searchForStudents(allData, 'root');
+                        }
+                    }
+                    
+                    studentSelect.innerHTML = '<option value="">✨ Choose Amazing Student ✨</option>';
+                    currentStudents = students || {};
+                    
+                    if (students && Object.keys(students).length > 0) {
+                        Object.keys(students).forEach(studentId => {
+                            const student = students[studentId];
+                            const option = document.createElement('option');
+                            option.value = studentId;
+                            option.textContent = `${student.name} 👦✨`;
+                            studentSelect.appendChild(option);
+                        });
+                        console.log(`Loaded ${Object.keys(students).length} students for class ${selectedClass}`);
+                    } else {
+                        console.log("No students found, adding demo data...");
+                        addDemoData(selectedClass);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error loading students:", error);
+                    studentSelect.innerHTML = '<option value="">❌ Error loading students</option>';
+                    addDemoData(selectedClass);
+                });
+        }
+
+        // Add demo data to Firebase
+        function addDemoData(classNum) {
+            const demoStudents = {
+                student1: {
+                    name: "Alice Rainbow",
+                    fatherName: "Robert Rainbow",
+                    class: classNum,
+                    subjects: {
+                        hindi: { name: "Hindi 📚", obtained: 9, maximum: 10 },
+                        english: { name: "English 📖", obtained: 8, maximum: 10 },
+                        maths: { name: "Maths 🔢", obtained: 10, maximum: 10 },
+                        evs: { name: "EVS 🌍", obtained: 9, maximum: 10 },
+                        sanskrit: { name: "Sanskrit 🕉️", obtained: 8, maximum: 10 }
                     }
                 },
-                class2: {
-                    "diana_wilson_2": {
-                        "Mathematics": { obtained: 90, maximum: 100 },
-                        "English": { obtained: 94, maximum: 100 },
-                        "Science": { obtained: 87, maximum: 100 },
-                        "Social Studies": { obtained: 91, maximum: 100 },
-                        "Art": { obtained: 96, maximum: 100 }
-                    },
-                    "edward_davis_2": {
-                        "Mathematics": { obtained: 73, maximum: 100 },
-                        "English": { obtained: 79, maximum: 100 },
-                        "Science": { obtained: 76, maximum: 100 },
-                        "Social Studies": { obtained: 74, maximum: 100 },
-                        "Art": { obtained: 85, maximum: 100 }
-                    },
-                    "fiona_miller_2": {
-                        "Mathematics": { obtained: 82, maximum: 100 },
-                        "English": { obtained: 86, maximum: 100 },
-                        "Science": { obtained: 84, maximum: 100 },
-                        "Social Studies": { obtained: 88, maximum: 100 },
-                        "Art": { obtained: 90, maximum: 100 }
+                student2: {
+                    name: "Bob Sparkle",
+                    fatherName: "John Sparkle",
+                    class: classNum,
+                    subjects: {
+                        hindi: { name: "Hindi 📚", obtained: 7, maximum: 10 },
+                        english: { name: "English 📖", obtained: 8, maximum: 10 },
+                        maths: { name: "Maths 🔢", obtained: 6, maximum: 10 },
+                        evs: { name: "EVS 🌍", obtained: 7, maximum: 10 },
+                        sanskrit: { name: "Sanskrit 🕉️", obtained: 6, maximum: 10 }
                     }
                 },
-                class3: {
-                    "george_taylor_3": {
-                        "Mathematics": { obtained: 88, maximum: 100 },
-                        "English": { obtained: 85, maximum: 100 },
-                        "Science": { obtained: 90, maximum: 100 },
-                        "Social Studies": { obtained: 87, maximum: 100 },
-                        "Computer": { obtained: 95, maximum: 100 }
-                    },
-                    "helen_anderson_3": {
-                        "Mathematics": { obtained: 92, maximum: 100 },
-                        "English": { obtained: 89, maximum: 100 },
-                        "Science": { obtained: 94, maximum: 100 },
-                        "Social Studies": { obtained: 91, maximum: 100 },
-                        "Computer": { obtained: 88, maximum: 100 }
-                    },
-                    "ivan_thomas_3": {
-                        "Mathematics": { obtained: 77, maximum: 100 },
-                        "English": { obtained: 74, maximum: 100 },
-                        "Science": { obtained: 79, maximum: 100 },
-                        "Social Studies": { obtained: 76, maximum: 100 },
-                        "Computer": { obtained: 82, maximum: 100 }
+                student3: {
+                    name: "Charlie Bright",
+                    fatherName: "David Bright",
+                    class: classNum,
+                    subjects: {
+                        hindi: { name: "Hindi 📚", obtained: 8, maximum: 10 },
+                        english: { name: "English 📖", obtained: 9, maximum: 10 },
+                        maths: { name: "Maths 🔢", obtained: 9, maximum: 10 },
+                        evs: { name: "EVS 🌍", obtained: 8, maximum: 10 },
+                        sanskrit: { name: "Sanskrit 🕉️", obtained: 7, maximum: 10 }
                     }
                 }
-            }
-        };
-
-        // DOM Elements
-        const elements = {
-            // Navigation
-            studentBtn: document.getElementById('studentBtn'),
-            adminBtn: document.getElementById('adminBtn'),
-            studentSection: document.getElementById('studentSection'),
-            adminSection: document.getElementById('adminSection'),
-
-            
-            // Student View
-            classSelect: document.getElementById('classSelect'),
-            studentSelect: document.getElementById('studentSelect'),
-            reportCard: document.getElementById('reportCard'),
-            studentInfo: document.getElementById('studentInfo'),
-            marksTable: document.getElementById('marksTable'),
-            summary: document.getElementById('summary'),
-            inspirationalQuote: document.getElementById('inspirationalQuote'),
-            
-            // Admin
-            adminLogin: document.getElementById('adminLogin'),
-            adminDashboard: document.getElementById('adminDashboard'),
-            adminPassword: document.getElementById('adminPassword'),
-            loginBtn: document.getElementById('loginBtn'),
-            adminClassSelect: document.getElementById('adminClassSelect'),
-            adminStudentSelect: document.getElementById('adminStudentSelect'),
-            deleteStudentBtn: document.getElementById('deleteStudentBtn'),
-            studentForm: document.getElementById('studentForm'),
-            studentName: document.getElementById('studentName'),
-            fatherName: document.getElementById('fatherName'),
-            subjectsContainer: document.getElementById('subjectsContainer'),
-            addSubjectBtn: document.getElementById('addSubjectBtn'),
-            saveStudentBtn: document.getElementById('saveStudentBtn')
-        };
-
-        // Utility Functions
-        function showMessage(message, type = 'success') {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = type === 'success' ? 'success-message' : 'error-message';
-            messageDiv.textContent = message;
-            document.body.appendChild(messageDiv);
-            
-            setTimeout(() => {
-                messageDiv.remove();
-            }, 2000);
-        }
-
-        function generateStudentId(name) {
-            return name.toLowerCase().replace(/\s+/g, '_') + '_' + Date.now();
-        }
-
-        function calculateGrade(percentage) {
-            if (percentage >= 90) return 'A+';
-            if (percentage >= 80) return 'A';
-            if (percentage >= 70) return 'B';
-            if (percentage >= 60) return 'C';
-            if (percentage >= 50) return 'D';
-            return 'F';
-        }
-
-        // Celebration Functions for High Achievers (85%+)
-        function createCelebrationEffects() {
-            const container = document.getElementById('celebrationContainer');
-            container.classList.remove('hidden');
-            container.innerHTML = '';
-
-            // Create confetti pieces
-            for (let i = 0; i < 50; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti-piece';
-                confetti.style.left = Math.random() * 100 + '%';
-                confetti.style.backgroundColor = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3'][Math.floor(Math.random() * 6)];
-                confetti.style.animationDelay = Math.random() * 3 + 's';
-                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                container.appendChild(confetti);
-            }
-
-            // Create star bursts
-            for (let i = 0; i < 10; i++) {
-                const star = document.createElement('div');
-                star.className = 'star-burst';
-                star.innerHTML = '⭐';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.animationDelay = Math.random() * 2 + 's';
-                container.appendChild(star);
-            }
-
-            // Create fireworks
-            for (let i = 0; i < 8; i++) {
-                const firework = document.createElement('div');
-                firework.className = 'firework';
-                firework.style.left = Math.random() * 100 + '%';
-                firework.style.top = Math.random() * 50 + '%';
-                firework.style.backgroundColor = ['#ffd700', '#ff6b6b', '#4ecdc4', '#45b7d1'][Math.floor(Math.random() * 4)];
-                firework.style.animationDelay = Math.random() * 2 + 's';
-                container.appendChild(firework);
-            }
-
-            // Create shower effect (water drops)
-            for (let i = 0; i < 30; i++) {
-                const drop = document.createElement('div');
-                drop.className = 'shower-drop';
-                drop.style.left = Math.random() * 100 + '%';
-                drop.style.animationDelay = Math.random() * 2 + 's';
-                drop.style.animationDuration = (Math.random() * 1 + 1.5) + 's';
-                container.appendChild(drop);
-            }
-
-            // Hide celebration after 10 seconds
-            setTimeout(() => {
-                container.classList.add('hidden');
-            }, 10000);
-        }
-
-        function applyCelebrationStyles(percentage) {
-            const reportCard = document.getElementById('reportCard');
-            const studentInfo = document.getElementById('studentInfo');
-            const summary = document.getElementById('summary');
-            const inspirationalQuote = document.getElementById('inspirationalQuote');
-
-            if (percentage >= 85) {
-                // Add special celebration classes
-                reportCard.classList.add('gold-glow');
-                studentInfo.classList.add('celebration');
-                summary.classList.add('trophy-bounce');
-                inspirationalQuote.classList.add('celebration');
-                
-                // Create celebration effects
-                createCelebrationEffects();
-                
-                // Add special trophy and crown emojis
-                const reportCardTitle = reportCard.querySelector('h2');
-                if (reportCardTitle && !reportCardTitle.innerHTML.includes('👑')) {
-                    reportCardTitle.innerHTML = '🏆EXCELLENT REPORT CARD🏆';
-                }
-            } else {
-                // Remove celebration classes if percentage is below 85%
-                reportCard.classList.remove('gold-glow');
-                studentInfo.classList.remove('celebration');
-                summary.classList.remove('trophy-bounce');
-                inspirationalQuote.classList.remove('celebration');
-                
-                // Reset title
-                const reportCardTitle = reportCard.querySelector('h2');
-                if (reportCardTitle) {
-                    reportCardTitle.innerHTML = '🎉✨ REPORT CARD ✨🎉';
-                }
-            }
-        }
-
-        // Inspirational Quotes based on performance
-        function getInspirationalQuote(percentage, rank) {
-            const quotes = {
-                excellent: [
-                    { quote: "You're amazing!", author: "Keep it up!", emoji: "🌟" },
-                    { quote: "Great job!", author: "You rock!", emoji: "🏆" },
-                    { quote: "Fantastic work!", author: "So proud!", emoji: "✨" },
-                    { quote: "You're a star!", author: "Well done!", emoji: "👑" }
-                ],
-                good: [
-                    { quote: "Nice work!", author: "Keep going!", emoji: "💪" },
-                    { quote: "Good job!", author: "You can do it!", emoji: "❤️" },
-                    { quote: "Well done!", author: "Keep trying!", emoji: "🚀" },
-                    { quote: "Great effort!", author: "Don't stop!", emoji: "⏰" }
-                ],
-                average: [
-                    { quote: "Keep learning!", author: "You're growing!", emoji: "🌱" },
-                    { quote: "Never give up!", author: "Keep going!", emoji: "🛤️" },
-                    { quote: "Try your best!", author: "You can do it!", emoji: "📈" },
-                    { quote: "Keep working!", author: "Stay strong!", emoji: "🎯" }
-                ],
-                needsImprovement: [
-                    { quote: "Try again!", author: "You can do it!", emoji: "🌈" },
-                    { quote: "Don't give up!", author: "Keep trying!", emoji: "💫" },
-                    { quote: "Learn and grow!", author: "You're brave!", emoji: "📚" },
-                    { quote: "You're strong!", author: "Believe in yourself!", emoji: "🦁" }
-                ]
             };
 
-            let category;
-            if (percentage >= 85 || rank <= 2) {
-                category = 'excellent';
-            } else if (percentage >= 70 || rank <= 5) {
-                category = 'good';
-            } else if (percentage >= 50) {
-                category = 'average';
-            } else {
-                category = 'needsImprovement';
-            }
-
-            const categoryQuotes = quotes[category];
-            const randomQuote = categoryQuotes[Math.floor(Math.random() * categoryQuotes.length)];
-            return randomQuote;
-        }
-
-        // Restore Sample Data Function
-        async function restoreSampleData() {
-            try {
-                // Add sample students
-                await db.ref('students').set(sampleData.students);
-                
-                // Add sample marks
-                await db.ref('marks').set(sampleData.marks);
-                
-                console.log('Sample data restored successfully');
-                
-            } catch (error) {
-                console.error('Error restoring sample data:', error);
-            }
-        }
-
-        // Navigation - Desktop and Mobile
-        function showStudentSection() {
-            elements.studentSection.classList.remove('hidden');
-            elements.adminSection.classList.add('hidden');
-            elements.reportCard.classList.add('hidden');
-        }
-
-        function showAdminSection() {
-            elements.adminSection.classList.remove('hidden');
-            elements.studentSection.classList.add('hidden');
-            elements.reportCard.classList.add('hidden');
-            elements.adminLogin.classList.remove('hidden');
-            elements.adminDashboard.classList.add('hidden');
-        }
-
-        // Desktop Navigation
-        elements.studentBtn.addEventListener('click', showStudentSection);
-        elements.adminBtn.addEventListener('click', showAdminSection);
-
-        // Mobile Navigation
-        document.getElementById('studentBtnMobile').addEventListener('click', showStudentSection);
-        document.getElementById('adminBtnMobile').addEventListener('click', showAdminSection);
-
-        // Admin Login
-        elements.loginBtn.addEventListener('click', () => {
-            if (elements.adminPassword.value === ADMIN_PASSWORD) {
-                elements.adminLogin.classList.add('hidden');
-                elements.adminDashboard.classList.remove('hidden');
-                addSubjectRow(); // Add initial subject row
-            } else {
-                showMessage('❌ Incorrect password!', 'error');
-            }
-        });
-
-        // Student View - Class Selection
-        elements.classSelect.addEventListener('change', async () => {
-            const classNum = elements.classSelect.value;
-            elements.studentSelect.innerHTML = '<option value="">Select Student</option>';
-            elements.studentSelect.disabled = true;
-            elements.reportCard.classList.add('hidden');
-
-            if (classNum) {
-                try {
-                    const snapshot = await db.ref(`students/class${classNum}`).once('value');
-                    const students = snapshot.val();
+            console.log(`Adding demo data for class ${classNum}...`);
+            database.ref(`students/class${classNum}`).set(demoStudents)
+                .then(() => {
+                    console.log("Demo data added successfully");
+                    // Update the student dropdown immediately
+                    const studentSelect = document.getElementById('studentSelect');
+                    studentSelect.innerHTML = '<option value="">✨ Choose Amazing Student ✨</option>';
+                    currentStudents = demoStudents;
                     
-                    if (students) {
-                        elements.studentSelect.disabled = false;
-                        Object.keys(students).forEach(studentId => {
-                            const option = document.createElement('option');
-                            option.value = studentId;
-                            option.textContent = students[studentId].name;
-                            elements.studentSelect.appendChild(option);
+                    Object.keys(demoStudents).forEach(studentId => {
+                        const student = demoStudents[studentId];
+                        const option = document.createElement('option');
+                        option.value = studentId;
+                        option.textContent = `${student.name} 👦✨`;
+                        studentSelect.appendChild(option);
+                    });
+                })
+                .catch((error) => {
+                    console.error("Error adding demo data:", error);
+                    alert("❌ Error connecting to database. Please check your internet connection!");
+                });
+        }
+
+        // Load and display report card from Firebase
+        function loadReportCard() {
+            const classSelect = document.getElementById('classSelect');
+            const studentSelect = document.getElementById('studentSelect');
+            const reportDisplay = document.getElementById('reportCardDisplay');
+            
+            const selectedClass = classSelect.value;
+            const selectedStudent = studentSelect.value;
+            
+            if (!selectedClass || !selectedStudent) {
+                reportDisplay.classList.add('hidden');
+                return;
+            }
+            
+            // Show loading message
+            reportDisplay.innerHTML = '<div class="text-center p-8"><div class="text-4xl mb-4">🔄</div><p class="text-xl font-bold">Loading magical report card...</p></div>';
+            reportDisplay.classList.remove('hidden');
+            
+            // Fetch fresh data from Firebase to ensure we have the latest marks
+            database.ref().once('value')
+                .then((snapshot) => {
+                    const allData = snapshot.val();
+                    let student = null;
+                    
+                    // Search for the specific student across all possible paths
+                    if (allData) {
+                        // Try different paths to find the student
+                        if (allData.students && allData.students[`class${selectedClass}`] && allData.students[`class${selectedClass}`][selectedStudent]) {
+                            student = allData.students[`class${selectedClass}`][selectedStudent];
+                        } else if (allData[`class${selectedClass}`] && allData[`class${selectedClass}`][selectedStudent]) {
+                            student = allData[`class${selectedClass}`][selectedStudent];
+                        } else if (currentStudents[selectedStudent]) {
+                            student = currentStudents[selectedStudent];
+                        } else {
+                            // Deep search for the student
+                            const findStudent = (obj) => {
+                                if (obj && typeof obj === 'object') {
+                                    for (const key of Object.keys(obj)) {
+                                        if (key === selectedStudent && obj[key].name && obj[key].class == selectedClass) {
+                                            return obj[key];
+                                        }
+                                        if (typeof obj[key] === 'object') {
+                                            const found = findStudent(obj[key]);
+                                            if (found) return found;
+                                        }
+                                    }
+                                }
+                                return null;
+                            };
+                            student = findStudent(allData);
+                        }
+                    }
+                    
+                    currentStudentData = student;
+                    
+                    if (!student) {
+                        reportDisplay.innerHTML = '<div class="text-center p-8 text-red-600"><div class="text-4xl mb-4">❌</div><p class="text-xl font-bold">Student data not found!</p><p class="text-sm mt-2">Please check if the student exists in the database.</p></div>';
+                        return;
+                    }
+                    
+                    console.log("Loading report for student:", student.name, "Subjects:", student.subjects);
+                    
+                    // Calculate totals and percentage with default subjects order
+                    let totalObtained = 0;
+                    let totalMaximum = 0;
+                    const subjectsArray = [];
+                    
+                    // Define default subjects in order
+                    const defaultSubjects = ['hindi', 'english', 'maths'];
+                    const defaultSubjectNames = {
+                        'hindi': 'Hindi 📚',
+                        'english': 'English 📖', 
+                        'maths': 'Maths 🔢',
+                        // 'evs': 'EVS 🌍',
+                        // 'sanskrit': 'Sanskrit 🕉️'
+                    };
+                    
+                    if (student.subjects && Object.keys(student.subjects).length > 0) {
+                        // First add default subjects in order
+                        defaultSubjects.forEach(subjectKey => {
+                            if (student.subjects[subjectKey]) {
+                                const subject = student.subjects[subjectKey];
+                                totalObtained += subject.obtained || 0;
+                                totalMaximum += subject.maximum || 10;
+                                subjectsArray.push({
+                                    name: subject.name || defaultSubjectNames[subjectKey],
+                                    obtained: subject.obtained || 0,
+                                    maximum: subject.maximum || 10
+                                });
+                                console.log(`Added default subject: ${subject.name}, ${subject.obtained}/${subject.maximum}`);
+                            } else {
+                                // Add default subject with 0 marks if not present
+                                const defaultSubject = {
+                                    name: defaultSubjectNames[subjectKey],
+                                    obtained: 0,
+                                    maximum: 10
+                                };
+                                totalMaximum += defaultSubject.maximum;
+                                subjectsArray.push(defaultSubject);
+                                console.log(`Added missing default subject: ${defaultSubject.name}, 0/10`);
+                            }
+                        });
+                        
+                        // Then add any additional subjects not in defaults
+                        Object.keys(student.subjects).forEach(subjectKey => {
+                            if (!defaultSubjects.includes(subjectKey.toLowerCase())) {
+                                const subject = student.subjects[subjectKey];
+                                totalObtained += subject.obtained || 0;
+                                totalMaximum += subject.maximum || 10;
+                                subjectsArray.push({
+                                    name: subject.name || subjectKey,
+                                    obtained: subject.obtained || 0,
+                                    maximum: subject.maximum || 10
+                                });
+                                console.log(`Added additional subject: ${subject.name}, ${subject.obtained}/${subject.maximum}`);
+                            }
                         });
                     } else {
-                        elements.studentSelect.innerHTML = '<option value="">No students found</option>';
-                    }
-                } catch (error) {
-                    console.error('Error loading students:', error);
-                    showMessage('❌ Error loading students', 'error');
-                }
-            }
-        });
-
-        // Student View - Student Selection
-        elements.studentSelect.addEventListener('change', async () => {
-            const classNum = elements.classSelect.value;
-            const studentId = elements.studentSelect.value;
-            
-            if (classNum && studentId) {
-                await displayReportCard(classNum, studentId);
-            } else {
-                elements.reportCard.classList.add('hidden');
-            }
-        });
-
-        // Display Report Card Function
-        async function displayReportCard(classNum, studentId) {
-            // Show report card immediately
-            elements.reportCard.classList.remove('hidden');
-            
-            try {
-                const [studentSnapshot, marksSnapshot] = await Promise.all([
-                    db.ref(`students/class${classNum}/${studentId}`).once('value'),
-                    db.ref(`marks/class${classNum}/${studentId}`).once('value')
-                ]);
-                
-                const studentData = studentSnapshot.val();
-                const marksData = marksSnapshot.val();
-
-                if (!studentData) {
-                    showMessage('❌ Student data not found!', 'error');
-                    elements.reportCard.classList.add('hidden');
-                    return;
-                }
-
-                // Display student info with enhanced animations
-                elements.studentInfo.innerHTML = `
-                    <div class="relative overflow-hidden rounded-3xl transform hover:scale-105 transition-all duration-500" style="background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%); padding: 6px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: slideIn 0.8s ease-out;">
-                        <div class="bg-white rounded-2xl p-4 sm:p-6 text-center relative z-10">
-                            <div class="absolute top-2 right-2 text-2xl animate-bounce">👦</div>
-                            <h3 class="text-lg sm:text-2xl font-bold text-orange-700 mb-3" style="animation: wiggle 2s ease-in-out infinite;">✨ STUDENT NAME ✨</h3>
-                            <p class="text-base sm:text-xl font-bold text-orange-800 bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">${studentData.name}</p>
-                        </div>
-                        <div class="absolute -top-2 -left-2 w-8 h-8 bg-yellow-300 rounded-full opacity-60 animate-pulse"></div>
-                    </div>
-                    <div class="relative overflow-hidden rounded-3xl transform hover:scale-105 transition-all duration-500" style="background: linear-gradient(135deg, #a8e6cf 0%, #88d8a3 100%); padding: 6px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: slideIn 0.8s ease-out; animation-delay: 0.2s;">
-                        <div class="bg-white rounded-2xl p-4 sm:p-6 text-center relative z-10">
-                            <div class="absolute top-2 right-2 text-2xl animate-bounce" style="animation-delay: 0.5s;">👨</div>
-                            <h3 class="text-lg sm:text-2xl font-bold text-green-700 mb-3" style="animation: pulse 2s ease-in-out infinite;">💚 FATHER'S NAME 💚</h3>
-                            <p class="text-base sm:text-xl font-bold text-green-800 bg-gradient-to-r from-green-500 to-teal-500 bg-clip-text text-transparent">${studentData.fatherName}</p>
-                        </div>
-                        <div class="absolute -bottom-2 -right-2 w-6 h-6 bg-green-300 rounded-full opacity-60 animate-bounce"></div>
-                    </div>
-                    <div class="relative overflow-hidden rounded-3xl transform hover:scale-105 transition-all duration-500" style="background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%); padding: 6px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: slideIn 0.8s ease-out; animation-delay: 0.4s;">
-                        <div class="bg-white rounded-2xl p-4 sm:p-6 text-center relative z-10">
-                            <div class="absolute top-2 right-2 text-2xl animate-bounce" style="animation-delay: 1s;">📚</div>
-                            <h3 class="text-lg sm:text-2xl font-bold text-blue-700 mb-3" style="animation: float 3s ease-in-out infinite;">💙 CLASS LEVEL 💙</h3>
-                            <p class="text-base sm:text-xl font-bold text-blue-800 bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">Class ${classNum}</p>
-                        </div>
-                        <div class="absolute -top-2 -right-2 w-10 h-10 bg-blue-300 rounded-full opacity-60" style="animation: float 4s ease-in-out infinite;"></div>
-                    </div>
-                `;
-
-                // Display enhanced marks table with animations
-                let totalObtained = 0;
-                let totalMaximum = 0;
-                let tableHTML = '';
-
-                if (marksData) {
-                    Object.keys(marksData).forEach((subject, index) => {
-                        const marks = marksData[subject];
-                        const percentage = ((marks.obtained / marks.maximum) * 100).toFixed(1);
-                        const grade = calculateGrade(percentage);
-                        totalObtained += marks.obtained;
-                        totalMaximum += marks.maximum;
-
-                        // Enhanced row styling with gradients and animations
-                        const rowGradient = index % 4 === 0 ? 'from-pink-50 to-rose-100' : 
-                                          index % 4 === 1 ? 'from-blue-50 to-indigo-100' : 
-                                          index % 4 === 2 ? 'from-green-50 to-emerald-100' : 
-                                          'from-yellow-50 to-amber-100';
-                        
-                        const gradeColor = percentage >= 90 ? 'text-green-600 font-extrabold' : 
-                                         percentage >= 80 ? 'text-blue-600 font-extrabold' : 
-                                         percentage >= 70 ? 'text-yellow-600 font-extrabold' : 
-                                         percentage >= 60 ? 'text-orange-600 font-extrabold' : 
-                                         'text-red-600 font-extrabold';
-                        
-                        const gradeEmoji = percentage >= 90 ? '🏆' : 
-                                         percentage >= 80 ? '🥇' : 
-                                         percentage >= 70 ? '🥈' : 
-                                         percentage >= 60 ? '🥉' : '📚';
-                        
-                        const animationDelay = index * 0.1;
-                        
-                        tableHTML += `
-                            <tr class="bg-gradient-to-r ${rowGradient} hover:scale-102 transition-all duration-300 border-b-1 sm:border-b-2 border-white mobile-animate" style="animation: fadeInUp 0.6s ease-out; animation-delay: ${animationDelay}s; animation-fill-mode: both;">
-                                <td class="text-purple-800 relative">
-                                    <div class="flex items-center justify-center">
-                                        <span class="mr-1 text-sm sm:text-xl animate-bounce" style="animation-delay: ${animationDelay + 0.5}s;">📖</span>
-                                        <span class="text-xs sm:text-base font-bold">${subject}</span>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <div class="bg-blue-500 text-white px-2 py-1 rounded-full inline-block transform hover:scale-110 transition-all duration-300 text-xs sm:text-base font-bold mobile-animate" style="animation: pulse 2s ease-in-out infinite; animation-delay: ${animationDelay + 0.2}s;">
-                                        ${marks.obtained}
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <div class="bg-green-500 text-white px-2 py-1 rounded-full inline-block transform hover:scale-110 transition-all duration-300 text-xs sm:text-base font-bold mobile-animate" style="animation: pulse 2s ease-in-out infinite; animation-delay: ${animationDelay + 0.4}s;">
-                                        ${marks.maximum}
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <div class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-2 py-1 rounded-full inline-block transform hover:scale-110 transition-all duration-300 text-xs sm:text-base font-bold mobile-animate" style="animation: wiggle 2s ease-in-out infinite; animation-delay: ${animationDelay + 0.6}s;">
-                                        ${percentage}%
-                                    </div>
-                                </td>
-                            </tr>
-                        `;
-                    });
-                } else {
-                    tableHTML = '<tr><td colspan="4" class="py-8 text-center text-gray-500 text-lg">📚 No marks data available 📚</td></tr>';
-                }
-
-                elements.marksTable.innerHTML = tableHTML;
-
-                // Calculate overall performance
-                const overallPercentage = totalMaximum > 0 ? ((totalObtained / totalMaximum) * 100).toFixed(1) : 0;
-                const overallGrade = calculateGrade(overallPercentage);
-                const rank = 1; // Simplified rank calculation
-
-                // Display enhanced summary with spectacular animations
-                const performanceLevel = overallPercentage >= 90 ? 'outstanding' : 
-                                       overallPercentage >= 80 ? 'excellent' : 
-                                       overallPercentage >= 70 ? 'good' : 
-                                       overallPercentage >= 60 ? 'satisfactory' : 'needsImprovement';
-                
-                const performanceEmoji = overallPercentage >= 90 ? '🏆👑' : 
-                                       overallPercentage >= 80 ? '🥇⭐' : 
-                                       overallPercentage >= 70 ? '🥈💫' : 
-                                       overallPercentage >= 60 ? '🥉✨' : '📚💪';
-                
-                const rankEmoji = rank === 1 ? '👑🏆' : rank <= 3 ? '🥇⭐' : rank <= 5 ? '🥈💫' : '🥉✨';
-                
-                elements.summary.innerHTML = `
-                    <div class="relative overflow-hidden rounded-3xl transform hover:scale-110 transition-all duration-500" style="background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 50%, #fd79a8 100%); padding: 8px; box-shadow: 0 15px 40px rgba(0,0,0,0.3), 0 0 0 4px rgba(255,255,255,0.2); animation: slideIn 0.8s ease-out;">
-                        
-                        <!-- Floating Elements -->
-                        <div class="absolute top-2 left-2 text-2xl animate-bounce">📊</div>
-                        <div class="absolute top-2 right-2 text-xl animate-bounce" style="animation-delay: 0.5s;">✨</div>
-                        <div class="absolute bottom-2 left-2 text-lg animate-bounce" style="animation-delay: 1s;">💯</div>
-                        
-                        <div class="bg-white rounded-2xl p-4 sm:p-6 text-center relative z-10 shadow-inner">
-                            <div class="mb-4">
-                                <div class="text-3xl sm:text-4xl animate-bounce mb-2">📊✨</div>
-                                <h3 class="text-lg sm:text-2xl font-bold text-orange-700 mb-3" style="animation: wiggle 2s ease-in-out infinite;">TOTAL MARKS</h3>
-                            </div>
-                            <div class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-3 rounded-3xl transform hover:scale-105 transition-all duration-300" style="animation: pulse 2s ease-in-out infinite;">
-                                <p class="text-2xl sm:text-4xl font-extrabold">${totalObtained}/${totalMaximum}</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Decorative circles -->
-                        <div class="absolute -top-3 -left-3 w-12 h-12 bg-yellow-300 rounded-full opacity-40 animate-pulse"></div>
-                        <div class="absolute -bottom-3 -right-3 w-8 h-8 bg-pink-300 rounded-full opacity-40" style="animation: float 3s ease-in-out infinite;"></div>
-                    </div>
-                    
-                    <div class="relative overflow-hidden rounded-3xl transform hover:scale-110 transition-all duration-500" style="background: linear-gradient(135deg, #a8e6cf 0%, #88d8a3 50%, #52c41a 100%); padding: 8px; box-shadow: 0 15px 40px rgba(0,0,0,0.3), 0 0 0 4px rgba(255,255,255,0.2); animation: slideIn 0.8s ease-out; animation-delay: 0.2s;">
-                        
-                        <!-- Floating Elements -->
-                        <div class="absolute top-2 left-2 text-2xl animate-bounce" style="animation-delay: 0.3s;">📈</div>
-                        <div class="absolute top-2 right-2 text-xl animate-bounce" style="animation-delay: 0.8s;">🌟</div>
-                        <div class="absolute bottom-2 right-2 text-lg animate-bounce" style="animation-delay: 1.3s;">💚</div>
-                        
-                        <div class="bg-white rounded-2xl p-4 sm:p-6 text-center relative z-10 shadow-inner">
-                            <div class="mb-4">
-                                <div class="text-3xl sm:text-4xl animate-bounce mb-2" style="animation-delay: 0.5s;">${performanceEmoji}</div>
-                                <h3 class="text-lg sm:text-2xl font-bold text-green-700 mb-3" style="animation: pulse 2s ease-in-out infinite;">PERCENTAGE</h3>
-                            </div>
-                            <div class="bg-gradient-to-r from-green-500 to-teal-500 text-white px-4 py-3 rounded-2xl transform hover:scale-105 transition-all duration-300 ${overallPercentage >= 85 ? 'gold-glow' : ''}" style="animation: ${overallPercentage >= 85 ? 'celebration 2s ease-in-out infinite' : 'wiggle 2s ease-in-out infinite'};">
-                                <p class="text-2xl sm:text-4xl font-extrabold">${overallPercentage}%</p>
-                                <p class="text-sm sm:text-base font-bold mt-1 capitalize">${performanceLevel}</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Decorative circles -->
-                        <div class="absolute -top-3 -right-3 w-10 h-10 bg-green-300 rounded-full opacity-40" style="animation: float 4s ease-in-out infinite;"></div>
-                        <div class="absolute -bottom-3 -left-3 w-6 h-6 bg-teal-300 rounded-full opacity-40 animate-bounce"></div>
-                    </div>
-                    
-                    <div class="relative overflow-hidden rounded-3xl transform hover:scale-110 transition-all duration-500" style="background: linear-gradient(135deg, #74b9ff 0%, #0984e3 50%, #6c5ce7 100%); padding: 8px; box-shadow: 0 15px 40px rgba(0,0,0,0.3), 0 0 0 4px rgba(255,255,255,0.2); animation: slideIn 0.8s ease-out; animation-delay: 0.4s;">
-                        
-                        <!-- Floating Elements -->
-                        <div class="absolute top-2 left-2 text-2xl animate-bounce" style="animation-delay: 0.6s;">🥇</div>
-                        <div class="absolute top-2 right-2 text-xl animate-bounce" style="animation-delay: 1.1s;">💫</div>
-                        <div class="absolute bottom-2 left-2 text-lg animate-bounce" style="animation-delay: 1.6s;">🎯</div>
-                        
-                        <div class="bg-white rounded-2xl p-4 sm:p-6 text-center relative z-10 shadow-inner">
-                            <div class="mb-4">
-                                <div class="text-3xl sm:text-4xl animate-bounce mb-2" style="animation-delay: 0.7s;">${rankEmoji}</div>
-                                <h3 class="text-lg sm:text-2xl font-bold text-blue-700 mb-3" style="animation: float 3s ease-in-out infinite;">CLASS RANK</h3>
-                            </div>
-                            <div class="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-3 rounded-2xl transform hover:scale-105 transition-all duration-300 ${rank <= 3 ? 'trophy-bounce' : ''}" style="animation: ${rank <= 3 ? 'celebration 2s ease-in-out infinite' : 'pulse 2s ease-in-out infinite'};">
-                                <p class="text-2xl sm:text-4xl font-extrabold">#${rank}</p>
-                                <p class="text-sm sm:text-base font-bold mt-1">${rank === 1 ? 'First Place!' : rank <= 3 ? 'Top 3!' : rank <= 5 ? 'Top 5!' : 'Keep Going!'}</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Decorative circles -->
-                        <div class="absolute -top-3 -left-3 w-8 h-8 bg-blue-300 rounded-full opacity-40 animate-pulse"></div>
-                        <div class="absolute -bottom-3 -right-3 w-12 h-12 bg-purple-300 rounded-full opacity-40" style="animation: float 5s ease-in-out infinite reverse;"></div>
-                    </div>
-                `;
-
-                // Display enhanced inspirational quote with magical effects
-                const inspirationalQuote = getInspirationalQuote(parseFloat(overallPercentage), rank);
-                document.getElementById('inspirationalQuote').innerHTML = `
-                    <div class="mb-6 sm:mb-8 relative">
-                        <!-- Animated Title -->
-                        <div class="text-center relative">
-                            <div class="absolute inset-0 bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 rounded-3xl opacity-20 animate-pulse"></div>
-                            <h3 class="relative text-2xl sm:text-5xl font-extrabold mb-4 sm:mb-6" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: pulse 3s ease-in-out infinite; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
-                                ${inspirationalQuote.emoji}✨ WORDS OF INSPIRATION ✨${inspirationalQuote.emoji}
-                            </h3>
-                            
-                            <!-- Decorative line -->
-                            <div class="w-64 h-2 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 mx-auto rounded-full mb-6" style="animation: pulse 2s ease-in-out infinite;"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Enhanced Quote Container -->
-                    <div class="relative overflow-hidden rounded-3xl" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 8px; box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 0 6px rgba(255,255,255,0.1);">
-                        
-                        <!-- Floating Quote Marks -->
-                        <div class="absolute top-4 left-4 text-6xl text-white opacity-20 animate-pulse">"</div>
-                        <div class="absolute bottom-4 right-4 text-6xl text-white opacity-20 animate-bounce" style="animation-delay: 1s; transform: rotate(180deg);">"</div>
-                        
-                        <!-- Main Quote Content -->
-                        <div class="bg-white rounded-2xl p-6 sm:p-10 shadow-2xl relative z-10 border-4 border-white/20">
-                            
-                            <!-- Quote Text -->
-                            <div class="text-center mb-6 sm:mb-8">
-                                <div class="text-4xl sm:text-6xl mb-4 animate-bounce">${inspirationalQuote.emoji}</div>
-                                <p class="text-xl sm:text-4xl font-bold mb-6 sm:mb-8 italic relative" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.4; animation: pulse 3s ease-in-out infinite;">
-                                    "${inspirationalQuote.quote}"
-                                </p>
-                                
-                                <!-- Author -->
-                                <div class="relative">
-                                    <div class="absolute inset-0 bg-gradient-to-r from-purple-200 to-pink-200 rounded-2xl opacity-50"></div>
-                                    <p class="relative text-lg sm:text-2xl font-bold text-purple-700 py-3 px-6 rounded-2xl border-2 border-purple-300" style="animation: pulse 2s ease-in-out infinite;">
-                                        - ${inspirationalQuote.author}
-                                    </p>
-                                </div>
-                            </div>
-                            
-                            <!-- Motivational Message -->
-                            <div class="text-center">
-                                <div class="bg-gradient-to-r from-yellow-400 via-pink-400 to-purple-400 text-white px-6 py-4 rounded-3xl shadow-lg transform hover:scale-105 transition-all duration-300" style="animation: pulse 2s ease-in-out infinite;">
-                                    <p class="text-lg sm:text-2xl font-extrabold">✨🌟✨Keep shining bright! ✨🌟✨</p>
-                                    <p class="text-sm sm:text-lg font-bold mt-2">You are amazing and capable of great things!</p>
-                                </div>
-                            </div>
-                            
-                            <!-- Decorative Stars -->
-                            <div class="absolute top-4 left-8 text-2xl text-yellow-400 animate-pulse">⭐</div>
-                            <div class="absolute top-8 right-8 text-xl text-pink-400 animate-bounce" style="animation-delay: 0.5s;">✨</div>
-                            <div class="absolute bottom-8 left-6 text-lg text-purple-400 animate-bounce" style="animation-delay: 1s;">🌟</div>
-                            <div class="absolute bottom-4 right-12 text-2xl text-blue-400 animate-bounce" style="animation-delay: 1.5s;">💫</div>
-                        </div>
-                        
-                        <!-- Background Animation Elements -->
-                        <div class="absolute top-10 left-10 w-16 h-16 bg-white rounded-full opacity-10" style="animation: pulse 4s ease-in-out infinite;"></div>
-                        <div class="absolute bottom-10 right-10 w-12 h-12 bg-white rounded-full opacity-10" style="animation: pulse 5s ease-in-out infinite reverse;"></div>
-                        <div class="absolute top-1/2 left-1/4 w-8 h-8 bg-white rounded-full opacity-10" style="animation: pulse 3s ease-in-out infinite;"></div>
-                    </div>
-                `;
-
-                // Apply celebration effects for high achievers (85%+)
-                applyCelebrationStyles(parseFloat(overallPercentage));
-
-                // Report card already shown above
-
-            } catch (error) {
-                console.error('Error displaying report card:', error);
-                showMessage('❌ Error loading report card!', 'error');
-            }
-        }
-
-        // Calculate Rank
-        async function calculateRank(classNum, percentage) {
-            try {
-                const studentsSnapshot = await db.ref(`students/class${classNum}`).once('value');
-                const students = studentsSnapshot.val();
-                
-                if (!students) return 1;
-
-                const percentages = [];
-                
-                for (const studentId of Object.keys(students)) {
-                    const marksSnapshot = await db.ref(`marks/class${classNum}/${studentId}`).once('value');
-                    const marksData = marksSnapshot.val();
-                    
-                    if (marksData) {
-                        let totalObtained = 0;
-                        let totalMaximum = 0;
-                        
-                        Object.values(marksData).forEach(marks => {
-                            totalObtained += marks.obtained;
-                            totalMaximum += marks.maximum;
-                        });
-                        
-                        const studentPercentage = totalMaximum > 0 ? (totalObtained / totalMaximum) * 100 : 0;
-                        percentages.push(studentPercentage);
-                    }
-                }
-                
-                percentages.sort((a, b) => b - a);
-                const rank = percentages.findIndex(p => p <= percentage) + 1;
-                return rank || percentages.length + 1;
-                
-            } catch (error) {
-                console.error('Error calculating rank:', error);
-                return 1;
-            }
-        }
-
-        // Admin - Class Selection
-        elements.adminClassSelect.addEventListener('change', async () => {
-            const classNum = elements.adminClassSelect.value;
-            elements.adminStudentSelect.innerHTML = '<option value="">Select Student</option><option value="new">➕ Add New Student</option>';
-            elements.adminStudentSelect.disabled = true;
-            elements.deleteStudentBtn.disabled = true;
-            clearForm();
-
-            if (classNum) {
-                try {
-                    const snapshot = await db.ref(`students/class${classNum}`).once('value');
-                    const students = snapshot.val();
-                    
-                    elements.adminStudentSelect.disabled = false;
-                    
-                    if (students) {
-                        Object.keys(students).forEach(studentId => {
-                            const option = document.createElement('option');
-                            option.value = studentId;
-                            option.textContent = students[studentId].name;
-                            elements.adminStudentSelect.appendChild(option);
+                        // If no subjects exist, add default subjects with 0 marks
+                        defaultSubjects.forEach(subjectKey => {
+                            const defaultSubject = {
+                                name: defaultSubjectNames[subjectKey],
+                                obtained: 0,
+                                maximum: 10
+                            };
+                            totalMaximum += defaultSubject.maximum;
+                            subjectsArray.push(defaultSubject);
+                            console.log(`Added default subject (no data): ${defaultSubject.name}, 0/10`);
                         });
                     }
-                } catch (error) {
-                    console.error('Error loading students:', error);
-                    showMessage('❌ Error loading students', 'error');
-                }
-            }
-        });
-
-        // Admin - Student Selection
-        elements.adminStudentSelect.addEventListener('change', async () => {
-            const selectedValue = elements.adminStudentSelect.value;
-            const classNum = elements.adminClassSelect.value;
-            
-            elements.deleteStudentBtn.disabled = !selectedValue || selectedValue === 'new';
-            
-            if (selectedValue === 'new') {
-                clearForm();
-                currentStudentId = null;
-            } else if (selectedValue && classNum) {
-                await loadStudentData(classNum, selectedValue);
-            }
-        });
-
-        // Load Student Data
-        async function loadStudentData(classNum, studentId) {
-            try {
-                const [studentSnapshot, marksSnapshot] = await Promise.all([
-                    db.ref(`students/class${classNum}/${studentId}`).once('value'),
-                    db.ref(`marks/class${classNum}/${studentId}`).once('value')
-                ]);
-                
-                const studentData = studentSnapshot.val();
-                const marksData = marksSnapshot.val();
-                
-                currentStudentId = studentId;
-                
-                // Populate student info
-                elements.studentName.value = studentData.name || '';
-                elements.fatherName.value = studentData.fatherName || '';
-                
-                // Clear and populate subjects
-                elements.subjectsContainer.innerHTML = '';
-                subjectCount = 0;
-                
-                if (marksData) {
-                    Object.keys(marksData).forEach(subject => {
-                        const marks = marksData[subject];
-                        addSubjectRow(subject, marks.obtained, marks.maximum);
-                    });
-                } else {
-                    addSubjectRow(); // Add empty row
-                }
-                
-            } catch (error) {
-                console.error('Error loading student data:', error);
-                showMessage('❌ Error loading student data', 'error');
-            }
-        }
-
-        // Clear Form
-        function clearForm() {
-            elements.studentName.value = '';
-            elements.fatherName.value = '';
-            elements.subjectsContainer.innerHTML = '';
-            subjectCount = 0;
-            currentStudentId = null;
-            addSubjectRow(); // Add initial empty row
-        }
-
-        // Add Subject Row
-        function addSubjectRow(subjectName = '', obtained = '', maximum = '') {
-            subjectCount++;
-            const row = document.createElement('div');
-            row.className = 'subject-row grid grid-cols-1 sm:grid-cols-4 gap-2 sm:gap-4 mb-3 p-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border-2 border-purple-200 items-center';
-            row.innerHTML = `
-                <div class="sm:col-span-1">
-                    <label class="block text-sm font-bold text-purple-700 mb-1 sm:hidden">Subject:</label>
-                    <input type="text" class="subject-name w-full p-2 sm:p-3 border-2 border-purple-300 rounded-lg focus:border-purple-500 focus:outline-none text-sm sm:text-base" placeholder="Subject name" value="${subjectName}">
-                </div>
-                <div class="sm:col-span-1">
-                    <label class="block text-sm font-bold text-purple-700 mb-1 sm:hidden">Obtained:</label>
-                    <input type="number" class="obtained-marks w-full p-2 sm:p-3 border-2 border-purple-300 rounded-lg focus:border-purple-500 focus:outline-none text-sm sm:text-base" placeholder="Obtained" min="0" value="${obtained}">
-                </div>
-                <div class="sm:col-span-1">
-                    <label class="block text-sm font-bold text-purple-700 mb-1 sm:hidden">Maximum:</label>
-                    <input type="number" class="max-marks w-full p-2 sm:p-3 border-2 border-purple-300 rounded-lg focus:border-purple-500 focus:outline-none text-sm sm:text-base" placeholder="Maximum" min="1" value="${maximum}">
-                </div>
-                <div class="text-center sm:col-span-1">
-                    <button type="button" class="remove-subject bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-3 rounded-lg transform hover:scale-105 transition-all duration-300 text-sm sm:text-base w-full sm:w-auto" ${subjectCount === 1 ? 'style="display:none"' : ''}>
-                        🗑️ Remove
-                    </button>
+                    
+                    console.log(`Total subjects: ${subjectsArray.length}, Total obtained: ${totalObtained}, Total maximum: ${totalMaximum}`);
+                    
+                    const percentage = totalMaximum > 0 ? ((totalObtained / totalMaximum) * 100).toFixed(2) : 0;
+                    
+                    // Calculate rank (simplified - in real app, compare with all students)
+                    const rank = percentage >= 90 ? 1 : percentage >= 80 ? 2 : 3;
+                    
+                    // Generate report card HTML
+                    const isHighAchiever = percentage >= 85;
+                    const celebrationClass = isHighAchiever ? 'celebration rainbow-bg' : '';
+                    
+                    // Start shower animation for high achievers
+                    if (isHighAchiever) {
+                        startShowerAnimation();
+                    }
+                    
+                    reportDisplay.innerHTML = `
+                <div class="slide-in ${celebrationClass} p-8 rounded-3xl ${isHighAchiever ? 'text-black' : 'bg-gradient-to-r from-cyan-100 via-purple-100 to-pink-100 text-gray-800'} relative overflow-hidden">
+                    ${isHighAchiever ? `
+                        <div class="sparkle" style="top: 20px; left: 30px;"></div>
+                        <div class="sparkle" style="top: 40px; right: 40px; animation-delay: 0.5s;"></div>
+                        <div class="sparkle" style="bottom: 30px; left: 60%; animation-delay: 1s;"></div>
+                        <div class="sparkle" style="top: 60%; right: 20px; animation-delay: 1.5s;"></div>
+                        <div class="sparkle" style="bottom: 40px; left: 20%; animation-delay: 0.8s;"></div>
+                    ` : ''}
+                    
+                    <div class="text-center mb-8 relative z-10">
+                        <h3 class="text-4xl font-bold mb-4 drop-shadow-lg">🏆 MAGICAL REPORT CARD 🏆</h3>
+                        ${isHighAchiever ? '<p class="text-2xl font-bold animate-pulse drop-shadow-lg">🌟 SUPERSTAR PERFORMANCE! 🌟</p>' : ''}
+                    </div>
+                    
+                    <div class="grid md:grid-cols-3 gap-6 mb-8 text-xl relative z-10">
+                        <div class="bg-black bg-opacity-30 p-4 rounded-3xl backdrop-blur-sm">
+                            <strong>👦 Student:</strong><br>${student.name}
+                        </div>
+                        <div class="bg-black bg-opacity-30 p-4 rounded-3xl backdrop-blur-sm">
+                            <strong>👨 Father:</strong><br>Mr. ${student.fatherName || 'Not specified'}</div>
+                        <div class="bg-black bg-opacity-30 p-4 rounded-3xl backdrop-blur-sm">
+                            <strong>📚 Class:</strong><br>Class ${student.class} 🎓
+                        </div>
+                    </div>
+                    
+                     <!-- Student Class Display Under Class Selection -->
+                  <div class="text-center mb-8 relative z-10">
+                      <div class="inline-block bg-gradient-to-r from-emerald-400 via-cyan-500 to-blue-600 text-white px-8 py-4 rounded-2xl shadow-2xl border-2 border-white/30 transform hover:scale-105 transition-all duration-300">
+                          <div class="text-2xl font-bold drop-shadow-lg">
+                                  🎓 Academic Year 2025-26  📚
+                              </div>
+                              <div class="text-sm mt-1 opacity-50">
+                                  
+                              </div>
+                          </div>
+                      </div>
+                    
+                    ${subjectsArray.length > 0 ? `
+                    <div class="mb-12 relative z-10 bg-gradient-to-br from-white/20 to-white/10 p-6 rounded-3xl backdrop-blur-lg border-2 border-white/30 shadow-2xl">
+                        <div class="text-center mb-6">
+                            <h4 class="text-3xl font-extrabold text-red drop-shadow-2xl mb-2 animate-pulse">📊 ACADEMIC PERFORMANCE TABLE 📈</h4>
+                            <div class="w-24 h-1 bg-gradient-to-r from-yellow-400 via-pink-400 to-purple-400 mx-auto rounded-full"></div>
+                        </div>
+                        <table class="w-full border-collapse rounded-2xl overflow-hidden shadow-2xl transform hover:scale-[1.01] transition-all duration-500">
+                            <thead class="bg-gradient-to-r from-purple-700 via-pink-000 to-red-700 text-white">
+                                <tr>
+                                    <th class="border-2 border-white p-4 text-left text-lg font-extrabold drop-shadow-lg">📖 SUBJECT</th>
+                                    <th class="border-2 border-white p-4 text-center text-lg font-extrabold drop-shadow-lg">📊 OBTAINED</th>
+                                    <th class="border-2 border-white p-4 text-center text-lg font-extrabold drop-shadow-lg">🎯 MAXIMUM</th>
+                                    <th class="border-2 border-white p-4 text-center text-lg font-extrabold drop-shadow-lg">📋 TOTAL</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-pink">
+                                ${subjectsArray.map((subject, index) => `
+                                    <tr class="hover:bg-gradient-to-r hover:from-pink-100 hover:via-purple-100 hover:to-blue-100 hover:scale-105 hover:shadow-xl hover:z-20 transition-all duration-700 ease-in-out transform ${index % 2 === 0 ? 'bg-gradient-to-r from-gray-50 to-blue-50' : 'bg-gradient-to-r from-white to-purple-50'} border-b-2 border-gray-200 relative hover:border-pink-400 hover:rounded-lg origin-center">
+                                        <td class="border-2 border-gray-300 p-4 font-bold text-purple-800 text-base drop-shadow hover:text-lg hover:text-pink-700 transition-all duration-700 ease-in-out">${subject.name}</td>
+                                        <td class="border-2 border-gray-300 p-4 text-center font-extrabold text-green-700 text-2xl drop-shadow-lg animate-pulse hover:text-3xl hover:text-green-600 transition-all duration-700 ease-in-out">${subject.obtained}</td>
+                                        <td class="border-2 border-gray-300 p-4 text-center font-bold text-blue-700 text-lg drop-shadow hover:text-xl hover:text-blue-600 transition-all duration-700 ease-in-out">${subject.maximum}</td>
+                                        <td class="border-2 border-gray-300 p-4 text-center font-bold text-purple-700 text-lg drop-shadow-lg hover:text-xl hover:text-purple-600 transition-all duration-700 ease-in-out">${subject.obtained}/${subject.maximum}</td>
+                                    </tr>
+                                `).join('')}
+                                <tr class="bg-gradient-to-r from-yellow-300 via-orange-300 to-red-300 font-extrabold border-3 border-yellow-500 transform hover:scale-[1.01] transition-all duration-300">
+                                    <td class="border-3 border-yellow-500 p-5 text-purple-900 text-lg drop-shadow-2xl animate-pulse">🏆 GRAND TOTAL 🏆</td>
+                                    <td class="border-3 border-yellow-500 p-5 text-center text-green-800 text-3xl drop-shadow-2xl font-black animate-pulse">${totalObtained}</td>
+                                    <td class="border-3 border-yellow-500 p-5 text-center text-blue-800 text-2xl drop-shadow-2xl font-black">${totalMaximum}</td>
+                                    <td class="border-3 border-yellow-500 p-5 text-center text-purple-800 text-2xl drop-shadow-2xl font-black animate-pulse">${totalObtained}/${totalMaximum}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-8 text-center relative z-10">
+                        <div class="bg-gradient-to-r from-green-400 to-blue-500 p-6 rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-300">
+                            <h4 class="text-2xl font-bold mb-3 text-white drop-shadow">📈 Percentage</h4>
+                            <p class="text-4xl font-bold text-yellow-300 drop-shadow-lg">${percentage}%</p>
+                        </div>
+                        <div class="bg-gradient-to-r from-purple-400 to-pink-800 p-6 rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-300">
+                            <h4 class="text-2xl font-bold mb-3 text-white drop-shadow">🥇 Class Rank</h4>
+                            <p class="text-4xl font-bold text-yellow-300 drop-shadow-lg">#${rank}</p>
+                        </div>
+                    </div>
+                    ` : `
+                    <div class="text-center p-8 relative z-10">
+                        <div class="text-6xl mb-4">📚</div>
+                        <p class="text-2xl font-bold">No subjects added yet!</p>
+                        <p class="text-lg mt-2">Ask your admin to add subjects from the Admin Panel.</p>
+                    </div>
+                    `}
+                    
+                    ${isHighAchiever && subjectsArray.length > 0 ? `
+                        <div class="text-center mt-8 relative z-10">
+                            <p class="text-3xl font-bold animate-bounce drop-shadow-lg">🎉 CONGRATULATIONS! 🎉</p>
+                            <p class="text-xl font-semibold mt-2 drop-shadow">You're a SUPERSTAR! Keep shining! ✨</p>
+                        </div>
+                    ` : subjectsArray.length > 0 ? `
+                        <div class="text-center mt-8 relative z-10">
+                            <p class="text-2xl font-bold text-blue-600">🌟 Great Job! Keep Learning! 📚</p>
+                        </div>
+                    ` : ''}
                 </div>
             `;
-            
-            elements.subjectsContainer.appendChild(row);
-            
-            // Add remove functionality
-            row.querySelector('.remove-subject').addEventListener('click', () => {
-                row.remove();
-                subjectCount--;
-                updateRemoveButtons();
-            });
-            
-            updateRemoveButtons();
-        }
-
-        // Update Remove Buttons Visibility
-        function updateRemoveButtons() {
-            const removeButtons = document.querySelectorAll('.remove-subject');
-            removeButtons.forEach(btn => {
-                btn.style.display = removeButtons.length > 1 ? 'block' : 'none';
-            });
-        }
-
-        // Add Subject Button
-        elements.addSubjectBtn.addEventListener('click', () => {
-            addSubjectRow();
-        });
-
-        // Delete Student
-        elements.deleteStudentBtn.addEventListener('click', async () => {
-            const selectedValue = elements.adminStudentSelect.value;
-            const classNum = elements.adminClassSelect.value;
-            
-            if (!selectedValue || selectedValue === 'new' || !classNum) {
-                showMessage('❌ Please select a student to delete!', 'error');
-                return;
-            }
-            
-            const studentName = elements.adminStudentSelect.selectedOptions[0].textContent;
-            
-            if (confirm(`⚠️ Are you sure you want to delete ${studentName}? This action cannot be undone!`)) {
-                try {
-                    await Promise.all([
-                        db.ref(`students/class${classNum}/${selectedValue}`).remove(),
-                        db.ref(`marks/class${classNum}/${selectedValue}`).remove()
-                    ]);
-                    
-                    showMessage(`✅ ${studentName} deleted successfully!`);
-                    
-                    // Refresh student list
-                    elements.adminClassSelect.dispatchEvent(new Event('change'));
-                    
-                } catch (error) {
-                    console.error('Error deleting student:', error);
-                    showMessage(`❌ Failed to delete ${studentName}!`, 'error');
-                }
-            }
-        });
-
-        // Save Student
-        elements.saveStudentBtn.addEventListener('click', async () => {
-            const classNum = elements.adminClassSelect.value;
-            const studentName = elements.studentName.value.trim();
-            const fatherName = elements.fatherName.value.trim();
-            
-            if (!classNum) {
-                showMessage('❌ Please select a class!', 'error');
-                return;
-            }
-            
-            if (!studentName || !fatherName) {
-                showMessage('❌ Please fill in student name and father\'s name!', 'error');
-                return;
-            }
-            
-            // Collect subjects data
-            const subjectRows = document.querySelectorAll('.subject-row');
-            const subjects = {};
-            let hasValidSubject = false;
-            
-            subjectRows.forEach(row => {
-                const subjectName = row.querySelector('.subject-name').value.trim();
-                const obtainedMarks = parseInt(row.querySelector('.obtained-marks').value);
-                const maxMarks = parseInt(row.querySelector('.max-marks').value);
-                
-                if (subjectName && !isNaN(obtainedMarks) && !isNaN(maxMarks) && maxMarks > 0) {
-                    subjects[subjectName] = {
-                        obtained: obtainedMarks,
-                        maximum: maxMarks
-                    };
-                    hasValidSubject = true;
-                }
-            });
-            
-            if (!hasValidSubject) {
-                showMessage('❌ Please add at least one complete subject with valid marks!', 'error');
-                return;
-            }
-            
-            try {
-                const studentId = currentStudentId || generateStudentId(studentName);
-                
-                // Save student data
-                await db.ref(`students/class${classNum}/${studentId}`).set({
-                    name: studentName,
-                    fatherName: fatherName
+                })
+                .catch((error) => {
+                    console.error("Error loading report card:", error);
+                    reportDisplay.innerHTML = '<div class="text-center p-8 text-red-600"><div class="text-4xl mb-4">❌</div><p class="text-xl font-bold">Error loading report card!</p><p class="text-sm mt-2">Please check your internet connection and try again.</p></div>';
                 });
-                
-                // Save marks data
-                await db.ref(`marks/class${classNum}/${studentId}`).set(subjects);
-                
-                const action = currentStudentId ? 'updated' : 'saved';
-                showMessage(`✅ ${studentName} ${action} successfully!`);
-                
-                // Refresh student list
-                elements.adminClassSelect.dispatchEvent(new Event('change'));
-                
-            } catch (error) {
-                console.error('Error saving student:', error);
-                showMessage('❌ Error saving student data!', 'error');
-            }
-        });
+        }
 
-        // Initialize with sample data on first load
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('Smart Report Card System initialized');
+        // Admin panel functions
+        function checkPassword() {
+            const password = document.getElementById('adminPassword').value;
+            if (password === 'admin123') {
+                document.getElementById('passwordSection').classList.add('hidden');
+                document.getElementById('adminControls').classList.remove('hidden');
+            } else {
+                alert('❌ Incorrect password! Try "admin123" 🔑');
+            }
+        }
+
+        function showAddStudent() {
+            const adminForms = document.getElementById('adminForms');
+            adminForms.innerHTML = `
+                <div class="bg-gradient-to-r from-green-100 to-blue-100 p-8 rounded-3xl slide-in shadow-2xl">
+                    <h3 class="text-3xl font-bold mb-6 text-green-700 text-center">➕ Add New Superstar Student 🌟</h3>
+                    <form onsubmit="addStudent(event)" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <input type="text" id="newStudentName" placeholder="✨ Student Name" required class="p-4 border-3 border-green-300 rounded-2xl focus:border-blue-500 focus:outline-none text-lg font-semibold bg-gradient-to-r from-green-50 to-blue-50">
+                            <input type="text" id="newFatherName" placeholder="👨 Father's Name" required class="p-4 border-3 border-blue-300 rounded-2xl focus:border-green-500 focus:outline-none text-lg font-semibold bg-gradient-to-r from-blue-50 to-green-50">
+                        </div>
+                        <select id="newStudentClass" required class="w-full p-4 border-3 border-purple-300 rounded-2xl focus:border-pink-500 focus:outline-none text-lg font-semibold bg-gradient-to-r from-purple-50 to-pink-50">
+                            <option value="">🏫 Select Magical Class</option>
+                            <option value="1">Class 1 🌱</option>
+                            <option value="2">Class 2 🌿</option>
+                            <option value="3">Class 3 🌳</option>
+                            <option value="4">Class 4 🌲</option>
+                            <option value="5">Class 5 🎋</option>
+                        </select>
+                        <div id="subjectsContainer" class="bg-white bg-opacity-50 p-6 rounded-2xl">
+                            <h4 class="font-bold mb-4 text-xl text-purple-700">📚 Add Amazing Subjects:</h4>
+                            <div class="subject-entry grid grid-cols-4 gap-3 mb-4">
+                                <input type="text" value="Hindi" class="subject-name p-3 border-2 border-purple-200 rounded-xl font-semibold">
+                                <input type="number" placeholder="📊 Obtained" class="obtained-marks p-3 border-2 border-green-200 rounded-xl font-semibold">
+                                <input type="number" value="10" class="maximum-marks p-3 border-2 border-blue-200 rounded-xl font-semibold">
+                                <button type="button" onclick="removeSubject(this)" class="bg-gradient-to-r from-red-400 to-pink-500 text-white rounded-xl px-3 font-bold hover:from-red-500 hover:to-pink-600 transition-all duration-300">❌</button>
+                            </div>
+                            <div class="subject-entry grid grid-cols-4 gap-3 mb-4">
+                                <input type="text" value="English" class="subject-name p-3 border-2 border-purple-200 rounded-xl font-semibold">
+                                <input type="number" placeholder="📊 Obtained" class="obtained-marks p-3 border-2 border-green-200 rounded-xl font-semibold">
+                                <input type="number" value="10" class="maximum-marks p-3 border-2 border-blue-200 rounded-xl font-semibold">
+                                <button type="button" onclick="removeSubject(this)" class="bg-gradient-to-r from-red-400 to-pink-500 text-white rounded-xl px-3 font-bold hover:from-red-500 hover:to-pink-600 transition-all duration-300">❌</button>
+                            </div>
+                            <div class="subject-entry grid grid-cols-4 gap-3 mb-4">
+                                <input type="text" value="Maths" class="subject-name p-3 border-2 border-purple-200 rounded-xl font-semibold">
+                                <input type="number" placeholder="📊 Obtained" class="obtained-marks p-3 border-2 border-green-200 rounded-xl font-semibold">
+                                <input type="number" value="10" class="maximum-marks p-3 border-2 border-blue-200 rounded-xl font-semibold">
+                                <button type="button" onclick="removeSubject(this)" class="bg-gradient-to-r from-red-400 to-pink-500 text-white rounded-xl px-3 font-bold hover:from-red-500 hover:to-pink-600 transition-all duration-300">❌</button>
+                            </div>
+                            <div class="subject-entry grid grid-cols-4 gap-3 mb-4">
+                                <input type="text" value="EVS" class="subject-name p-3 border-2 border-purple-200 rounded-xl font-semibold">
+                                <input type="number" placeholder="📊 Obtained" class="obtained-marks p-3 border-2 border-green-200 rounded-xl font-semibold">
+                                <input type="number" value="10" class="maximum-marks p-3 border-2 border-blue-200 rounded-xl font-semibold">
+                                <button type="button" onclick="removeSubject(this)" class="bg-gradient-to-r from-red-400 to-pink-500 text-white rounded-xl px-3 font-bold hover:from-red-500 hover:to-pink-600 transition-all duration-300">❌</button>
+                            </div>
+                            <div class="subject-entry grid grid-cols-4 gap-3 mb-4">
+                                <input type="text" value="Sanskrit" class="subject-name p-3 border-2 border-purple-200 rounded-xl font-semibold">
+                                <input type="number" placeholder="📊 Obtained" class="obtained-marks p-3 border-2 border-green-200 rounded-xl font-semibold">
+                                <input type="number" value="10" class="maximum-marks p-3 border-2 border-blue-200 rounded-xl font-semibold">
+                                <button type="button" onclick="removeSubject(this)" class="bg-gradient-to-r from-red-400 to-pink-500 text-white rounded-xl px-3 font-bold hover:from-red-500 hover:to-pink-600 transition-all duration-300">❌</button>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <button type="button" onclick="addSubjectField()" class="group relative overflow-hidden bg-gradient-to-r from-purple-500 via-violet-600 to-indigo-700 hover:from-purple-600 hover:via-violet-700 hover:to-indigo-800 text-white px-8 py-4 rounded-2xl font-bold transition-all duration-300 transform hover:scale-105 shadow-xl border-2 border-white/20">
+                                <span class="relative z-10 flex items-center justify-center space-x-2">
+                                    <span>➕</span>
+                                    <span>Add Subject</span>
+                                    <span>📚</span>
+                                </span>
+                                <div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            </button>
+                            <button type="submit" class="flex-1 group relative overflow-hidden bg-gradient-to-r from-violet-500 via-purple-600 to-indigo-700 hover:from-violet-600 hover:via-purple-700 hover:to-indigo-800 text-white p-5 rounded-2xl text-xl font-bold transition-all duration-300 transform hover:scale-105 shadow-2xl border-2 border-white/20">
+                                <span class="relative z-10 flex items-center justify-center space-x-3">
+                                    <span>🚀</span>
+                                    <span>Add Superstar Student</span>
+                                    <span>✨</span>
+                                </span>
+                                <div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+        }
+
+        function showEditStudent() {
+            const adminForms = document.getElementById('adminForms');
+            adminForms.innerHTML = `
+                <div class="bg-gradient-to-r from-yellow-100 to-orange-100 p-8 rounded-3xl slide-in shadow-2xl">
+                    <h3 class="text-3xl font-bold mb-6 text-orange-700 text-center">✏️ Edit Student Information 📝</h3>
+                    <div class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <select id="editClassSelect" onchange="loadEditStudents()" class="p-4 border-3 border-yellow-300 rounded-2xl focus:border-orange-500 focus:outline-none text-lg font-semibold bg-gradient-to-r from-yellow-50 to-orange-50">
+                                <option value="">🏫 Select Class to Edit</option>
+                                <option value="1">Class 1 🌱</option>
+                                <option value="2">Class 2 🌿</option>
+                                <option value="3">Class 3 🌳</option>
+                                <option value="4">Class 4 🌲</option>
+                                <option value="5">Class 5 🎋</option>
+                            </select>
+                            <select id="editStudentSelect" onchange="loadStudentForEdit()" class="p-4 border-3 border-orange-300 rounded-2xl focus:border-yellow-500 focus:outline-none text-lg font-semibold bg-gradient-to-r from-orange-50 to-yellow-50">
+                                <option value="">👦 Select Student to Edit</option>
+                            </select>
+                        </div>
+                        <div id="editStudentForm" class="hidden">
+                            <!-- Edit form will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showDeleteStudent() {
+            const adminForms = document.getElementById('adminForms');
+            adminForms.innerHTML = `
+                <div class="bg-gradient-to-r from-red-100 to-pink-100 p-8 rounded-3xl slide-in shadow-2xl">
+                    <h3 class="text-3xl font-bold mb-6 text-red-700 text-center">🗑️ Remove Student 🚫</h3>
+                    <div class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <select id="deleteClassSelect" onchange="loadDeleteStudents()" class="p-4 border-3 border-red-300 rounded-2xl focus:border-pink-500 focus:outline-none text-lg font-semibold bg-gradient-to-r from-red-50 to-pink-50">
+                                <option value="">🏫 Select Class</option>
+                                <option value="1">Class 1 🌱</option>
+                                <option value="2">Class 2 🌿</option>
+                                <option value="3">Class 3 🌳</option>
+                                <option value="4">Class 4 🌲</option>
+                                <option value="5">Class 5 🎋</option>
+                            </select>
+                            <select id="deleteStudentSelect" class="p-4 border-3 border-pink-300 rounded-2xl focus:border-red-500 focus:outline-none text-lg font-semibold bg-gradient-to-r from-pink-50 to-red-50">
+                                <option value="">👦 Select Student to Remove</option>
+                            </select>
+                        </div>
+                        <div class="text-center">
+                            <button onclick="deleteStudent()" class="group relative overflow-hidden bg-gradient-to-r from-red-500 via-rose-600 to-pink-700 hover:from-red-600 hover:via-rose-700 hover:to-pink-800 text-white px-10 py-5 rounded-2xl text-xl font-bold transition-all duration-300 transform hover:scale-105 shadow-2xl border-2 border-white/20">
+                                <span class="relative z-10 flex items-center justify-center space-x-3">
+                                    <span>🗑️</span>
+                                    <span>Remove Student (Permanent!)</span>
+                                    <span>⚠️</span>
+                                </span>
+                                <div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            </button>
+                        </div>
+                        <div class="bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded">
+                            <p class="text-yellow-700 font-semibold">⚠️ Warning: This action cannot be undone!</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Helper functions for admin operations
+        function addSubjectField() {
+            const container = document.getElementById('subjectsContainer');
+            const newField = document.createElement('div');
+            newField.className = 'subject-entry grid grid-cols-4 gap-3 mb-4';
+            newField.innerHTML = `
+                <input type="text" placeholder="📖 Subject Name" class="subject-name p-3 border-2 border-purple-200 rounded-xl font-semibold">
+                <input type="number" placeholder="📊 Obtained" class="obtained-marks p-3 border-2 border-green-200 rounded-xl font-semibold">
+                <input type="number" value="10" class="maximum-marks p-3 border-2 border-blue-200 rounded-xl font-semibold">
+                <button type="button" onclick="removeSubject(this)" class="bg-gradient-to-r from-red-400 to-pink-500 text-white rounded-xl px-3 font-bold hover:from-red-500 hover:to-pink-600 transition-all duration-300">❌</button>
+            `;
+            container.appendChild(newField);
+        }
+
+        function removeSubject(button) {
+            button.parentElement.remove();
+        }
+
+        function addStudent(event) {
+            event.preventDefault();
             
-            // Check if database is empty and auto-restore sample data in background (non-blocking)
-            setTimeout(async () => {
-                try {
-                    const studentsSnapshot = await db.ref('students').once('value');
-                    if (!studentsSnapshot.exists()) {
-                        console.log('Database is empty, restoring sample data...');
-                        await restoreSampleData();
-                    }
-                } catch (error) {
-                    console.error('Error checking database:', error);
+            const name = document.getElementById('newStudentName').value;
+            const fatherName = document.getElementById('newFatherName').value;
+            const studentClass = document.getElementById('newStudentClass').value;
+            
+            const subjectEntries = document.querySelectorAll('.subject-entry');
+            const subjects = {};
+            
+            subjectEntries.forEach((entry, index) => {
+                const subjectName = entry.querySelector('.subject-name').value;
+                const obtained = parseInt(entry.querySelector('.obtained-marks').value);
+                const maximum = parseInt(entry.querySelector('.maximum-marks').value);
+                
+                if (subjectName && !isNaN(obtained) && !isNaN(maximum)) {
+                    const subjectKey = subjectName.toLowerCase().replace(/\s+/g, '');
+                    subjects[subjectKey] = {
+                        name: subjectName + " 📚",
+                        obtained: obtained,
+                        maximum: maximum
+                    };
                 }
-            }, 100);
+            });
+            
+            const newStudent = {
+                name: name,
+                fatherName: fatherName,
+                class: studentClass,
+                subjects: subjects
+            };
+            
+            // Save to Firebase
+            const newStudentRef = database.ref(`students/class${studentClass}`).push();
+            newStudentRef.set(newStudent)
+                .then(() => {
+                    alert('🎉 Superstar student added successfully! ✨');
+                    document.getElementById('adminForms').innerHTML = '';
+                    // Refresh the student list if the same class is selected
+                    if (document.getElementById('classSelect').value === studentClass) {
+                        loadStudents();
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error adding student:", error);
+                    alert('❌ Error adding student. Please try again!');
+                });
+        }
+
+        function loadEditStudents() {
+            const classSelect = document.getElementById('editClassSelect');
+            const studentSelect = document.getElementById('editStudentSelect');
+            const selectedClass = classSelect.value;
+            
+            studentSelect.innerHTML = '<option value="">👦 Select Student to Edit</option>';
+            document.getElementById('editStudentForm').classList.add('hidden');
+            
+            if (!selectedClass) return;
+            
+            // Use comprehensive search like in loadStudents
+            database.ref().once('value')
+                .then((snapshot) => {
+                    const allData = snapshot.val();
+                    let students = null;
+                    
+                    if (allData) {
+                        if (allData.students && allData.students[`class${selectedClass}`]) {
+                            students = allData.students[`class${selectedClass}`];
+                        } else if (allData[`class${selectedClass}`]) {
+                            students = allData[`class${selectedClass}`];
+                        } else {
+                            students = {};
+                            const searchForStudents = (obj) => {
+                                if (obj && typeof obj === 'object') {
+                                    Object.keys(obj).forEach(key => {
+                                        const value = obj[key];
+                                        if (value && typeof value === 'object') {
+                                            if (value.name && value.class && value.class == selectedClass) {
+                                                students[key] = value;
+                                            } else {
+                                                searchForStudents(value);
+                                            }
+                                        }
+                                    });
+                                }
+                            };
+                            searchForStudents(allData);
+                        }
+                    }
+                    
+                    if (students && Object.keys(students).length > 0) {
+                        Object.keys(students).forEach(studentId => {
+                            const student = students[studentId];
+                            const option = document.createElement('option');
+                            option.value = studentId;
+                            option.textContent = `${student.name} 👦`;
+                            studentSelect.appendChild(option);
+                        });
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error loading students for edit:", error);
+                });
+        }
+
+        function loadStudentForEdit() {
+            const classSelect = document.getElementById('editClassSelect');
+            const studentSelect = document.getElementById('editStudentSelect');
+            const editForm = document.getElementById('editStudentForm');
+            
+            const selectedClass = classSelect.value;
+            const selectedStudent = studentSelect.value;
+            
+            if (!selectedClass || !selectedStudent) {
+                editForm.classList.add('hidden');
+                return;
+            }
+            
+            database.ref(`students/class${selectedClass}/${selectedStudent}`).once('value')
+                .then((snapshot) => {
+                    const student = snapshot.val();
+                    if (!student) return;
+                    
+                    // Define default subjects in order
+                    const defaultSubjects = [
+                        { key: 'hindi', name: 'Hindi' },
+                        { key: 'english', name: 'English' },
+                        { key: 'maths', name: 'Maths' },
+                        { key: 'evs', name: 'EVS' },
+                        { key: 'sanskrit', name: 'Sanskrit' }
+                    ];
+                    
+                    let subjectsHTML = '';
+                    
+                    // First add default subjects in order
+                    defaultSubjects.forEach(defaultSubject => {
+                        let obtained = 0;
+                        let maximum = 10;
+                        
+                        // Check if student has this subject
+                        if (student.subjects && student.subjects[defaultSubject.key]) {
+                            obtained = student.subjects[defaultSubject.key].obtained || 0;
+                            maximum = student.subjects[defaultSubject.key].maximum || 10;
+                        }
+                        
+                        subjectsHTML += `
+                            <div class="subject-entry grid grid-cols-4 gap-3 mb-4">
+                                <input type="text" value="${defaultSubject.name}" class="subject-name p-3 border-2 border-purple-200 rounded-xl font-semibold">
+                                <input type="number" value="${obtained}" class="obtained-marks p-3 border-2 border-green-200 rounded-xl font-semibold">
+                                <input type="number" value="${maximum}" class="maximum-marks p-3 border-2 border-blue-200 rounded-xl font-semibold">
+                                <button type="button" onclick="removeSubject(this)" class="bg-gradient-to-r from-red-400 to-pink-500 text-white rounded-xl px-3 font-bold hover:from-red-500 hover:to-pink-600 transition-all duration-300">❌</button>
+                            </div>
+                        `;
+                    });
+                    
+                    // Then add any additional subjects not in defaults
+                    if (student.subjects) {
+                        const defaultKeys = defaultSubjects.map(s => s.key);
+                        Object.keys(student.subjects).forEach(subjectKey => {
+                            if (!defaultKeys.includes(subjectKey.toLowerCase())) {
+                                const subject = student.subjects[subjectKey];
+                                subjectsHTML += `
+                                    <div class="subject-entry grid grid-cols-4 gap-3 mb-4">
+                                        <input type="text" value="${subject.name.replace(' 📚', '')}" class="subject-name p-3 border-2 border-purple-200 rounded-xl font-semibold">
+                                        <input type="number" value="${subject.obtained}" class="obtained-marks p-3 border-2 border-green-200 rounded-xl font-semibold">
+                                        <input type="number" value="${subject.maximum}" class="maximum-marks p-3 border-2 border-blue-200 rounded-xl font-semibold">
+                                        <button type="button" onclick="removeSubject(this)" class="bg-gradient-to-r from-red-400 to-pink-500 text-white rounded-xl px-3 font-bold hover:from-red-500 hover:to-pink-600 transition-all duration-300">❌</button>
+                                    </div>
+                                `;
+                            }
+                        });
+                    }
+                    
+                    editForm.innerHTML = `
+                        <form onsubmit="updateStudent(event, '${selectedClass}', '${selectedStudent}')" class="space-y-6">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <input type="text" id="editStudentName" value="${student.name}" placeholder="✨ Student Name" required class="p-4 border-3 border-green-300 rounded-2xl focus:border-blue-500 focus:outline-none text-lg font-semibold bg-gradient-to-r from-green-50 to-blue-50">
+                                <input type="text" id="editFatherName" value="${student.fatherName || ''}" placeholder="👨 Father's Name" required class="p-4 border-3 border-blue-300 rounded-2xl focus:border-green-500 focus:outline-none text-lg font-semibold bg-gradient-to-r from-blue-50 to-green-50">
+                            </div>
+                            <div id="editSubjectsContainer" class="bg-white bg-opacity-50 p-6 rounded-2xl">
+                                <h4 class="font-bold mb-4 text-xl text-purple-700">📚 Edit Subjects:</h4>
+                                ${subjectsHTML}
+                            </div>
+                            <div class="flex gap-4">
+                                <button type="button" onclick="addEditSubjectField()" class="group relative overflow-hidden bg-gradient-to-r from-purple-500 via-violet-600 to-indigo-700 hover:from-purple-600 hover:via-violet-700 hover:to-indigo-800 text-white px-8 py-4 rounded-2xl font-bold transition-all duration-300 transform hover:scale-105 shadow-xl border-2 border-white/20">
+                                    <span class="relative z-10 flex items-center justify-center space-x-2">
+                                        <span>➕</span>
+                                        <span>Add Subject</span>
+                                        <span>📚</span>
+                                    </span>
+                                    <div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                </button>
+                                <button type="submit" class="flex-1 group relative overflow-hidden bg-gradient-to-r from-emerald-500 via-teal-600 to-cyan-700 hover:from-emerald-600 hover:via-teal-700 hover:to-cyan-800 text-white p-5 rounded-2xl text-xl font-bold transition-all duration-300 transform hover:scale-105 shadow-2xl border-2 border-white/20">
+                                    <span class="relative z-10 flex items-center justify-center space-x-3">
+                                        <span>💾</span>
+                                        <span>Update Student</span>
+                                        <span>✨</span>
+                                    </span>
+                                    <div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                </button>
+                            </div>
+                        </form>
+                    `;
+                    
+                    editForm.classList.remove('hidden');
+                });
+        }
+
+        function addEditSubjectField() {
+            const container = document.getElementById('editSubjectsContainer');
+            const newField = document.createElement('div');
+            newField.className = 'subject-entry grid grid-cols-4 gap-3 mb-4';
+            newField.innerHTML = `
+                <input type="text" placeholder="📖 Subject Name" class="subject-name p-3 border-2 border-purple-200 rounded-xl font-semibold">
+                <input type="number" placeholder="📊 Obtained" class="obtained-marks p-3 border-2 border-green-200 rounded-xl font-semibold">
+                <input type="number" value="10" class="maximum-marks p-3 border-2 border-blue-200 rounded-xl font-semibold">
+                <button type="button" onclick="removeSubject(this)" class="bg-gradient-to-r from-red-400 to-pink-500 text-white rounded-xl px-3 font-bold hover:from-red-500 hover:to-pink-600 transition-all duration-300">❌</button>
+            `;
+            container.appendChild(newField);
+        }
+
+        function updateStudent(event, classNum, studentId) {
+            event.preventDefault();
+            
+            const name = document.getElementById('editStudentName').value;
+            const fatherName = document.getElementById('editFatherName').value;
+            
+            const subjectEntries = document.querySelectorAll('#editSubjectsContainer .subject-entry');
+            const subjects = {};
+            
+            subjectEntries.forEach((entry, index) => {
+                const subjectName = entry.querySelector('.subject-name').value;
+                const obtained = parseInt(entry.querySelector('.obtained-marks').value);
+                const maximum = parseInt(entry.querySelector('.maximum-marks').value);
+                
+                if (subjectName && !isNaN(obtained) && !isNaN(maximum)) {
+                    const subjectKey = subjectName.toLowerCase().replace(/\s+/g, '');
+                    subjects[subjectKey] = {
+                        name: subjectName + " 📚",
+                        obtained: obtained,
+                        maximum: maximum
+                    };
+                }
+            });
+            
+            const updatedStudent = {
+                name: name,
+                fatherName: fatherName,
+                class: classNum,
+                subjects: subjects
+            };
+            
+            // Update in Firebase
+            database.ref(`students/class${classNum}/${studentId}`).set(updatedStudent)
+                .then(() => {
+                    alert('🎉 Student updated successfully! ✨');
+                    document.getElementById('adminForms').innerHTML = '';
+                    // Refresh the student list if the same class is selected
+                    if (document.getElementById('classSelect').value === classNum) {
+                        loadStudents();
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error updating student:", error);
+                    alert('❌ Error updating student. Please try again!');
+                });
+        }
+
+        function loadDeleteStudents() {
+            const classSelect = document.getElementById('deleteClassSelect');
+            const studentSelect = document.getElementById('deleteStudentSelect');
+            const selectedClass = classSelect.value;
+            
+            studentSelect.innerHTML = '<option value="">👦 Select Student to Remove</option>';
+            
+            if (!selectedClass) return;
+            
+            // Use comprehensive search like in loadStudents
+            database.ref().once('value')
+                .then((snapshot) => {
+                    const allData = snapshot.val();
+                    let students = null;
+                    
+                    if (allData) {
+                        if (allData.students && allData.students[`class${selectedClass}`]) {
+                            students = allData.students[`class${selectedClass}`];
+                        } else if (allData[`class${selectedClass}`]) {
+                            students = allData[`class${selectedClass}`];
+                        } else {
+                            students = {};
+                            const searchForStudents = (obj) => {
+                                if (obj && typeof obj === 'object') {
+                                    Object.keys(obj).forEach(key => {
+                                        const value = obj[key];
+                                        if (value && typeof value === 'object') {
+                                            if (value.name && value.class && value.class == selectedClass) {
+                                                students[key] = value;
+                                            } else {
+                                                searchForStudents(value);
+                                            }
+                                        }
+                                    });
+                                }
+                            };
+                            searchForStudents(allData);
+                        }
+                    }
+                    
+                    if (students && Object.keys(students).length > 0) {
+                        Object.keys(students).forEach(studentId => {
+                            const student = students[studentId];
+                            const option = document.createElement('option');
+                            option.value = studentId;
+                            option.textContent = `${student.name} 👦`;
+                            studentSelect.appendChild(option);
+                        });
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error loading students for delete:", error);
+                });
+        }
+
+        function deleteStudent() {
+            const classSelect = document.getElementById('deleteClassSelect');
+            const studentSelect = document.getElementById('deleteStudentSelect');
+            
+            const selectedClass = classSelect.value;
+            const selectedStudent = studentSelect.value;
+            
+            if (!selectedClass || !selectedStudent) {
+                alert('🚨 Please select both class and student to remove! ⚠️');
+                return;
+            }
+            
+            const studentName = studentSelect.options[studentSelect.selectedIndex].text;
+            
+            if (confirm(`🚨 Are you sure you want to permanently remove ${studentName}? This action cannot be undone! ⚠️`)) {
+                database.ref(`students/class${selectedClass}/${selectedStudent}`).remove()
+                    .then(() => {
+                        alert('🗑️ Student removed successfully! ✨');
+                        document.getElementById('adminForms').innerHTML = '';
+                        // Refresh the student list if the same class is selected
+                        if (document.getElementById('classSelect').value === selectedClass) {
+                            loadStudents();
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error deleting student:", error);
+                        alert('❌ Error removing student. Please try again!');
+                    });
+            }
+        }
+
+        // Shower animation function for high achievers
+        function startShowerAnimation() {
+            // Clear any existing shower particles
+            document.querySelectorAll('.shower-particle').forEach(particle => particle.remove());
+            
+            // Create shower particles
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'shower-particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 2 + 's';
+                    particle.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    
+                    // Random colors for particles
+                    const colors = [
+                        'radial-gradient(circle, #ffd700, #ff6b6b)',
+                        'radial-gradient(circle, #4ecdc4, #45b7d1)',
+                        'radial-gradient(circle, #96ceb4, #feca57)',
+                        'radial-gradient(circle, #ff9ff3, #54a0ff)',
+                        'radial-gradient(circle, #a8e6cf, #dcedc1)'
+                    ];
+                    particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    document.body.appendChild(particle);
+                    
+                    // Remove particle after animation
+                    setTimeout(() => {
+                        if (particle.parentNode) {
+                            particle.parentNode.removeChild(particle);
+                        }
+                    }, 5000);
+                }, i * 100);
+            }
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            showReportCard();
         });
     </script>
-
-    <!-- Developer Credit Marquee at Bottom -->
-    <div class="fixed bottom-0 left-0 right-0 z-50 overflow-hidden" style="background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c, #4facfe, #00f2fe); background-size: 400% 400%; animation: rainbow 3s ease infinite; border-top: 4px solid #ffffff; box-shadow: 0 -10px 30px rgba(0,0,0,0.3);">
-        
-        <!-- Animated Background Elements -->
-        <div class="absolute inset-0 overflow-hidden">
-            <div class="absolute -top-2 left-10 w-8 h-8 bg-white rounded-full opacity-20 animate-bounce"></div>
-            <div class="absolute -top-1 right-20 w-6 h-6 bg-yellow-300 rounded-full opacity-30 animate-pulse"></div>
-            <div class="absolute -top-3 left-1/3 w-4 h-4 bg-pink-300 rounded-full opacity-25" style="animation: float 4s ease-in-out infinite;"></div>
-            <div class="absolute -top-2 right-1/3 w-5 h-5 bg-blue-300 rounded-full opacity-20" style="animation: float 3s ease-in-out infinite reverse;"></div>
-        </div>
-        
-        <!-- Main Marquee Container -->
-        <div class="relative py-3 sm:py-4 overflow-hidden">
-            <div class="marquee-container">
-                <div class="whitespace-nowrap animate-marquee">
-                    
-                    <!-- Sparkle Effects -->
-                    <span class="inline-block text-2xl sm:text-2xl animate-bounce mr-4" style="animation-delay: 0s;">✨</span>
-                    <span class="inline-block text-xl sm:text-2xl animate-bounce mr-2" style="animation-delay: 0.2s;">🌟</span>
-                    <span class="inline-block text-lg sm:text-2xl animate-bounce mr-4" style="animation-delay: 0.4s;">💫</span>
-                    
-                    <!-- Main Developer Credit Text -->
-                    <span class="text-lg sm:text-1xl md:text-2xl lg:text-2xl font-display text-white mr-8 relative" style="text-shadow: 3px 3px 6px rgba(0,0,0,0.5), 0 0 20px rgba(255,255,255,0.8); letter-spacing: 3px; animation: pulse 2s ease-in-out infinite;">
-                        🚀👨‍💻 This site is developed by Mr. Deepak Kumar Vaishy 👨‍💻🚀
-                    </span>
-                    
-                    <!-- More Sparkle Effects -->
-                    <span class="inline-block text-2xl sm:text-3xl animate-bounce mr-4" style="animation-delay: 0.6s;">⭐</span>
-                    <span class="inline-block text-xl sm:text-2xl animate-bounce mr-2" style="animation-delay: 0.8s;">🎯</span>
-                    <span class="inline-block text-lg sm:text-xl animate-bounce mr-4" style="animation-delay: 1s;">🏆</span>
-                    
-                    <!-- Repeated Text for Continuous Effect -->
-                    <span class="text-lg sm:text-1xl md:text-2xl lg:text-2xl font-display text-white mr-8 relative" style="text-shadow: 3px 3px 6px rgba(0,0,0,0.5), 0 0 20px rgba(255,255,255,0.8); letter-spacing: 3px; animation: wiggle 3s ease-in-out infinite;">
-                        💻✨ This site is developed by Mr. Deepak Kumar Vaishy ✨💻
-                    </span>
-                    
-                    <!-- Final Sparkle Effects -->
-                    <span class="inline-block text-2xl sm:text-3xl animate-bounce mr-4" style="animation-delay: 1.2s;">🌈</span>
-                    <span class="inline-block text-xl sm:text-2xl animate-bounce mr-2" style="animation-delay: 1.4s;">💎</span>
-                    <span class="inline-block text-lg sm:text-xl animate-bounce mr-8" style="animation-delay: 1.6s;">🎨</span>
-                    
-                    <!-- Third Repetition -->
-                    <span class="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-display text-white mr-8 relative" style="text-shadow: 3px 3px 6px rgba(0,0,0,0.5), 0 0 20px rgba(255,255,255,0.8); letter-spacing: 2px; animation: bounce 2s ease-in-out infinite;">
-                        🎓🌟 This site is developed by Mr. Deepak Kumar Vaishy 🌟🎓
-                    </span>
-                    
-                </div>
-            </div>
-        </div>
-        
-        <!-- Decorative Border Animation -->
-        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-400 via-pink-400 to-purple-400" style="animation: pulse 1.5s ease-in-out infinite;"></div>
-        
-        <!-- Floating Elements -->
-        <div class="absolute top-1 left-4 text-lg text-white opacity-60 animate-bounce" style="animation-delay: 0.3s;">💻</div>
-        <div class="absolute top-2 right-8 text-sm text-white opacity-50 animate-bounce" style="animation-delay: 0.7s;">🚀</div>
-        <div class="absolute top-1 left-1/2 text-base text-white opacity-40 animate-bounce" style="animation-delay: 1.1s;">⚡</div>
-        
-    </div>
-
-    <!-- Add bottom padding to main content to prevent overlap with fixed marquee -->
-    <style>
-        body {
-            padding-bottom: 60px; /* Adjust based on marquee height */
-        }
-        
-        @media (min-width: 640px) {
-            body {
-                padding-bottom: 80px;
-            }
-        }
-        
-        /* Enhanced marquee animation for smoother effect */
-        @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-        
-        .animate-marquee {
-            animation: marquee 25s linear infinite;
-        }
-        
-        /* Pause animation on hover for better readability */
-        .marquee-container:hover .animate-marquee {
-            animation-play-state: paused;
-        }
-        
-        /* Glowing text effect for developer credit */
-        .developer-glow {
-            text-shadow: 
-                0 0 5px rgba(255,255,255,0.8),
-                0 0 10px rgba(255,255,255,0.6),
-                0 0 15px rgba(255,255,255,0.4),
-                0 0 20px rgba(102, 126, 234, 0.8),
-                0 0 35px rgba(102, 126, 234, 0.6),
-                0 0 40px rgba(102, 126, 234, 0.4);
-        }
-        
-        /* Mobile responsiveness for marquee */
-        @media (max-width: 640px) {
-            .animate-marquee {
-                animation-duration: 20s;
-            }
-            
-            body {
-                padding-bottom: 60px;
-            }
-        }
-        
-        /* Tablet responsiveness */
-        @media (min-width: 641px) and (max-width: 1024px) {
-            .animate-marquee {
-                animation-duration: 22s;
-            }
-        }
-        
-        /* Desktop enhancement */
-        @media (min-width: 1025px) {
-            .animate-marquee {
-                animation-duration: 30s;
-            }
-            
-            body {
-                padding-bottom: 90px;
-            }
-        }
-    </style>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96a3d9dfe45e16e3',t:'MTc1NDM3MTI4Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96bd14f0a5103b4f',t:'MTc1NDYzNTg1MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
