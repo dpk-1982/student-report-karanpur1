@@ -43,17 +43,16 @@
             animation: shower 4s linear infinite;
             pointer-events: none;
         }
-       
-
-/*          Marquee Animations  */
-       @keyframes marqueeLeft {
+        
+        /* Marquee Animations */
+        @keyframes marqueeLeft {
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
         @keyframes marqueeRight {
             0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); } 
-        } 
+            100% { transform: translateX(100%); }
+        }
         @keyframes glow {
             0%, 100% { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0073e6, 0 0 20px #0073e6; }
             50% { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #0073e6, 0 0 40px #0073e6; }
@@ -100,7 +99,7 @@
         }
         
         .marquee-top {
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7);
+            background: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460, #533483);
             overflow: hidden;
             white-space: nowrap;
             padding: 15px 0;
@@ -108,11 +107,28 @@
             top: 0;
             left: 0;
             right: 0;
-            z-index: 1000;
+            z-index: 9999;
+            border-bottom: 8px solid transparent;
+            border-image: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7) 1;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.4), inset 0 3px 15px rgba(255,255,255,0.1);
+            animation: marqueeShine 3s ease-in-out infinite;
+            clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+        }
+        
+        .marquee-top::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, #ff6b6b20, #4ecdc420, #45b7d120, #96ceb420);
+            z-index: -1;
+            filter: blur(2px);
         }
         
         .marquee-bottom {
-            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+            background: linear-gradient(-45deg, #2c1810, #3d2914, #4a1810, #5d1a1a);
             overflow: hidden;
             white-space: nowrap;
             padding: 15px 0;
@@ -120,55 +136,98 @@
             bottom: 0;
             left: 0;
             right: 0;
-            z-index: 1000;
+            z-index: 9999;
+            border-top: 8px solid transparent;
+            border-image: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c) 1;
+            box-shadow: 0 -6px 25px rgba(0,0,0,0.4), inset 0 -3px 15px rgba(255,255,255,0.1);
+            animation: marqueeGlow 4s ease-in-out infinite;
+            clip-path: polygon(5% 0, 95% 0, 100% 100%, 0% 100%);
+        }
+        
+        .marquee-bottom::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(-45deg, #667eea20, #764ba220, #f093fb20, #f5576c20);
+            z-index: -1;
+            filter: blur(2px);
+        }
+        
+        @keyframes marqueeShine {
+            0%, 100% { 
+                box-shadow: 0 4px 15px rgba(0,0,0,0.3), inset 0 2px 10px rgba(255,255,255,0.3);
+                border-bottom-width: 6px;
+            }
+            50% { 
+                box-shadow: 0 6px 25px rgba(255,107,107,0.5), inset 0 4px 15px rgba(255,255,255,0.5);
+                border-bottom-width: 8px;
+            }
+        }
+        
+        @keyframes marqueeGlow {
+            0%, 100% { 
+                box-shadow: 0 -4px 15px rgba(0,0,0,0.3), inset 0 -2px 10px rgba(255,255,255,0.3);
+                border-top-width: 6px;
+            }
+            50% { 
+                box-shadow: 0 -6px 25px rgba(102,126,234,0.5), inset 0 -4px 15px rgba(255,255,255,0.5);
+                border-top-width: 8px;
+            }
         }
         
         .marquee-content-top {
             display: inline-block;
-            animation: marqueeLeft 30s linear infinite;
-            font-size: 1.1rem;
+            animation: marqueeLeft 35s linear infinite;
+            font-size: 1.2rem;
             font-weight: bold;
             color: white;
+            white-space: nowrap;
+            padding-left: 100%;
+            padding-right: 100%;
         }
         
         .marquee-content-bottom {
             display: inline-block;
-            animation: marqueeLeft 30s linear infinite;
+            animation: marqueeLeft 40s linear infinite;
             font-size: 1.1rem;
             font-weight: bold;
             color: white;
+            white-space: nowrap;
+            padding-left: 100%;
+            padding-right: 100%;
         }
         
-        /* Animated Background */
-        @keyframes backgroundShift {
-            0% { background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); }
-            14% { background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c); }
-            28% { background: linear-gradient(-45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4); }
-            42% { background: linear-gradient(-45deg, #ffeaa7, #fab1a0, #fd79a8, #fdcb6e); }
-            56% { background: linear-gradient(-45deg, #a29bfe, #6c5ce7, #fd79a8, #e84393); }
-            70% { background: linear-gradient(-45deg, #00b894, #00cec9, #0984e3, #6c5ce7); }
-            84% { background: linear-gradient(-45deg, #e17055, #d63031, #74b9ff, #0984e3); }
-            100% { background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); }
+        /* Pause animations on hover */
+        .marquee-top:hover .marquee-content-top,
+        .marquee-bottom:hover .marquee-content-bottom {
+            animation-play-state: paused;
         }
         
-        .animated-bg {
+        /* Smooth Page Background Animation */
+        @keyframes smoothBackgroundShift {
+            0% { background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%); }
+            20% { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 25%, #fecfef 50%, #ff9a9e 75%, #a8edea 100%); }
+            40% { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 25%, #d299c2 50%, #fef9d7 75%, #667eea 100%); }
+            60% { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 25%, #ff8a80 50%, #ff7043 75%, #764ba2 100%); }
+            80% { background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 25%, #667eea 50%, #764ba2 75%, #f093fb 100%); }
+            100% { background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%); }
+        }
+        
+        .smooth-animated-bg {
             background-size: 400% 400%;
-            animation: backgroundShift 15s ease infinite;
+            animation: smoothBackgroundShift 20s ease-in-out infinite;
+            transition: all 0.5s ease;
         }
     </style>
 </head>
-<body class="min-h-screen animated-bg" style="font-family: 'Comic Sans MS', bold, sans-serif; padding-top: 60px; padding-bottom: 60px;">
+<body class="min-h-screen smooth-animated-bg" style="font-family: 'Arial', 'Helvetica', sans-serif; padding-top: 80px; padding-bottom: 80px;">
     <!-- Top Marquee -->
     <div class="marquee-top">
         <div class="marquee-content-top">
-           
-                
-           
-                    🎓 Welcome to Primary School Karanpur, "🌟A school with a difference.".🌟 "Learn with JOY !! "🌟 Excellence in Education 📚 Building Future Leaders 🚀 🎓 Welcome to Primary School Karanpur, "🌟A school with a difference.".🌟 "Learn with JOY !! "🌟 Excellence in Education 📚 Building Future Leaders 🚀
-               🎓 Welcome to Primary School Karanpur, "🌟A school with a difference.".🌟 "Learn with JOY !! "🌟 Excellence in Education 📚 Building Future Leaders 🚀
-               
-               
-            
+            🎓 Welcome to Primary School Karanpur, A school with a difference. Learn with JOY !! 🌟 Excellence in Education 📚 Building Future Leaders 🚀
         </div>
     </div>
 
@@ -176,13 +235,29 @@
     <div id="celebration" class="celebration hidden"></div>
 
     <!-- School Name Box -->
-    <div class="container mx-auto px-4 py-6">
-        <div class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 p-1 rounded-3xl shadow-2xl mb-6">
-            <div class="bg-white rounded-3xl p-6 text-center">
-                <h1 class="text-5xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-r from-indigo-600 to-purple-500 bg-clip-text text-transparent mb-2">
-                    Primary School Karanpur
+    <div class="w-full px-4 py-6">
+        <div class="relative bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 p-2 rounded-3xl shadow-2xl mb-6 border-4 border-white animate-pulse">
+            <!-- Shining border effect -->
+            <div class="absolute inset-0 bg-gradient-to-r from-cyan-300 via-blue-400 to-indigo-500 rounded-3xl blur-sm opacity-75 animate-pulse"></div>
+            <div class="relative bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 rounded-3xl p-8 text-center border-4 border-gold shadow-inner overflow-hidden">
+                <!-- Animated background pattern -->
+                <div class="absolute inset-0 opacity-20">
+                    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 animate-pulse"></div>
+                    <div class="absolute top-4 left-4 w-16 h-16 bg-white rounded-full opacity-10 animate-bounce"></div>
+                    <div class="absolute top-8 right-8 w-12 h-12 bg-yellow-300 rounded-full opacity-15 animate-bounce" style="animation-delay: 0.5s;"></div>
+                    <div class="absolute bottom-8 left-8 w-20 h-20 bg-pink-400 rounded-full opacity-10 animate-bounce" style="animation-delay: 1s;"></div>
+                    <div class="absolute bottom-4 right-4 w-14 h-14 bg-green-400 rounded-full opacity-15 animate-bounce" style="animation-delay: 1.5s;"></div>
+                </div>
+                <!-- Decorative corner stars -->
+                <div class="absolute top-2 left-2 text-yellow-400 text-2xl animate-spin">⭐</div>
+                <div class="absolute top-2 right-2 text-yellow-400 text-2xl animate-spin" style="animation-delay: 0.5s;">⭐</div>
+                <div class="absolute bottom-2 left-2 text-yellow-400 text-2xl animate-spin" style="animation-delay: 1s;">⭐</div>
+                <div class="absolute bottom-2 right-2 text-yellow-400 text-2xl animate-spin" style="animation-delay: 1.5s;">⭐</div>
+                
+                <h1 class="text-3xl sm:text-4xl md:text-6xl font-bold bg-gradient-to-r from-cyan-300 via-white to-blue-300 bg-clip-text text-transparent mb-4 drop-shadow-2xl relative z-10" style="font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; text-shadow: 0 0 30px rgba(255,255,255,0.5);">
+                    🏫 Primary School Karanpur
                 </h1>
-                <p class="text-lg sm:text-xl text-gray-600 font-semibold">"A School with a Difference."</p>
+                <p class="text-xl sm:text-2xl font-bold bg-gradient-to-r from-yellow-300 via-white to-cyan-300 bg-clip-text text-transparent relative z-10" style="font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; text-shadow: 0 0 20px rgba(255,255,255,0.3);">A School with a Difference - Learn with JOY!</p>
             </div>
         </div>
     </div>
@@ -191,7 +266,7 @@
     <nav class="bg-white shadow-2xl mb-8 border-4 border-yellow-300 rounded-b-3xl">
         <div class="container mx-auto px-4 py-4">
             <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
-                <h1 class="text-2xl sm:text-3xl font-bold text-purple-600 text-center">🎓 Report Card System 🎓</h1>
+                <h1 class="text-2xl sm:text-3xl font-bold text-purple-600 text-center">🎓 Report Card System</h1>
                 <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 w-full sm:w-auto">
                     <button id="studentViewBtn" class="bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white px-4 py-3 rounded-full btn-hover shadow-lg border-2 border-blue-300 font-bold text-sm sm:text-base slide-in-left">
                         📊 Student View
@@ -206,8 +281,18 @@
 
     <!-- Student View -->
     <div id="studentView" class="container mx-auto px-2 sm:px-4">
-        <div class="bg-white rounded-3xl shadow-2xl p-4 sm:p-8 mb-8 border-4 border-purple-300">
-            <h2 class="text-2xl sm:text-4xl font-bold text-center text-purple-600 mb-6 sm:mb-8">🌟 Select Student Report Card 🌟</h2>
+        <div class="relative bg-gradient-to-br from-purple-100 via-pink-100 to-blue-100 rounded-3xl shadow-2xl p-4 sm:p-8 mb-8 border-4 border-purple-400 overflow-hidden">
+            <!-- Animated background elements -->
+            <div class="absolute top-0 left-0 w-full h-full opacity-20">
+                <div class="absolute top-4 left-4 w-8 h-8 bg-purple-400 rounded-full animate-bounce"></div>
+                <div class="absolute top-8 right-8 w-6 h-6 bg-pink-400 rounded-full animate-bounce" style="animation-delay: 0.5s;"></div>
+                <div class="absolute bottom-8 left-8 w-10 h-10 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 1s;"></div>
+                <div class="absolute bottom-4 right-4 w-7 h-7 bg-yellow-400 rounded-full animate-bounce" style="animation-delay: 1.5s;"></div>
+            </div>
+            <!-- Shining border effect -->
+            <div class="absolute inset-0 bg-gradient-to-r from-purple-300 via-pink-300 to-blue-300 rounded-3xl blur-sm opacity-50 animate-pulse"></div>
+            <div class="relative">
+                <h2 class="text-2xl sm:text-4xl font-bold text-center bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent mb-6 sm:mb-8 drop-shadow-lg">🌟 Select Student Report Card</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
                 <div class="space-y-2">
@@ -229,8 +314,7 @@
                     </select>
                 </div>
             </div>
-            
-
+            </div>
         </div>
 
         <!-- Report Card Display -->
@@ -502,27 +586,30 @@
                     ${isHighAchiever ? '<div class="text-2xl">🌟 EXCELLENT PERFORMANCE! 🌟</div>' : ''}
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
-                    <div class="bg-gradient-to-r from-blue-100 to-purple-100 p-4 sm:p-6 rounded-2xl">
-                        <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-4">📋 Student Information</h3>
-                        <div class="space-y-2 text-sm sm:text-base">
-                            <p><span class="font-semibold">👦 Student Name:</span> ${studentData.name}</p>
-                            <p><span class="font-semibold">👨 Father's Name:</span> ${studentData.fatherName}</p>
-                            <p><span class="font-semibold">📚 Class:</span> ${classNum}</p>
+                <!-- Student Information -->
+                <div class="bg-gradient-to-r from-blue-100 to-purple-100 p-6 sm:p-8 rounded-2xl mb-6 sm:mb-8 border-4 border-blue-400 shadow-2xl relative overflow-hidden">
+                    <!-- Decorative corner elements -->
+                    <div class="absolute top-0 left-0 w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-br-full"></div>
+                    <div class="absolute top-0 right-0 w-8 h-8 bg-gradient-to-bl from-blue-500 to-purple-500 rounded-bl-full"></div>
+                    <div class="absolute bottom-0 left-0 w-8 h-8 bg-gradient-to-tr from-blue-500 to-purple-500 rounded-tr-full"></div>
+                    <div class="absolute bottom-0 right-0 w-8 h-8 bg-gradient-to-tl from-blue-500 to-purple-500 rounded-tl-full"></div>
+                    
+                    <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center bg-white rounded-xl p-3 shadow-lg border-2 border-blue-300">📋 Student Information</h3>
+                    <div class="space-y-4 text-base sm:text-lg md:text-xl">
+                        <div class="bg-white p-4 rounded-xl shadow-md border-l-4 border-blue-500">
+                            <p><span class="font-semibold text-blue-600">👦 Student Name:</span> <span class="font-bold text-gray-800">${studentData.name}</span></p>
                         </div>
-                    </div>
-
-                    <div class="bg-gradient-to-r from-green-100 to-blue-100 p-4 sm:p-6 rounded-2xl">
-                        <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-4">📊 Performance Summary</h3>
-                        <div class="space-y-2 text-sm sm:text-base">
-                            <p><span class="font-semibold">📈 Total Marks:</span> ${totalObtained}/${totalMaximum}</p>
-                            <p><span class="font-semibold">🎯 Percentage:</span> <span class="${percentage >= 85 ? 'text-green-600 font-bold text-lg sm:text-xl' : percentage >= 60 ? 'text-blue-600' : 'text-red-600'}">${percentage}%</span></p>
-                            <p><span class="font-semibold">🏆 Grade:</span> <span class="font-bold ${percentage >= 85 ? 'text-green-600' : percentage >= 60 ? 'text-blue-600' : 'text-red-600'}">${getGrade(percentage)}</span></p>
+                        <div class="bg-white p-4 rounded-xl shadow-md border-l-4 border-purple-500">
+                            <p><span class="font-semibold text-purple-600">👨 Father's Name:</span> <span class="font-bold text-gray-800">${studentData.fatherName}</span></p>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl shadow-md border-l-4 border-indigo-500">
+                            <p><span class="font-semibold text-indigo-600">📚 Class:</span> <span class="font-bold text-gray-800">${classNum}</span></p>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-gray-50 rounded-2xl p-3 sm:p-6">
+                <!-- Subject-wise Performance Table -->
+                <div class="bg-gray-50 rounded-2xl p-3 sm:p-6 mb-6 sm:mb-8">
                     <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6 text-center">📚 Subject-wise Performance</h3>
                     <div class="overflow-x-auto">
                         <table class="w-full bg-white rounded-xl shadow-lg overflow-hidden min-w-full">
@@ -544,6 +631,22 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+
+                <!-- Performance Summary -->
+                <div class="bg-gradient-to-r from-orange-100 to-pink-100 p-6 sm:p-8 rounded-2xl border-4 border-orange-300">
+                    <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">📊 Performance Summary</h3>
+                    <div class="space-y-4 text-center">
+                        <div class="bg-white p-4 rounded-xl shadow-md">
+                            <p class="text-base sm:text-lg md:text-xl"><span class="font-semibold">📈 Total Marks:</span> <span class="font-bold text-blue-600">${totalObtained}/${totalMaximum}</span></p>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl shadow-md">
+                            <p class="text-base sm:text-lg md:text-xl"><span class="font-semibold">🎯 Percentage:</span> <span class="${percentage >= 85 ? 'text-green-600 font-bold text-xl sm:text-2xl md:text-3xl' : percentage >= 60 ? 'text-blue-600 font-bold text-xl sm:text-2xl' : 'text-red-600 font-bold text-xl sm:text-2xl'}">${percentage}%</span></p>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl shadow-md">
+                            <p class="text-base sm:text-lg md:text-xl"><span class="font-semibold">🏆 Grade:</span> <span class="font-bold text-xl sm:text-2xl md:text-3xl ${percentage >= 85 ? 'text-green-600' : percentage >= 60 ? 'text-blue-600' : 'text-red-600'}">${getGrade(percentage)}</span></p>
+                        </div>
                     </div>
                 </div>
 
@@ -577,7 +680,7 @@
             // Scroll to report card
             setTimeout(() => {
                 reportCard.scrollIntoView({ behavior: 'smooth' });
-            }, 300);
+            }, 200);
         }
 
         // Get grade based on percentage
@@ -594,11 +697,13 @@
         // Get random motivational quote
         function getMotivationalQuote() {
             const quotes = [
+                "Success is not final, failure is not fatal: it is the courage to continue that counts.",
                 "The future belongs to those who believe in the beauty of their dreams.",
                 "It is during our darkest moments that we must focus to see the light.",
                 "Believe you can and you're halfway there.",
                 "The only impossible journey is the one you never begin.",
                 "In the middle of difficulty lies opportunity.",
+                "Success is not how high you have climbed, but how you make a positive difference to the world.",
                 "Don't watch the clock; do what it does. Keep going.",
                 "The way to get started is to quit talking and begin doing.",
                 "Innovation distinguishes between a leader and a follower.",
@@ -667,7 +772,7 @@
                 adminDashboard.classList.remove('hidden');
                 adminPasswordInput.value = ''; // Clear password after successful login
             } else {
-                alert('❌ Incorrect password! Try with correct password.');
+                alert('❌ Incorrect password! Try "admin123"');
                 adminPasswordInput.value = '';
             }
         });
@@ -770,33 +875,35 @@
         function addSubjectWithData(subjectName = '', obtained = 0, maximum = 10, isDefault = false) {
             const container = document.getElementById('allSubjects');
             const subjectDiv = document.createElement('div');
-            subjectDiv.className = 'bg-white p-4 rounded-2xl shadow-lg border-4 border-blue-200 btn-hover';
+            subjectDiv.className = 'bg-white p-3 sm:p-4 rounded-2xl shadow-lg border-4 border-blue-200 btn-hover';
             
             const removeButton = isDefault ? '' : `
-                <div>
-                    <button type="button" onclick="this.parentElement.parentElement.remove()" class="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-4 py-3 rounded-xl font-bold w-full btn-hover shadow-lg border-2 border-red-400">
+                <div class="flex justify-center mt-3">
+                    <button type="button" onclick="this.parentElement.parentElement.remove()" class="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-4 py-2 rounded-xl font-bold btn-hover shadow-lg border-2 border-red-400 text-sm">
                         🗑️ Remove
                     </button>
                 </div>
             `;
             
-            const gridCols = isDefault ? 'sm:grid-cols-3' : 'sm:grid-cols-4';
             const readonlyAttr = isDefault ? 'readonly' : '';
             const placeholder = isDefault ? '' : 'placeholder="Subject Name"';
             
             subjectDiv.innerHTML = `
-                <div class="grid grid-cols-1 ${gridCols} gap-3 items-end">
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">Subject Name:</label>
-                        <input type="text" class="subject-name w-full p-3 border-4 border-gray-300 rounded-xl focus:border-blue-500 focus:outline-none bg-blue-50 font-bold" value="${subjectName}" ${readonlyAttr} ${placeholder}>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">Obtained Marks:</label>
-                        <input type="number" class="subject-obtained w-full p-3 border-4 border-gray-300 rounded-xl focus:border-blue-500 focus:outline-none bg-blue-50 font-bold text-center" min="0" value="${obtained}">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">Maximum Marks:</label>
-                        <input type="number" class="subject-maximum w-full p-3 border-4 border-gray-300 rounded-xl focus:border-blue-500 focus:outline-none bg-blue-50 font-bold text-center" min="1" value="${maximum}">
+                <div class="space-y-3">
+                    <!-- Mobile: All fields in column, Desktop: All fields in row -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-xs sm:text-sm font-bold text-gray-700 mb-1">Subject Name:</label>
+                            <input type="text" class="subject-name w-full p-2 sm:p-3 border-3 sm:border-4 border-gray-300 rounded-lg sm:rounded-xl focus:border-blue-500 focus:outline-none bg-blue-50 font-bold text-sm sm:text-base" value="${subjectName}" ${readonlyAttr} ${placeholder}>
+                        </div>
+                        <div>
+                            <label class="block text-xs sm:text-sm font-bold text-gray-700 mb-1">Obtained Marks:</label>
+                            <input type="number" class="subject-obtained w-full p-2 sm:p-3 border-3 sm:border-4 border-gray-300 rounded-lg sm:rounded-xl focus:border-blue-500 focus:outline-none bg-blue-50 font-bold text-center text-sm sm:text-base" min="0" value="${obtained}">
+                        </div>
+                        <div>
+                            <label class="block text-xs sm:text-sm font-bold text-gray-700 mb-1">Maximum Marks:</label>
+                            <input type="number" class="subject-maximum w-full p-2 sm:p-3 border-3 sm:border-4 border-gray-300 rounded-lg sm:rounded-xl focus:border-blue-500 focus:outline-none bg-blue-50 font-bold text-center text-sm sm:text-base" min="1" value="${maximum}">
+                        </div>
                     </div>
                     ${removeButton}
                 </div>
@@ -1091,8 +1198,8 @@
     <!-- Bottom Marquee -->
     <div class="marquee-bottom">
         <div class="marquee-content-bottom">
-            💻 This site is developed by Mr. Deepak Kumar Vaishy !! 🌟This site is developed by Mr. Deepak Kumar Vaishy !!  🚀 🌟This site is developed by Mr. Deepak Kumar Vaishy !! 🌟This site is developed by Mr. Deepak Kumar Vaishy !!  🚀 🚀Contact for Custom Solutions 📧💻 This site is developed by Mr. Deepak Kumar Vaishy !! 🌟
+            💻 This site is developed by Mr. Deepak Kumar Vaishya , Assistant Teacher at Primary School Karanpur. !! 🌟 Professional Web Development Services 🚀 Contact for Custom Solutions 📧
         </div>
     </div>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96c72dbb24925a12',t:'MTc1NDc0MTcyMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96cd4604d7d254b0',t:'MTc1NDgwNTYzMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
