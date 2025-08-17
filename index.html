@@ -2,15 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>🌟 Student Report Card System</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <style>
-        .rainbow-bg {
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        /* Base responsive styles */
+        * {
+            box-sizing: border-box;
         }
+        
+        html, body {
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        /* Hide scrollbars */
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+        
+        html {
+            scrollbar-width: none;
+        }
+        
+        /* Responsive font sizes */
+        .text-responsive-xs { font-size: clamp(0.75rem, 2vw, 0.875rem); }
+        .text-responsive-sm { font-size: clamp(0.875rem, 2.5vw, 1rem); }
+        .text-responsive-base { font-size: clamp(1rem, 3vw, 1.125rem); }
+        .text-responsive-lg { font-size: clamp(1.125rem, 3.5vw, 1.25rem); }
+        .text-responsive-xl { font-size: clamp(1.25rem, 4vw, 1.5rem); }
+        .text-responsive-2xl { font-size: clamp(1.5rem, 5vw, 2rem); }
+        .text-responsive-3xl { font-size: clamp(2rem, 6vw, 3rem); }
+        .text-responsive-4xl { font-size: clamp(2.5rem, 7vw, 4rem); }
+        
+        /* Smooth animations */
         .celebration {
             position: fixed;
             top: 0;
@@ -20,48 +48,424 @@
             pointer-events: none;
             z-index: 1000;
         }
+        
         .confetti {
             position: absolute;
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             background: #f39c12;
             animation: confetti-fall 3s linear infinite;
         }
+        
         @keyframes confetti-fall {
             0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
             100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
         }
+        
+        .shower-particle {
+            position: absolute;
+            font-size: clamp(1rem, 3vw, 2rem);
+            animation: shower 4s linear infinite;
+            pointer-events: none;
+        }
+        
         @keyframes shower {
             0% { transform: translateY(-100vh) scale(0); opacity: 0; }
             10% { opacity: 1; transform: scale(1); }
             90% { opacity: 1; }
             100% { transform: translateY(100vh) scale(0); opacity: 0; }
         }
-        .shower-particle {
+        
+        /* Shiny effects for school name */
+        .shiny-container {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .shiny-container::before {
+            content: '';
             position: absolute;
-            font-size: 2rem;
-            animation: shower 4s linear infinite;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, 
+                transparent 30%, 
+                rgba(255, 255, 255, 0.3) 50%, 
+                transparent 70%);
+            animation: shine 6s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+            100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        }
+        
+        .sparkle-effect {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            animation: sparkle 2s ease-in-out infinite;
             pointer-events: none;
         }
         
-        /* Marquee Animations */
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+        
+        .simple-text {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Enhanced celebration effects */
+        .golden-shower {
+            position: absolute;
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            animation: golden-shower 5s linear infinite;
+            pointer-events: none;
+            filter: drop-shadow(0 0 10px gold);
+        }
+        
+        @keyframes golden-shower {
+            0% { 
+                transform: translateY(-100vh) scale(0) rotate(0deg); 
+                opacity: 0; 
+            }
+            10% { 
+                opacity: 1; 
+                transform: scale(1.2) rotate(180deg); 
+            }
+            50% { 
+                transform: scale(1) rotate(360deg); 
+            }
+            90% { 
+                opacity: 1; 
+                transform: scale(0.8) rotate(540deg); 
+            }
+            100% { 
+                transform: translateY(100vh) scale(0) rotate(720deg); 
+                opacity: 0; 
+            }
+        }
+        
+        .firework {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            animation: firework 2s ease-out infinite;
+        }
+        
+        @keyframes firework {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+        
+        .report-card-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .report-card-shine::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 215, 0, 0.4), 
+                transparent);
+            animation: report-shine 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes report-shine {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: -100%; }
+        }
+        
+        /* Marquee animations - seamless continuous scrolling */
         @keyframes marqueeLeft {
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
+        
         @keyframes marqueeRight {
             0% { transform: translateX(-100%); }
             100% { transform: translateX(100%); }
         }
-        @keyframes glow {
-            0%, 100% { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0073e6, 0 0 20px #0073e6; }
-            50% { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #0073e6, 0 0 40px #0073e6; }
-        }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        
+        /* Button collision animations */
+        @keyframes slideInFromLeft {
+            0% { 
+                transform: translateX(-200vw) scale(0.8);
+                opacity: 0;
+            }
+            70% {
+                transform: translateX(10px) scale(1.1);
+                opacity: 1;
+            }
+            100% { 
+                transform: translateX(0) scale(1);
+                opacity: 1;
+            }
         }
         
+        @keyframes slideInFromRight {
+            0% { 
+                transform: translateX(200vw) scale(0.8);
+                opacity: 0;
+            }
+            70% {
+                transform: translateX(-10px) scale(1.1);
+                opacity: 1;
+            }
+            100% { 
+                transform: translateX(0) scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .slide-collision-left {
+            animation: slideInFromLeft 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        .slide-collision-right {
+            animation: slideInFromRight 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            animation-delay: 0.2s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+        
+        /* Beautiful kid-friendly marquee styles with geometric shapes */
+        .marquee-top {
+            background: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460, #533483, #7209b7, #2d1b69);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            overflow: hidden;
+            white-space: nowrap;
+            padding: clamp(10px, 2.5vw, 16px) clamp(12px, 3vw, 20px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10000;
+            /* Hexagonal bottom border */
+            clip-path: polygon(0 0, 100% 0, 100% 70%, 95% 85%, 85% 95%, 75% 100%, 25% 100%, 15% 95%, 5% 85%, 0 70%);
+            border: clamp(1px, 0.4vw, 2px) solid #fff;
+            border-bottom: none;
+            box-shadow: 
+                0 4px 12px rgba(0,0,0,0.2),
+                inset 0 1px 4px rgba(255,255,255,0.2),
+                0 0 0 clamp(0.5px, 0.2vw, 1px) rgba(255,255,255,0.6);
+            backdrop-filter: blur(10px);
+            will-change: transform;
+            transform: translateZ(0);
+        }
+        
+        .marquee-top::before {
+            content: '';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: clamp(60px, 15vw, 120px);
+            height: clamp(20px, 5vw, 40px);
+            background: linear-gradient(45deg, #7209b7, #533483);
+            /* Diamond shape */
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            border: clamp(1px, 0.3vw, 2px) solid #fff;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+        }
+        
+        .marquee-top::after {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: clamp(0.9rem, 2.5vw, 1.6rem);
+            animation: twinkle 2s ease-in-out infinite;
+        }
+        
+        .marquee-bottom {
+            background: linear-gradient(-45deg, #2d1b69, #7209b7, #533483, #0f3460, #16213e, #1a1a2e);
+            background-size: 400% 400%;
+            animation: gradientShift 10s ease infinite reverse;
+            overflow: hidden;
+            white-space: nowrap;
+            padding: clamp(10px, 2.5vw, 16px) clamp(12px, 3vw, 20px);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 10000;
+            /* Arrow-like top border pointing upward */
+            clip-path: polygon(0 30%, 5% 15%, 15% 5%, 25% 0%, 75% 0%, 85% 5%, 95% 15%, 100% 30%, 100% 100%, 0 100%);
+            border: clamp(1px, 0.4vw, 2px) solid #fff;
+            border-top: none;
+            box-shadow: 
+                0 -4px 12px rgba(0,0,0,0.2),
+                inset 0 -1px 4px rgba(255,255,255,0.2),
+                0 0 0 clamp(0.5px, 0.2vw, 1px) rgba(255,255,255,0.6);
+            backdrop-filter: blur(10px);
+            will-change: transform;
+            transform: translateZ(0);
+        }
+        
+        .marquee-bottom::before {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: clamp(60px, 15vw, 120px);
+            height: clamp(20px, 5vw, 40px);
+            background: linear-gradient(-45deg, #533483, #7209b7);
+            /* Octagon shape */
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            border: clamp(1px, 0.3vw, 2px) solid #fff;
+            box-shadow: 0 -3px 12px rgba(0,0,0,0.15);
+        }
+        
+        .marquee-bottom::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: clamp(0.9rem, 2.5vw, 1.6rem);
+            animation: bounce 2s ease-in-out infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { transform: translateX(-50%) scale(1) rotate(0deg); }
+            50% { transform: translateX(-50%) scale(1.2) rotate(180deg); }
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-5px); }
+        }
+        
+        .marquee-content-top {
+            display: inline-block;
+            animation: marqueeLeft 50s linear infinite;
+            font-size: clamp(0.875rem, 2.5vw, 1.125rem);
+            font-weight: 600;
+            font-family: 'Arial', sans-serif;
+            white-space: nowrap;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+            text-shadow: 0 0 8px rgba(255,255,255,0.6);
+            padding-right: 100vw;
+            will-change: transform;
+            transform: translateZ(0);
+            animation-play-state: running;
+        }
+        
+        .marquee-content-bottom {
+            display: inline-block;
+            animation: marqueeLeft 60s linear infinite;
+            font-size: clamp(0.75rem, 2vw, 1rem);
+            font-weight: 600;
+            font-family: 'Arial', sans-serif;
+            white-space: nowrap;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+            text-shadow: 0 0 8px rgba(255,255,255,0.6);
+            padding-right: 100vw;
+            will-change: transform;
+            transform: translateZ(0);
+            animation-play-state: running;
+        }
+        
+        /* Pause animations on hover */
+        .marquee-top:hover .marquee-content-top,
+        .marquee-bottom:hover .marquee-content-bottom {
+            animation-play-state: paused;
+        }
+        
+        /* Ultra smooth background animation */
+        @keyframes ultraSmoothBackgroundShift {
+            0% { 
+                background: linear-gradient(135deg, 
+                    #667eea 0%, #764ba2 12.5%, #f093fb 25%, #f5576c 37.5%, 
+                    #4facfe 50%, #00c9ff 62.5%, #92fe9d 75%, #667eea 87.5%, #667eea 100%); 
+            }
+            12.5% { 
+                background: linear-gradient(135deg, 
+                    #ff9a9e 0%, #fecfef 12.5%, #fad0c4 25%, #ff9a9e 37.5%, 
+                    #a8edea 50%, #fed6e3 62.5%, #d299c2 75%, #fef9d7 87.5%, #ff9a9e 100%); 
+            }
+            25% { 
+                background: linear-gradient(135deg, 
+                    #a8edea 0%, #fed6e3 12.5%, #d299c2 25%, #fef9d7 37.5%, 
+                    #667eea 50%, #764ba2 62.5%, #f093fb 75%, #f5576c 87.5%, #a8edea 100%); 
+            }
+            37.5% { 
+                background: linear-gradient(135deg, 
+                    #ffecd2 0%, #fcb69f 12.5%, #ff8a80 25%, #ff7043 37.5%, 
+                    #764ba2 50%, #667eea 62.5%, #4facfe 75%, #00c9ff 87.5%, #ffecd2 100%); 
+            }
+            50% { 
+                background: linear-gradient(135deg, 
+                    #667eea 0%, #764ba2 12.5%, #f093fb 25%, #f5576c 37.5%, 
+                    #4facfe 50%, #00c9ff 62.5%, #92fe9d 75%, #667eea 87.5%, #667eea 100%); 
+            }
+            62.5% { 
+                background: linear-gradient(135deg, 
+                    #ff9a9e 0%, #fecfef 12.5%, #fad0c4 25%, #ff9a9e 37.5%, 
+                    #a8edea 50%, #fed6e3 62.5%, #d299c2 75%, #fef9d7 87.5%, #ff9a9e 100%); 
+            }
+            75% { 
+                background: linear-gradient(135deg, 
+                    #a8edea 0%, #fed6e3 12.5%, #d299c2 25%, #fef9d7 37.5%, 
+                    #667eea 50%, #764ba2 62.5%, #f093fb 75%, #f5576c 87.5%, #a8edea 100%); 
+            }
+            87.5% { 
+                background: linear-gradient(135deg, 
+                    #ffecd2 0%, #fcb69f 12.5%, #ff8a80 25%, #ff7043 37.5%, 
+                    #764ba2 50%, #667eea 62.5%, #4facfe 75%, #00c9ff 87.5%, #ffecd2 100%); 
+            }
+            100% { 
+                background: linear-gradient(135deg, 
+                    #667eea 0%, #764ba2 12.5%, #f093fb 25%, #f5576c 37.5%, 
+                    #4facfe 50%, #00c9ff 62.5%, #92fe9d 75%, #667eea 87.5%, #667eea 100%); 
+            }
+        }
+        
+        .smooth-animated-bg {
+            background-size: 600% 600%;
+            animation: ultraSmoothBackgroundShift 40s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+        }
+        
+        /* Responsive animations */
         @keyframes slideInLeft {
             0% { transform: translateX(-100%); opacity: 0; }
             100% { transform: translateX(0); opacity: 1; }
@@ -77,157 +481,751 @@
             100% { transform: translateY(0); opacity: 1; }
         }
         
-        .slide-in-left {
-            animation: slideInLeft 0.6s ease-out;
+        .slide-in-left { animation: slideInLeft 0.8s ease-out; }
+        .slide-in-right { animation: slideInRight 0.8s ease-out; }
+        .slide-in-up { animation: slideInUp 0.8s ease-out; }
+        
+        /* Report card section animations */
+        .report-slide-left {
+            animation: slideInLeft 1s ease-out;
+            animation-fill-mode: both;
         }
         
-        .slide-in-right {
-            animation: slideInRight 0.6s ease-out;
+        .report-slide-right {
+            animation: slideInRight 1s ease-out;
+            animation-delay: 0.3s;
+            animation-fill-mode: both;
+            opacity: 0;
         }
         
-        .slide-in-up {
-            animation: slideInUp 0.8s ease-out;
+        .report-slide-left-delayed {
+            animation: slideInLeft 1s ease-out;
+            animation-delay: 0.6s;
+            animation-fill-mode: both;
+            opacity: 0;
         }
         
+        /* Button hover effects */
         .btn-hover {
             transition: all 0.3s ease;
+            transform: translateZ(0);
         }
         
         .btn-hover:hover {
-            transform: translateY(-2px);
+            transform: translateY(-2px) translateZ(0);
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
         
-        .marquee-top {
-            background: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460, #533483);
-            overflow: hidden;
-            white-space: nowrap;
-            padding: 15px 0;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 9999;
-            border-bottom: 8px solid transparent;
-            border-image: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7) 1;
-            box-shadow: 0 6px 25px rgba(0,0,0,0.4), inset 0 3px 15px rgba(255,255,255,0.1);
-            animation: marqueeShine 3s ease-in-out infinite;
-            clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+        /* Mobile optimizations */
+        @media (max-width: 640px) {
+            .marquee-content-top {
+                animation-duration: 35s;
+                font-size: clamp(0.75rem, 3vw, 1rem);
+            }
+            
+            .marquee-content-bottom {
+                animation-duration: 40s;
+                font-size: clamp(0.7rem, 2.8vw, 0.9rem);
+            }
+            
+            .marquee-top {
+                padding: clamp(8px, 2vw, 12px) clamp(8px, 2vw, 16px);
+            }
+            
+            .marquee-bottom {
+                padding: clamp(8px, 2vw, 12px) clamp(8px, 2vw, 16px);
+            }
+            
+            .btn-hover:hover {
+                transform: none;
+            }
+            
+            .btn-hover:active {
+                transform: scale(0.98);
+            }
+            
+            /* Mobile-specific report card adjustments */
+            .report-card-magical-bg {
+                margin: 0 4px;
+                border-radius: 12px;
+            }
+            
+            .floating-element {
+                font-size: clamp(1rem, 4vw, 1.5rem);
+            }
+            
+            /* Better touch targets for mobile */
+            .touch-button {
+                min-height: 48px;
+                min-width: 48px;
+                padding: 12px 16px;
+            }
+            
+            /* Improved mobile table */
+            .responsive-table {
+                font-size: clamp(0.7rem, 2.5vw, 0.85rem);
+            }
+            
+            .responsive-table th,
+            .responsive-table td {
+                padding: clamp(6px, 1.5vw, 12px);
+            }
         }
         
-        .marquee-top::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, #ff6b6b20, #4ecdc420, #45b7d120, #96ceb420);
-            z-index: -1;
-            filter: blur(2px);
+        /* Tablet optimizations */
+        @media (min-width: 641px) and (max-width: 1024px) {
+            .marquee-content-top {
+                animation-duration: 48s;
+                font-size: clamp(0.8rem, 2.2vw, 1.1rem);
+            }
+            
+            .marquee-content-bottom {
+                animation-duration: 58s;
+                font-size: clamp(0.75rem, 2vw, 1rem);
+            }
+            
+            .touch-button {
+                min-height: 46px;
+                min-width: 46px;
+            }
+        }
+        
+        /* Extra small mobile devices */
+        @media (max-width: 480px) {
+            .marquee-content-top {
+                animation-duration: 30s;
+                font-size: clamp(0.7rem, 3.5vw, 0.9rem);
+            }
+            
+            .marquee-content-bottom {
+                animation-duration: 35s;
+                font-size: clamp(0.65rem, 3.2vw, 0.85rem);
+            }
+            
+            .marquee-top {
+                padding: 6px 8px;
+            }
+            
+            .marquee-bottom {
+                padding: 6px 8px;
+            }
+            
+            .text-responsive-3xl { font-size: clamp(1.5rem, 8vw, 2.5rem); }
+            .text-responsive-2xl { font-size: clamp(1.2rem, 6vw, 1.8rem); }
+            .text-responsive-xl { font-size: clamp(1rem, 5vw, 1.4rem); }
+            
+            .report-card-magical-bg {
+                margin: 0 2px;
+                padding: 8px;
+            }
+            
+            .floating-element {
+                font-size: clamp(0.8rem, 3.5vw, 1.2rem);
+            }
+        }
+        
+        /* Performance optimizations */
+        .gpu-accelerated {
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
+        
+        /* Preload and instant display optimizations */
+        .marquee-top,
+        .marquee-bottom {
+            opacity: 1;
+            visibility: visible;
+            display: block;
+        }
+        
+        .marquee-content-top,
+        .marquee-content-bottom {
+            opacity: 1;
+            visibility: visible;
+            display: inline-block;
+        }
+        
+        /* Ensure marquees are always visible during scroll */
+        .marquee-top {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            z-index: 999999 !important;
+            width: 100vw !important;
+            max-width: 100vw !important;
+            transform: translateZ(0) !important;
+            will-change: transform !important;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
         }
         
         .marquee-bottom {
-            background: linear-gradient(-45deg, #2c1810, #3d2914, #4a1810, #5d1a1a);
-            overflow: hidden;
-            white-space: nowrap;
-            padding: 15px 0;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 9999;
-            border-top: 8px solid transparent;
-            border-image: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c) 1;
-            box-shadow: 0 -6px 25px rgba(0,0,0,0.4), inset 0 -3px 15px rgba(255,255,255,0.1);
-            animation: marqueeGlow 4s ease-in-out infinite;
-            clip-path: polygon(5% 0, 95% 0, 100% 100%, 0% 100%);
+            position: fixed !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            z-index: 999999 !important;
+            width: 100vw !important;
+            max-width: 100vw !important;
+            transform: translateZ(0) !important;
+            will-change: transform !important;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
         }
         
-        .marquee-bottom::before {
+        /* Force marquee content to be visible and animated */
+        .marquee-content-top,
+        .marquee-content-bottom {
+            display: inline-block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            animation-play-state: running !important;
+        }
+        
+        /* Responsive table */
+        .responsive-table {
+            font-size: clamp(0.75rem, 2vw, 1rem);
+        }
+        
+        .responsive-table th,
+        .responsive-table td {
+            padding: clamp(8px, 2vw, 16px);
+        }
+        
+        /* Touch-friendly buttons */
+        .touch-button {
+            min-height: 44px;
+            min-width: 44px;
+        }
+        
+        /* Kid-friendly shining background for report cards */
+        .report-card-magical-bg {
+            position: relative;
+            background: linear-gradient(135deg, 
+                #667eea 0%, #764ba2 20%, #f093fb 40%, #f5576c 60%, #4facfe 80%, #00c9ff 100%);
+            background-size: 400% 400%;
+            animation: magicalShine 8s ease-in-out infinite;
+            overflow: hidden;
+        }
+        
+        .report-card-magical-bg::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, 
+                transparent 30%, 
+                rgba(255, 255, 255, 0.2) 40%,
+                rgba(255, 255, 255, 0.4) 50%,
+                rgba(255, 255, 255, 0.2) 60%,
+                transparent 70%);
+            animation: reportCardShine 4s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .report-card-magical-bg::after {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(-45deg, #667eea20, #764ba220, #f093fb20, #f5576c20);
-            z-index: -1;
-            filter: blur(2px);
+            background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 60%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+            animation: sparkleBackground 6s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
         }
         
-        @keyframes marqueeShine {
-            0%, 100% { 
-                box-shadow: 0 4px 15px rgba(0,0,0,0.3), inset 0 2px 10px rgba(255,255,255,0.3);
-                border-bottom-width: 6px;
-            }
-            50% { 
-                box-shadow: 0 6px 25px rgba(255,107,107,0.5), inset 0 4px 15px rgba(255,255,255,0.5);
-                border-bottom-width: 8px;
-            }
+        @keyframes magicalShine {
+            0%, 100% { background-position: 0% 50%; }
+            25% { background-position: 100% 50%; }
+            50% { background-position: 50% 100%; }
+            75% { background-position: 100% 0%; }
         }
         
-        @keyframes marqueeGlow {
-            0%, 100% { 
-                box-shadow: 0 -4px 15px rgba(0,0,0,0.3), inset 0 -2px 10px rgba(255,255,255,0.3);
-                border-top-width: 6px;
-            }
-            50% { 
-                box-shadow: 0 -6px 25px rgba(102,126,234,0.5), inset 0 -4px 15px rgba(255,255,255,0.5);
-                border-top-width: 8px;
-            }
+        @keyframes reportCardShine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            25% { transform: translateX(0%) translateY(0%) rotate(45deg); }
+            50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+            75% { transform: translateX(50%) translateY(-50%) rotate(45deg); }
+            100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
         }
         
-        .marquee-content-top {
-            display: inline-block;
-            animation: marqueeLeft 35s linear infinite;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: white;
-            white-space: nowrap;
-            padding-left: 100%;
-            padding-right: 100%;
+        @keyframes sparkleBackground {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
         }
         
-        .marquee-content-bottom {
-            display: inline-block;
-            animation: marqueeLeft 40s linear infinite;
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: white;
-            white-space: nowrap;
-            padding-left: 100%;
-            padding-right: 100%;
+        /* Floating elements for kid-friendly design */
+        .floating-element {
+            position: absolute;
+            pointer-events: none;
+            z-index: 2;
+            animation: float 3s ease-in-out infinite;
         }
         
-        /* Pause animations on hover */
-        .marquee-top:hover .marquee-content-top,
-        .marquee-bottom:hover .marquee-content-bottom {
-            animation-play-state: paused;
+        .floating-element:nth-child(odd) {
+            animation-delay: 1.5s;
+            animation-direction: reverse;
         }
         
-        /* Smooth Page Background Animation */
-        @keyframes smoothBackgroundShift {
-            0% { background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%); }
-            20% { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 25%, #fecfef 50%, #ff9a9e 75%, #a8edea 100%); }
-            40% { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 25%, #d299c2 50%, #fef9d7 75%, #667eea 100%); }
-            60% { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 25%, #ff8a80 50%, #ff7043 75%, #764ba2 100%); }
-            80% { background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 25%, #667eea 50%, #764ba2 75%, #f093fb 100%); }
-            100% { background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%); }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
         }
         
-        .smooth-animated-bg {
+        /* Rainbow border effect */
+        .rainbow-border {
+            position: relative;
+            background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
             background-size: 400% 400%;
-            animation: smoothBackgroundShift 20s ease-in-out infinite;
-            transition: all 0.4s ease;
+            animation: rainbowBorder 3s linear infinite;
+            padding: 4px;
+            border-radius: 20px;
+        }
+        
+        @keyframes rainbowBorder {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Pulsing glow effect for high achievers */
+        .achievement-glow {
+            box-shadow: 
+                0 0 20px rgba(255, 215, 0, 0.6),
+                0 0 40px rgba(255, 215, 0, 0.4),
+                0 0 60px rgba(255, 215, 0, 0.2),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+            animation: achievementPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes achievementPulse {
+            0%, 100% { 
+                box-shadow: 
+                    0 0 20px rgba(255, 215, 0, 0.6),
+                    0 0 40px rgba(255, 215, 0, 0.4),
+                    0 0 60px rgba(255, 215, 0, 0.2),
+                    inset 0 0 20px rgba(255, 255, 255, 0.1);
+            }
+            50% { 
+                box-shadow: 
+                    0 0 30px rgba(255, 215, 0, 0.8),
+                    0 0 60px rgba(255, 215, 0, 0.6),
+                    0 0 90px rgba(255, 215, 0, 0.4),
+                    inset 0 0 30px rgba(255, 255, 255, 0.2);
+            }
+        }
+        
+        /* Table magical shine effect */
+        .table-magical-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .table-magical-shine::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, 
+                transparent 20%, 
+                rgba(34, 197, 94, 0.15) 30%,
+                rgba(59, 130, 246, 0.2) 40%,
+                rgba(147, 51, 234, 0.15) 50%,
+                rgba(34, 197, 94, 0.1) 60%,
+                transparent 70%);
+            animation: tableShine 6s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .table-magical-shine::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 15% 25%, rgba(34, 197, 94, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(147, 51, 234, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 25% 75%, rgba(34, 197, 94, 0.05) 0%, transparent 35%),
+                radial-gradient(circle at 75% 25%, rgba(59, 130, 246, 0.05) 0%, transparent 35%);
+            animation: tableSparkle 8s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* Student Information Section with Shining Stars */
+        .student-info-magical {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .student-info-magical::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, 
+                transparent 25%, 
+                rgba(219, 39, 119, 0.12) 35%,
+                rgba(147, 51, 234, 0.15) 45%,
+                rgba(79, 70, 229, 0.12) 55%,
+                rgba(219, 39, 119, 0.08) 65%,
+                transparent 75%);
+            animation: studentInfoShine 7s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .student-info-magical::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(219, 39, 119, 0.1) 0%, transparent 35%),
+                radial-gradient(circle at 80% 20%, rgba(147, 51, 234, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 60% 70%, rgba(79, 70, 229, 0.06) 0%, transparent 45%),
+                radial-gradient(circle at 30% 80%, rgba(219, 39, 119, 0.05) 0%, transparent 30%),
+                radial-gradient(circle at 90% 60%, rgba(147, 51, 234, 0.04) 0%, transparent 35%);
+            animation: studentInfoSparkle 9s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        @keyframes studentInfoShine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            20% { transform: translateX(-25%) translateY(-25%) rotate(45deg); }
+            40% { transform: translateX(50%) translateY(50%) rotate(45deg); }
+            60% { transform: translateX(75%) translateY(25%) rotate(45deg); }
+            80% { transform: translateX(25%) translateY(75%) rotate(45deg); }
+            100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        }
+        
+        @keyframes studentInfoSparkle {
+            0%, 100% { opacity: 0.3; }
+            20% { opacity: 0.6; }
+            40% { opacity: 0.9; }
+            60% { opacity: 0.7; }
+            80% { opacity: 0.5; }
+        }
+        
+        /* Floating star elements for student info */
+        .floating-star {
+            position: absolute;
+            color: #fbbf24;
+            font-size: clamp(0.8rem, 2vw, 1.2rem);
+            animation: floatingStar 4s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 3;
+            text-shadow: 0 0 8px rgba(251, 191, 36, 0.6);
+        }
+        
+        .floating-star:nth-child(2n) {
+            animation-delay: 1s;
+            animation-direction: reverse;
+        }
+        
+        .floating-star:nth-child(3n) {
+            animation-delay: 2s;
+            color: #f472b6;
+            text-shadow: 0 0 8px rgba(244, 114, 182, 0.6);
+        }
+        
+        .floating-star:nth-child(4n) {
+            animation-delay: 3s;
+            color: #a78bfa;
+            text-shadow: 0 0 8px rgba(167, 139, 250, 0.6);
+        }
+        
+        @keyframes floatingStar {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg) scale(1); 
+                opacity: 0.7; 
+            }
+            25% { 
+                transform: translateY(-15px) rotate(90deg) scale(1.2); 
+                opacity: 1; 
+            }
+            50% { 
+                transform: translateY(-25px) rotate(180deg) scale(0.9); 
+                opacity: 0.8; 
+            }
+            75% { 
+                transform: translateY(-10px) rotate(270deg) scale(1.1); 
+                opacity: 0.9; 
+            }
+        }
+        
+        /* Twinkling stars effect */
+        .twinkle-star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #fbbf24;
+            border-radius: 50%;
+            animation: twinkleStar 2s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 3;
+            box-shadow: 0 0 6px #fbbf24;
+        }
+        
+        .twinkle-star:nth-child(2n) {
+            background: #f472b6;
+            box-shadow: 0 0 6px #f472b6;
+            animation-delay: 0.5s;
+        }
+        
+        .twinkle-star:nth-child(3n) {
+            background: #a78bfa;
+            box-shadow: 0 0 6px #a78bfa;
+            animation-delay: 1s;
+        }
+        
+        .twinkle-star:nth-child(4n) {
+            background: #60a5fa;
+            box-shadow: 0 0 6px #60a5fa;
+            animation-delay: 1.5s;
+        }
+        
+        @keyframes twinkleStar {
+            0%, 100% { 
+                opacity: 0.3; 
+                transform: scale(0.8); 
+            }
+            50% { 
+                opacity: 1; 
+                transform: scale(1.5); 
+            }
+        }
+        
+        @keyframes tableShine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            25% { transform: translateX(0%) translateY(-50%) rotate(45deg); }
+            50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+            75% { transform: translateX(50%) translateY(-25%) rotate(45deg); }
+            100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        }
+        
+        @keyframes tableSparkle {
+            0%, 100% { opacity: 0.4; }
+            25% { opacity: 0.7; }
+            50% { opacity: 0.9; }
+            75% { opacity: 0.6; }
+        }
+        
+        /* Table rows with subtle shine on hover */
+        .table-magical-shine tbody tr {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .table-magical-shine tbody tr:hover {
+            background: linear-gradient(90deg, 
+                rgba(34, 197, 94, 0.1) 0%, 
+                rgba(59, 130, 246, 0.15) 50%, 
+                rgba(147, 51, 234, 0.1) 100%) !important;
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Table header with enhanced shine */
+        .table-magical-shine thead {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .table-magical-shine thead::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.3), 
+                transparent);
+            animation: headerShine 4s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        @keyframes headerShine {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: -100%; }
+        }
+        
+
+
+
+
+
+
+        /* Wavy Text Animation */
+        .waviy {
+            position: relative;
+            -webkit-box-reflect: below -15px linear-gradient(transparent, rgba(0,0,0,.15));
+            font-size: clamp(1.5rem, 6vw, 2.5rem);
+            font-family: 'Arial Black', sans-serif;
+            font-weight: 500;
+            text-align: center;
+            margin: clamp(15px, 3vw, 25px) 0;
+        }
+        
+        .waviy span {
+            position: relative;
+            display: inline-block;
+            color: #1e3a8a;
+            text-transform: uppercase;
+            animation: waviy 1s infinite;
+            animation-delay: calc(.1s * var(--i));
+            text-shadow: 
+                -3px -3px 0 #fff,
+                3px -3px 0 #fff,
+                -3px 3px 0 #fff,
+                3px 3px 0 #fff,
+                -3px 0 0 #fff,
+                3px 0 0 #fff,
+                0 -3px 0 #fff,
+                0 3px 0 #fff,
+                0 0 8px rgba(30, 58, 138, 0.3);
+            margin: 0 clamp(1px, 0.4vw, 2px);
+        }
+        
+        @keyframes waviy {
+            0%, 40%, 100% {
+                transform: translateY(0);
+            }
+            20% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        /* Mobile optimizations for wavy text */
+        @media (max-width: 5400px) {
+            .waviy {
+                font-size: clamp(1.2rem, 8vw, 2rem);
+                -webkit-box-reflect: below -12px linear-gradient(transparent, rgba(0,0,0,.1));
+                margin: 12px 0;
+            }
+            
+            .waviy span {
+                margin: 0 clamp(0.5px, 0.3vw, 1.5px);
+                text-shadow: 
+                    -2px -2px 0 #fff,
+                    2px -2px 0 #fff,
+                    -2px 2px 0 #fff,
+                    2px 2px 0 #fff,
+                    -2px 0 0 #fff,
+                    2px 0 0 #fff,
+                    0 -2px 0 #fff,
+                    0 2px 0 #fff,
+                    0 0 6px rgba(30, 58, 138, 0.2);
+            }
+            
+            @keyframes waviy {
+                0%, 40%, 100% {
+                    transform: translateY(0);
+                }
+                20% {
+                    transform: translateY(-12px);
+                }
+            }
+        }
+        
+        /* Extra small mobile devices */
+        @media (max-width: 480px) {
+            .waviy {
+                font-size: clamp(1rem, 10vw, 1.8rem);
+                -webkit-box-reflect: below -10px linear-gradient(transparent, rgba(0,0,0,.08));
+                margin: 10px 0;
+            }
+            
+            .waviy span {
+                text-shadow: 
+                    -1.5px -1.5px 0 #fff,
+                    1.5px -1.5px 0 #fff,
+                    -1.5px 1.5px 0 #fff,
+                    1.5px 1.5px 0 #fff,
+                    -1.5px 0 0 #fff,
+                    1.5px 0 0 #fff,
+                    0 -1.5px 0 #fff,
+                    0 1.5px 0 #fff,
+                    0 0 4px rgba(30, 58, 138, 0.15);
+            }
+            
+            @keyframes waviy {
+                0%, 40%, 100% {
+                    transform: translateY(0);
+                }
+                20% {
+                    transform: translateY(-10px);
+                }
+            }
+        }
+
+        /* Reduced motion for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            .marquee-content-top {
+                animation-duration: 80s;
+            }
+            
+            .marquee-content-bottom {
+                animation-duration: 90s;
+            }
+            
+            .smooth-animated-bg {
+                animation: ultraSmoothBackgroundShift 60s linear infinite;
+                background-size: 300% 300%;
+            }
+            
+            .report-card-magical-bg {
+                animation: none;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            }
+            
+            .floating-element {
+                animation: none;
+            }
+            
+            .waviy span {
+                animation: none;
+                background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
         }
     </style>
 </head>
-<body class="min-h-screen smooth-animated-bg" style="font-family: 'Arial', 'Helvetica', sans-serif; padding-top: 80px; padding-bottom: 80px;">
+<body class="min-h-screen smooth-animated-bg gpu-accelerated" style="font-family: 'Arial', sans-serif; padding-top: clamp(50px, 12vw, 80px); padding-bottom: clamp(50px, 12vw, 80px); overflow-x: hidden;">
+    
     <!-- Top Marquee -->
     <div class="marquee-top">
-        <div class="marquee-content-top">
-            🎓 Welcome to Primary School Karanpur, A school with a difference.🎓 Learn with JOY !! 🌟 Excellence in Education 📚 Building Future Leaders 🚀🎓
+        <div class="marquee-content-top" id="topMarqueeContent">
+            PRIMARY SCHOOL KARANPUR - WHERE DREAMS TAKE FLIGHT! ✨ Excellence in Education Since Day One ✨ Nurturing Young Minds with Love & Care ✨ Building Tomorrow's Leaders Today ✨ A School with a Difference ✨ Learn with JOY! ✨ Empowering Students for Success ✨ Quality Education for All ✨ Creating Bright Futures ✨ Knowledge is Power ✨ 
         </div>
     </div>
 
@@ -235,43 +1233,69 @@
     <div id="celebration" class="celebration hidden"></div>
 
     <!-- School Name Box -->
-    <div class="w-full px-4 py-6">
-        <div class="relative bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 p-2 rounded-3xl shadow-2xl mb-6 border-4 border-white animate-pulse">
-            <!-- Shining border effect -->
-            <div class="absolute inset-0 bg-gradient-to-r from-cyan-300 via-blue-400 to-indigo-500 rounded-3xl blur-sm opacity-75 animate-pulse"></div>
-            <div class="relative bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 rounded-3xl p-8 text-center border-4 border-gold shadow-inner overflow-hidden">
-                <!-- Animated background pattern -->
-                <div class="absolute inset-0 opacity-20">
-                    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 animate-pulse"></div>
-                    <div class="absolute top-4 left-4 w-16 h-16 bg-white rounded-full opacity-10 animate-bounce"></div>
-                    <div class="absolute top-8 right-8 w-12 h-12 bg-yellow-300 rounded-full opacity-15 animate-bounce" style="animation-delay: 0.5s;"></div>
-                    <div class="absolute bottom-8 left-8 w-20 h-20 bg-pink-400 rounded-full opacity-10 animate-bounce" style="animation-delay: 1s;"></div>
-                    <div class="absolute bottom-4 right-4 w-14 h-14 bg-green-400 rounded-full opacity-15 animate-bounce" style="animation-delay: 1.5s;"></div>
-                </div>
-                <!-- Decorative corner stars -->
-                <div class="absolute top-2 left-2 text-yellow-400 text-2xl animate-spin">⭐</div>
-                <div class="absolute top-2 right-2 text-yellow-400 text-2xl animate-spin" style="animation-delay: 0.5s;">⭐</div>
-                <div class="absolute bottom-2 left-2 text-yellow-400 text-2xl animate-spin" style="animation-delay: 1s;">⭐</div>
-                <div class="absolute bottom-2 right-2 text-yellow-400 text-2xl animate-spin" style="animation-delay: 1.5s;">⭐</div>
+    <div class="w-full px-2 sm:px-4 py-4 sm:py-6">
+        <div class="relative bg-gradient-to-r from-purple-600 via-indigo-700 to-slate-800 p-1 sm:p-2 rounded-2xl sm:rounded-3xl shadow-2xl mb-4 sm:mb-6 border-2 sm:border-4 border-purple-400">
+            <div class="relative bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900 rounded-xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 text-center border-2 sm:border-4 border-purple-500 shadow-inner overflow-hidden shiny-container">
+                <!-- Decorative elements -->
+                <div class="absolute top-1 left-1 sm:top-2 sm:left-2 text-yellow-400 text-lg sm:text-2xl animate-spin">⭐</div>
+                <div class="absolute top-1 right-1 sm:top-2 sm:right-2 text-yellow-400 text-lg sm:text-2xl animate-spin" style="animation-delay: 0.5s;">⭐</div>
+                <div class="absolute bottom-1 left-1 sm:bottom-2 sm:left-2 text-yellow-400 text-lg sm:text-2xl animate-spin" style="animation-delay: 1s;">⭐</div>
+                <div class="absolute bottom-1 right-1 sm:bottom-2 sm:right-2 text-yellow-400 text-lg sm:text-2xl animate-spin" style="animation-delay: 1.5s;">⭐</div>
                 
-                <h1 class="text-3xl sm:text-4xl md:text-6xl font-bold bg-gradient-to-r from-cyan-300 via-white to-blue-300 bg-clip-text text-transparent mb-4 drop-shadow-2xl relative z-10" style="font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; text-shadow: 0 0 30px rgba(255,255,255,0.5);">
-                    Primary School Karanpur
+                <!-- Sparkle effects -->
+                <div class="sparkle-effect" style="top: 20%; left: 15%; animation-delay: 0s;"></div>
+                <div class="sparkle-effect" style="top: 30%; right: 20%; animation-delay: 0.5s;"></div>
+                <div class="sparkle-effect" style="bottom: 25%; left: 25%; animation-delay: 1s;"></div>
+                <div class="sparkle-effect" style="bottom: 35%; right: 15%; animation-delay: 1.5s;"></div>
+                <div class="sparkle-effect" style="top: 50%; left: 50%; animation-delay: 0.8s;"></div>
+                <div class="sparkle-effect" style="top: 15%; left: 60%; animation-delay: 1.2s;"></div>
+                
+                <h1 class="text-responsive-3xl font-bold text-white mb-2 sm:mb-3 drop-shadow-2xl relative z-10 simple-text">
+                     Primary School Karanpur
                 </h1>
-                <p class="text-xl sm:text-2xl font-bold bg-gradient-to-r from-yellow-300 via-white to-cyan-300 bg-clip-text text-transparent relative z-10" style="font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; text-shadow: 0 0 20px rgba(255,255,255,0.3);"> Behjam, Lakhimpur-Kheri </p>
+                <p class="text-responsive-lg font-bold text-yellow-300 relative z-10 simple-text">
+                    A School with a Difference - Learn with JOY!
+                </p>
+               <div class="w-full px-2 sm:px-4 py-4 sm:py-6 flex justify-center">
+        <div class="waviy">
+            <span style="--i:1">B</span>
+            <span style="--i:2">E</span>
+            <span style="--i:3">H</span>
+            <span style="--i:4">J</span>
+            <span style="--i:5">A</span>
+            <span style="--i:6">M</span>
+            <span style="--i:7">-</span>
+            <span style="--i:8">K</span>
+            <span style="--i:9">H</span>
+            <span style="--i:10">E</span>
+            <span style="--i:11">R</span>
+            <span style="--i:12">I</span>
+        </div>
+    </div>
+               
             </div>
         </div>
     </div>
 
+    <!-- Wavy Text Animation -->
+   
+
+
+
+
+
+
+
     <!-- Navigation -->
-    <nav class="bg-white shadow-2xl mb-8 border-4 border-yellow-300 rounded-b-3xl">
-        <div class="container mx-auto px-4 py-4">
-            <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
-                <h1 class="text-2xl sm:text-3xl font-bold text-purple-600 text-center">🎓 Report Card System 🎓</h1>
-                <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 w-full sm:w-auto">
-                    <button id="studentViewBtn" class="bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white px-4 py-3 rounded-full btn-hover shadow-lg border-2 border-blue-300 font-bold text-sm sm:text-base slide-in-left">
+    <nav class="bg-gradient-to-r from-gray-800 via-slate-800 to-gray-900 shadow-2xl mb-4 sm:mb-8 border-2 sm:border-4 border-purple-500 rounded-b-2xl sm:rounded-b-3xl mx-2 sm:mx-0">
+        <div class="container mx-auto px-2 sm:px-4 py-3 sm:py-4">
+            <div class="flex flex-col space-y-3 sm:space-y-4">
+                <h1 class="text-responsive-2xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent text-center">🎓 Report Card System</h1>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center items-center">
+                    <button id="studentViewBtn" class="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white px-4 py-3 rounded-full btn-hover shadow-lg border-2 border-blue-400 font-bold text-responsive-base slide-collision-left touch-button">
                         📊 Student View
                     </button>
-                    <button id="adminViewBtn" class="bg-gradient-to-r from-red-400 to-red-600 hover:from-red-500 hover:to-red-700 text-white px-4 py-3 rounded-full btn-hover shadow-lg border-2 border-red-300 font-bold text-sm sm:text-base slide-in-right">
+                    <button id="adminViewBtn" class="bg-gradient-to-r from-red-600 to-pink-700 hover:from-red-700 hover:to-pink-800 text-white px-4 py-3 rounded-full btn-hover shadow-lg border-2 border-red-400 font-bold text-responsive-base slide-collision-right touch-button">
                         👨‍💼 Admin Panel
                     </button>
                 </div>
@@ -281,56 +1305,59 @@
 
     <!-- Student View -->
     <div id="studentView" class="container mx-auto px-2 sm:px-4">
-        <div class="relative bg-gradient-to-br from-purple-100 via-pink-100 to-blue-100 rounded-3xl shadow-2xl p-4 sm:p-8 mb-8 border-4 border-purple-400 overflow-hidden">
-            <!-- Animated background elements -->
-            <div class="absolute top-0 left-0 w-full h-full opacity-20">
-                <div class="absolute top-4 left-4 w-8 h-8 bg-purple-400 rounded-full animate-bounce"></div>
-                <div class="absolute top-8 right-8 w-6 h-6 bg-pink-400 rounded-full animate-bounce" style="animation-delay: 0.5s;"></div>
-                <div class="absolute bottom-8 left-8 w-10 h-10 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 1s;"></div>
-                <div class="absolute bottom-4 right-4 w-7 h-7 bg-yellow-400 rounded-full animate-bounce" style="animation-delay: 1.5s;"></div>
-            </div>
-            <!-- Shining border effect -->
-            <div class="absolute inset-0 bg-gradient-to-r from-purple-300 via-pink-300 to-blue-300 rounded-3xl blur-sm opacity-50 animate-pulse"></div>
-            <div class="relative">
-                <h2 class="text-2xl sm:text-4xl font-bold text-center bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent mb-6 sm:mb-8 drop-shadow-lg">🌟To view Report Card🌟</h2>
+        <div class="relative bg-gradient-to-br from-gray-800 via-slate-800 to-gray-900 rounded-2xl sm:rounded-3xl shadow-2xl p-3 sm:p-6 lg:p-8 mb-4 sm:mb-8 border-2 sm:border-4 border-purple-500 overflow-hidden">
+            <div class="relative z-10">
+                <h2 class="text-responsive-2xl font-bold text-center bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent mb-4 sm:mb-6 lg:mb-8 drop-shadow-lg">
+                    🌟 Select Student Report Card
+                </h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
-                <div class="space-y-2">
-                    <label class="block text-base sm:text-lg font-bold text-gray-700">📚 Select Class:</label>
-                    <select id="classSelect" class="w-full p-3 sm:p-4 border-4 border-purple-300 rounded-2xl focus:border-purple-500 focus:outline-none text-base sm:text-lg bg-purple-50 font-bold transform hover:scale-105 transition-all duration-300">
-                        <option value="">Choose Class...</option>
-                        <option value="1">Class 1</option>
-                        <option value="2">Class 2</option>
-                        <option value="3">Class 3</option>
-                        <option value="4">Class 4</option>
-                        <option value="5">Class 5</option>
-                    </select>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 lg:gap-6 mb-4 sm:mb-6 lg:mb-8">
+                    <div class="space-y-2">
+                        <label class="block text-responsive-base font-bold text-gray-300">📚 Select Class:</label>
+                        <select id="classSelect" class="w-full p-3 sm:p-4 border-2 sm:border-4 border-purple-500 rounded-xl sm:rounded-2xl focus:border-purple-400 focus:outline-none text-responsive-base bg-gray-700 text-white font-bold transform hover:scale-105 transition-all duration-300 touch-button">
+                            <option value="">Choose Class...</option>
+                            <option value="1">Class 1</option>
+                            <option value="2">Class 2</option>
+                            <option value="3">Class 3</option>
+                            <option value="4">Class 4</option>
+                            <option value="5">Class 5</option>
+                        </select>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <label class="block text-responsive-base font-bold text-gray-300">👦 Select Student:</label>
+                        <select id="studentSelect" class="w-full p-3 sm:p-4 border-2 sm:border-4 border-purple-500 rounded-xl sm:rounded-2xl focus:border-purple-400 focus:outline-none text-responsive-base bg-gray-700 text-white font-bold transform hover:scale-105 transition-all duration-300 touch-button" disabled>
+                            <option value="">First select a class...</option>
+                        </select>
+                    </div>
                 </div>
-                
-                <div class="space-y-2">
-                    <label class="block text-base sm:text-lg font-bold text-gray-700">👦 Select Student:</label>
-                    <select id="studentSelect" class="w-full p-3 sm:p-4 border-4 border-purple-300 rounded-2xl focus:border-purple-500 focus:outline-none text-base sm:text-lg bg-purple-50 font-bold transform hover:scale-105 transition-all duration-300" disabled>
-                        <option value="">First select a class...</option>
-                    </select>
-                </div>
-            </div>
             </div>
         </div>
 
         <!-- Report Card Display -->
-        <div id="reportCard" class="hidden bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-2 sm:p-4 md:p-8 border-2 sm:border-4 border-yellow-400 mx-1 sm:mx-0">
-            <div id="reportContent"></div>
+        <div id="reportCard" class="hidden report-card-magical-bg rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-2xl p-2 sm:p-4 lg:p-8 border-2 sm:border-4 border-purple-500">
+            <!-- Floating decorative elements -->
+            <div class="floating-element text-2xl" style="top: 10%; left: 5%;">⭐</div>
+            <div class="floating-element text-2xl" style="top: 15%; right: 8%;">🌟</div>
+            <div class="floating-element text-xl" style="top: 25%; left: 10%;">✨</div>
+            <div class="floating-element text-xl" style="top: 30%; right: 12%;">💫</div>
+            <div class="floating-element text-2xl" style="bottom: 20%; left: 8%;">🎉</div>
+            <div class="floating-element text-2xl" style="bottom: 25%; right: 6%;">🎊</div>
+            <div class="floating-element text-xl" style="bottom: 35%; left: 15%;">🌈</div>
+            <div class="floating-element text-xl" style="bottom: 40%; right: 18%;">🦄</div>
+            
+            <div id="reportContent" class="relative z-10"></div>
         </div>
     </div>
 
     <!-- Admin Panel -->
     <div id="adminPanel" class="hidden container mx-auto px-2 sm:px-4">
         <!-- Admin Login -->
-        <div id="adminLogin" class="bg-white rounded-3xl shadow-2xl p-6 sm:p-8 max-w-md mx-auto border-4 border-red-300">
-            <h2 class="text-2xl sm:text-3xl font-bold text-center text-red-600 mb-6">🔐 Admin Login</h2>
-            <div class="space-y-4">
-                <input type="password" id="adminPassword" placeholder="Enter Admin Password" class="w-full p-3 sm:p-4 border-4 border-red-300 rounded-2xl focus:border-red-500 focus:outline-none text-base sm:text-lg bg-red-50 font-bold transform hover:scale-105 transition-all duration-300">
-                <button id="loginBtn" class="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white py-3 sm:py-4 rounded-2xl text-base sm:text-lg font-bold btn-hover shadow-lg border-2 border-red-400">
+        <div id="adminLogin" class="bg-gradient-to-br from-gray-800 via-slate-800 to-gray-900 rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 lg:p-8 max-w-md mx-auto border-2 sm:border-4 border-red-500">
+            <h2 class="text-responsive-2xl font-bold text-center bg-gradient-to-r from-red-400 via-pink-400 to-orange-400 bg-clip-text text-transparent mb-4 sm:mb-6">🔐 Admin Login</h2>
+            <div class="space-y-3 sm:space-y-4">
+                <input type="password" id="adminPassword" placeholder="Enter Admin Password" class="w-full p-3 sm:p-4 border-2 sm:border-4 border-red-500 rounded-xl sm:rounded-2xl focus:border-red-400 focus:outline-none text-responsive-base bg-gray-700 text-white placeholder-gray-400 font-bold transform hover:scale-105 transition-all duration-300 touch-button">
+                <button id="loginBtn" class="w-full bg-gradient-to-r from-red-600 to-pink-700 hover:from-red-700 hover:to-pink-800 text-white py-3 sm:py-4 rounded-xl sm:rounded-2xl text-responsive-base font-bold btn-hover shadow-lg border-2 border-red-400 touch-button">
                     🚀 Login
                 </button>
             </div>
@@ -338,14 +1365,14 @@
 
         <!-- Admin Dashboard -->
         <div id="adminDashboard" class="hidden">
-            <div class="bg-white rounded-3xl shadow-2xl p-4 sm:p-8 mb-8 border-4 border-red-300">
-                <h2 class="text-2xl sm:text-4xl font-bold text-center text-red-600 mb-6 sm:mb-8">👨‍💼 Admin Dashboard</h2>
+            <div class="bg-gradient-to-br from-gray-800 via-slate-800 to-gray-900 rounded-2xl sm:rounded-3xl shadow-2xl p-3 sm:p-6 lg:p-8 mb-4 sm:mb-8 border-2 sm:border-4 border-red-500">
+                <h2 class="text-responsive-2xl font-bold text-center bg-gradient-to-r from-red-400 via-pink-400 to-orange-400 bg-clip-text text-transparent mb-4 sm:mb-6 lg:mb-8">👨‍💼 Admin Dashboard</h2>
                 
                 <!-- Student Management Form -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 lg:gap-6 mb-4 sm:mb-6 lg:mb-8">
                     <div>
-                        <label class="block text-base sm:text-lg font-bold text-gray-700 mb-2">📚 Select Class:</label>
-                        <select id="adminClassSelect" class="w-full p-3 sm:p-4 border-4 border-red-300 rounded-2xl focus:border-red-500 focus:outline-none text-base sm:text-lg bg-red-50 font-bold transform hover:scale-105 transition-all duration-300">
+                        <label class="block text-responsive-base font-bold text-gray-300 mb-2">📚 Select Class:</label>
+                        <select id="adminClassSelect" class="w-full p-3 sm:p-4 border-2 sm:border-4 border-red-500 rounded-xl sm:rounded-2xl focus:border-red-400 focus:outline-none text-responsive-base bg-gray-700 text-white font-bold transform hover:scale-105 transition-all duration-300 touch-button">
                             <option value="">Choose Class...</option>
                             <option value="1">Class 1</option>
                             <option value="2">Class 2</option>
@@ -356,8 +1383,8 @@
                     </div>
                     
                     <div>
-                        <label class="block text-base sm:text-lg font-bold text-gray-700 mb-2">👦 Select Student:</label>
-                        <select id="adminStudentSelect" class="w-full p-3 sm:p-4 border-4 border-red-300 rounded-2xl focus:border-red-500 focus:outline-none text-base sm:text-lg bg-red-50 font-bold transform hover:scale-105 transition-all duration-300" disabled>
+                        <label class="block text-responsive-base font-bold text-gray-300 mb-2">👦 Select Student:</label>
+                        <select id="adminStudentSelect" class="w-full p-3 sm:p-4 border-2 sm:border-4 border-red-500 rounded-xl sm:rounded-2xl focus:border-red-400 focus:outline-none text-responsive-base bg-gray-700 text-white font-bold transform hover:scale-105 transition-all duration-300 touch-button" disabled>
                             <option value="">First select a class...</option>
                             <option value="new">➕ Add New Student</option>
                         </select>
@@ -366,21 +1393,21 @@
             </div>
 
             <!-- Student Form -->
-            <div id="studentForm" class="hidden bg-white rounded-3xl shadow-2xl p-4 sm:p-8 mb-8 border-4 border-green-300">
-                <h3 id="formTitle" class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 text-center">➕ Add New Student</h3>
+            <div id="studentForm" class="hidden bg-gradient-to-br from-gray-800 via-slate-800 to-gray-900 rounded-2xl sm:rounded-3xl shadow-2xl p-3 sm:p-6 lg:p-8 mb-4 sm:mb-8 border-2 sm:border-4 border-green-500">
+                <h3 id="formTitle" class="text-responsive-xl font-bold bg-gradient-to-r from-green-400 via-emerald-400 to-teal-400 bg-clip-text text-transparent mb-4 sm:mb-6 text-center">➕ Add New Student</h3>
                 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 mb-4 sm:mb-6">
                     <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">👦 Student Name:</label>
-                        <input type="text" id="studentName" class="w-full p-3 border-4 border-gray-300 rounded-2xl focus:border-green-500 focus:outline-none bg-green-50 font-bold transform hover:scale-105 transition-all duration-300">
+                        <label class="block text-responsive-sm font-bold text-gray-300 mb-2">👦 Student Name:</label>
+                        <input type="text" id="studentName" class="w-full p-3 border-2 sm:border-4 border-green-500 rounded-xl sm:rounded-2xl focus:border-green-400 focus:outline-none bg-gray-700 text-white placeholder-gray-400 font-bold transform hover:scale-105 transition-all duration-300 text-responsive-sm touch-button">
                     </div>
                     <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">👨 Father's Name:</label>
-                        <input type="text" id="fatherName" class="w-full p-3 border-4 border-gray-300 rounded-2xl focus:border-green-500 focus:outline-none bg-green-50 font-bold transform hover:scale-105 transition-all duration-300">
+                        <label class="block text-responsive-sm font-bold text-gray-300 mb-2">👨 Father's Name:</label>
+                        <input type="text" id="fatherName" class="w-full p-3 border-2 sm:border-4 border-green-500 rounded-xl sm:rounded-2xl focus:border-green-400 focus:outline-none bg-gray-700 text-white placeholder-gray-400 font-bold transform hover:scale-105 transition-all duration-300 text-responsive-sm touch-button">
                     </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">📚 Class:</label>
-                        <select id="studentClass" class="w-full p-3 border-4 border-gray-300 rounded-2xl focus:border-green-500 focus:outline-none bg-green-50 font-bold transform hover:scale-105 transition-all duration-300">
+                    <div class="sm:col-span-2 lg:col-span-1">
+                        <label class="block text-responsive-sm font-bold text-gray-300 mb-2">📚 Class:</label>
+                        <select id="studentClass" class="w-full p-3 border-2 sm:border-4 border-green-500 rounded-xl sm:rounded-2xl focus:border-green-400 focus:outline-none bg-gray-700 text-white font-bold transform hover:scale-105 transition-all duration-300 text-responsive-sm touch-button">
                             <option value="">Select Class...</option>
                             <option value="1">Class 1</option>
                             <option value="2">Class 2</option>
@@ -392,10 +1419,10 @@
                 </div>
 
                 <!-- Subjects -->
-                <div class="bg-gradient-to-r from-blue-100 to-purple-100 p-4 sm:p-6 rounded-3xl mb-6 border-4 border-blue-300">
-                    <div class="flex flex-col sm:flex-row justify-between items-center mb-4 space-y-2 sm:space-y-0">
-                        <h4 class="text-lg sm:text-xl font-bold text-gray-800">📚 Subjects & Marks</h4>
-                        <button id="addSubjectBtn" class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-4 py-2 rounded-2xl font-bold btn-hover shadow-lg border-2 border-blue-400">
+                <div class="bg-gradient-to-r from-gray-700 to-slate-700 p-3 sm:p-4 lg:p-6 rounded-2xl sm:rounded-3xl mb-4 sm:mb-6 border-2 sm:border-4 border-blue-500">
+                    <div class="flex flex-col sm:flex-row justify-between items-center mb-3 sm:mb-4 space-y-2 sm:space-y-0">
+                        <h4 class="text-responsive-lg font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">📚 Subjects & Marks</h4>
+                        <button id="addSubjectBtn" class="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white px-4 py-2 rounded-xl sm:rounded-2xl font-bold btn-hover shadow-lg border-2 border-blue-400 text-responsive-sm touch-button">
                             ➕ Add Subject
                         </button>
                     </div>
@@ -405,15 +1432,15 @@
                 </div>
                 
                 <!-- Success Message -->
-                <div id="successMessage" class="hidden bg-green-100 border-4 border-green-400 text-green-800 px-6 py-4 rounded-2xl mb-4 text-center font-bold">
+                <div id="successMessage" class="hidden bg-green-100 border-2 sm:border-4 border-green-400 text-green-800 px-4 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl mb-3 sm:mb-4 text-center font-bold text-responsive-sm">
                     <!-- Success message will appear here -->
                 </div>
                 
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <button id="saveStudentBtn" class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl text-lg sm:text-xl font-bold btn-hover shadow-2xl border-4 border-green-400 slide-in-left">
+                <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+                    <button id="saveStudentBtn" class="bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl text-responsive-base font-bold btn-hover shadow-2xl border-2 sm:border-4 border-green-400 slide-in-left touch-button">
                         💾 Save Student
                     </button>
-                    <button id="deleteStudentBtn" class="hidden bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl text-lg sm:text-xl font-bold btn-hover shadow-2xl border-4 border-red-400 slide-in-right">
+                    <button id="deleteStudentBtn" class="hidden bg-gradient-to-r from-red-600 to-pink-700 hover:from-red-700 hover:to-pink-800 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl text-responsive-base font-bold btn-hover shadow-2xl border-2 sm:border-4 border-red-400 slide-in-right touch-button">
                         🗑️ Delete Student
                     </button>
                 </div>
@@ -440,6 +1467,9 @@
         // Global variables
         let currentView = 'student';
         const adminPassword = 'admin123';
+        const defaultSubjects = ['Hindi', 'English', 'Maths', 'EVS', 'Sanskrit'];
+        let currentStudentId = null;
+        let isEditMode = false;
 
         // DOM Elements
         const studentViewBtn = document.getElementById('studentViewBtn');
@@ -448,29 +1478,43 @@
         const adminPanel = document.getElementById('adminPanel');
         const classSelect = document.getElementById('classSelect');
         const studentSelect = document.getElementById('studentSelect');
-        const generateReportBtn = document.getElementById('generateReportBtn');
         const reportCard = document.getElementById('reportCard');
+        const adminLogin = document.getElementById('adminLogin');
+        const adminDashboard = document.getElementById('adminDashboard');
+        const adminPasswordInput = document.getElementById('adminPassword');
+        const loginBtn = document.getElementById('loginBtn');
 
-        // Navigation
+        // Navigation handlers
         studentViewBtn.addEventListener('click', () => {
             currentView = 'student';
             studentView.classList.remove('hidden');
             adminPanel.classList.add('hidden');
-            studentViewBtn.classList.add('bg-blue-600');
-            adminViewBtn.classList.remove('bg-red-600');
+            updateButtonStates();
         });
 
         adminViewBtn.addEventListener('click', () => {
             currentView = 'admin';
             studentView.classList.add('hidden');
             adminPanel.classList.remove('hidden');
-            // Always show login screen when accessing admin panel
             adminLogin.classList.remove('hidden');
             adminDashboard.classList.add('hidden');
-            adminPasswordInput.value = ''; // Clear any existing password
-            adminViewBtn.classList.add('bg-red-600');
-            studentViewBtn.classList.remove('bg-blue-600');
+            adminPasswordInput.value = '';
+            updateButtonStates();
         });
+
+        function updateButtonStates() {
+            if (currentView === 'student') {
+                studentViewBtn.classList.add('from-blue-600', 'to-blue-700');
+                studentViewBtn.classList.remove('from-blue-400', 'to-blue-600');
+                adminViewBtn.classList.add('from-red-400', 'to-red-600');
+                adminViewBtn.classList.remove('from-red-600', 'to-red-700');
+            } else {
+                adminViewBtn.classList.add('from-red-600', 'to-red-700');
+                adminViewBtn.classList.remove('from-red-400', 'to-red-600');
+                studentViewBtn.classList.add('from-blue-400', 'to-blue-600');
+                studentViewBtn.classList.remove('from-blue-600', 'to-blue-700');
+            }
+        }
 
         // Class selection handler
         classSelect.addEventListener('change', async (e) => {
@@ -505,7 +1549,7 @@
             }
         });
 
-        // Student selection handler - Auto generate report
+        // Student selection handler
         studentSelect.addEventListener('change', async (e) => {
             const selectedClass = classSelect.value;
             const selectedStudent = e.target.value;
@@ -526,22 +1570,85 @@
             }
         });
 
-
-
-        // Generate report card HTML
-        function generateReportCard(studentData, classNum) {
+        // Calculate student rank in class
+        async function calculateStudentRank(studentData, classNum) {
+            try {
+                const snapshot = await database.ref(`students/class${classNum}`).once('value');
+                const allStudents = snapshot.val();
+                
+                if (!allStudents) return { rank: 1, totalStudents: 1 };
+                
+                const studentsWithPercentages = [];
+                
+                Object.keys(allStudents).forEach(studentId => {
+                    const student = allStudents[studentId];
+                    const subjects = student.subjects || {};
+                    let totalObtained = 0;
+                    let totalMaximum = 0;
+                    
+                    Object.values(subjects).forEach(subject => {
+                        if (subject.obtained > 0) {
+                            totalObtained += subject.obtained || 0;
+                            totalMaximum += subject.maximum || 0;
+                        }
+                    });
+                    
+                    const percentage = totalMaximum > 0 ? ((totalObtained / totalMaximum) * 100) : 0;
+                    studentsWithPercentages.push({
+                        id: studentId,
+                        name: student.name,
+                        percentage: percentage
+                    });
+                });
+                
+                // Sort by percentage in descending order
+                studentsWithPercentages.sort((a, b) => b.percentage - a.percentage);
+                
+                // Find current student's rank
+                const currentStudentPercentage = calculatePercentage(studentData);
+                let rank = 1;
+                
+                for (let i = 0; i < studentsWithPercentages.length; i++) {
+                    if (studentsWithPercentages[i].percentage > currentStudentPercentage) {
+                        rank = i + 2;
+                    } else {
+                        break;
+                    }
+                }
+                
+                return { rank: rank, totalStudents: studentsWithPercentages.length };
+            } catch (error) {
+                console.error('Error calculating rank:', error);
+                return { rank: 1, totalStudents: 1 };
+            }
+        }
+        
+        function calculatePercentage(studentData) {
             const subjects = studentData.subjects || {};
             let totalObtained = 0;
             let totalMaximum = 0;
             
-            // Subject order priority
-            const subjectOrder = ['Hindi', 'English', 'Maths', 'EVS', 'Sanskrit'];
+            Object.values(subjects).forEach(subject => {
+                if (subject.obtained > 0) {
+                    totalObtained += subject.obtained || 0;
+                    totalMaximum += subject.maximum || 0;
+                }
+            });
             
-            // Filter and order subjects - show subjects with obtained marks > 0 or if they have any marks entered
+            return totalMaximum > 0 ? ((totalObtained / totalMaximum) * 100) : 0;
+        }
+
+        // Generate responsive report card
+        async function generateReportCard(studentData, classNum) {
+            const subjects = studentData.subjects || {};
+            let totalObtained = 0;
+            let totalMaximum = 0;
+            
+            // Filter subjects with obtained marks > 0
             const filteredSubjects = {};
             
             // Add subjects in order if they have obtained marks > 0
-            subjectOrder.forEach(subjectName => {
+            defaultSubjects.forEach(subjectName => {
                 if (subjects[subjectName] && subjects[subjectName].obtained > 0) {
                     filteredSubjects[subjectName] = subjects[subjectName];
                 }
@@ -549,12 +1656,12 @@
             
             // Add other subjects that have obtained marks > 0
             Object.keys(subjects).forEach(subjectName => {
-                if (!subjectOrder.includes(subjectName) && subjects[subjectName].obtained > 0) {
+                if (!defaultSubjects.includes(subjectName) && subjects[subjectName].obtained > 0) {
                     filteredSubjects[subjectName] = subjects[subjectName];
                 }
             });
             
-            // Calculate totals from filtered subjects
+            // Calculate totals
             Object.values(filteredSubjects).forEach(subject => {
                 totalObtained += subject.obtained || 0;
                 totalMaximum += subject.maximum || 0;
@@ -562,107 +1669,169 @@
 
             const percentage = totalMaximum > 0 ? ((totalObtained / totalMaximum) * 100).toFixed(2) : 0;
             const isHighAchiever = percentage >= 85;
+            
+            // Calculate rank
+            const rankData = await calculateStudentRank(studentData, classNum);
 
-            // Generate subjects table from filtered subjects
+            // Generate subjects table
             let subjectsHTML = '';
             Object.entries(filteredSubjects).forEach(([subjectName, marks]) => {
-                // Convert subject name to proper case
                 const properCaseSubject = subjectName.charAt(0).toUpperCase() + subjectName.slice(1).toLowerCase();
                 subjectsHTML += `
-                    <tr class="border-b border-gray-200 hover:bg-purple-50 transition-colors duration-200">
-                        <td class="py-3 px-2 sm:py-4 sm:px-4 font-semibold text-gray-800 text-sm sm:text-base md:text-lg">${properCaseSubject}</td>
-                        <td class="py-3 px-2 sm:py-4 sm:px-4 text-center text-blue-600 font-bold text-sm sm:text-base md:text-lg">${marks.obtained || 0}</td>
-                        <td class="py-3 px-2 sm:py-4 sm:px-4 text-center text-gray-600 text-sm sm:text-base md:text-lg">${marks.maximum || 0}</td>
-                        <td class="py-3 px-2 sm:py-4 sm:px-4 text-center font-bold text-sm sm:text-base md:text-lg">${marks.obtained || 0}/${marks.maximum || 0}</td>
+                    <tr class="border-b border-purple-200 hover:bg-gradient-to-r hover:from-blue-100 hover:to-purple-100 transition-colors duration-200">
+                        <td class="py-2 sm:py-3 lg:py-4 px-2 sm:px-4 font-semibold text-gray-800 text-responsive-sm">${properCaseSubject}</td>
+                        <td class="py-2 sm:py-3 lg:py-4 px-2 sm:px-4 text-center text-blue-600 font-bold text-responsive-sm">${marks.obtained || 0}</td>
+                        <td class="py-2 sm:py-3 lg:py-4 px-2 sm:px-4 text-center text-gray-600 text-responsive-sm">${marks.maximum || 0}</td>
+                        <td class="py-2 sm:py-3 lg:py-4 px-2 sm:px-4 text-center font-bold text-purple-600 text-responsive-sm">${marks.obtained || 0}/${marks.maximum || 0}</td>
                     </tr>
                 `;
             });
 
             const reportHTML = `
-                <div class="text-center mb-8">
-                    <h2 class="text-4xl font-bold text-purple-600 mb-2 ${isHighAchiever ? 'rainbow-bg text-transparent bg-clip-text' : ''}">
-                        🎓 REPORT CARD
-                    </h2>
-                    ${isHighAchiever ? '<div class="text-2xl">🌟 EXCELLENT PERFORMANCE! 🌟</div>' : ''}
+                <div class="text-center mb-4 sm:mb-6 lg:mb-8 ${isHighAchiever ? 'rainbow-border achievement-glow' : 'bg-white bg-opacity-10 rounded-2xl p-4'}">
+                    <div class="bg-white bg-opacity-90 rounded-xl p-4 ${isHighAchiever ? '' : 'border-4 border-purple-400'}">
+                        <h2 class="text-responsive-3xl font-bold ${isHighAchiever ? 'bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 bg-clip-text text-transparent' : 'bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent'} mb-2 drop-shadow-lg">
+                            🎓 REPORT CARD
+                        </h2>
+                        ${isHighAchiever ? '<div class="text-responsive-xl bg-gradient-to-r from-yellow-500 to-orange-600 bg-clip-text text-transparent font-bold animate-pulse">🌟 EXCELLENT PERFORMANCE! 🌟</div>' : '<div class="text-responsive-lg bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent font-semibold">📚 Academic Progress Report 📚</div>'}
+                    </div>
                 </div>
 
                 <!-- Student Information -->
-                <div class="bg-gradient-to-r from-blue-100 to-purple-100 p-6 sm:p-8 rounded-2xl mb-6 sm:mb-8 border-4 border-blue-400 shadow-2xl relative overflow-hidden">
-                    <!-- Decorative corner elements -->
-                    <div class="absolute top-0 left-0 w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-br-full"></div>
-                    <div class="absolute top-0 right-0 w-8 h-8 bg-gradient-to-bl from-blue-500 to-purple-500 rounded-bl-full"></div>
-                    <div class="absolute bottom-0 left-0 w-8 h-8 bg-gradient-to-tr from-blue-500 to-purple-500 rounded-tr-full"></div>
-                    <div class="absolute bottom-0 right-0 w-8 h-8 bg-gradient-to-tl from-blue-500 to-purple-500 rounded-tl-full"></div>
-                    
-                    <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center bg-white rounded-xl p-3 shadow-lg border-2 border-blue-300">📋 Student Information</h3>
-                    <div class="space-y-4 text-base sm:text-lg md:text-xl">
-                        <div class="bg-white p-4 rounded-xl shadow-md border-l-4 border-blue-500">
-                            <p><span class="font-semibold text-blue-600">👦 Student Name:</span> <span class="font-bold text-gray-800">${studentData.name}</span></p>
-                        </div>
-                        <div class="bg-white p-4 rounded-xl shadow-md border-l-4 border-purple-500">
-                            <p><span class="font-semibold text-purple-600">👨 Father's Name:</span> <span class="font-bold text-gray-800">${studentData.fatherName}</span></p>
-                        </div>
-                        <div class="bg-white p-4 rounded-xl shadow-md border-l-4 border-indigo-500">
-                            <p><span class="font-semibold text-indigo-600">📚 Class:</span> <span class="font-bold text-gray-800">${classNum}</span></p>
+                <div class="bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-600 p-1 rounded-xl sm:rounded-2xl mb-4 sm:mb-6 lg:mb-8 shadow-2xl relative overflow-hidden report-slide-left">
+                    <div class="bg-white bg-opacity-95 p-3 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl student-info-magical">
+                        <!-- Floating Stars -->
+                        <div class="floating-star" style="top: 10%; left: 8%;">⭐</div>
+                        <div class="floating-star" style="top: 15%; right: 12%;">🌟</div>
+                        <div class="floating-star" style="top: 25%; left: 85%;">✨</div>
+                        <div class="floating-star" style="bottom: 30%; left: 10%;">💫</div>
+                        <div class="floating-star" style="bottom: 20%; right: 15%;">⭐</div>
+                        <div class="floating-star" style="top: 40%; left: 5%;">🌟</div>
+                        <div class="floating-star" style="bottom: 45%; right: 8%;">✨</div>
+                        <div class="floating-star" style="top: 60%; right: 90%;">💫</div>
+                        
+                        <!-- Twinkling Stars -->
+                        <div class="twinkle-star" style="top: 20%; left: 25%;"></div>
+                        <div class="twinkle-star" style="top: 35%; right: 30%;"></div>
+                        <div class="twinkle-star" style="bottom: 40%; left: 70%;"></div>
+                        <div class="twinkle-star" style="bottom: 25%; right: 45%;"></div>
+                        <div class="twinkle-star" style="top: 50%; left: 15%;"></div>
+                        <div class="twinkle-star" style="top: 70%; right: 20%;"></div>
+                        <div class="twinkle-star" style="bottom: 60%; left: 40%;"></div>
+                        <div class="twinkle-star" style="bottom: 15%; right: 65%;"></div>
+                        <div class="twinkle-star" style="top: 30%; left: 60%;"></div>
+                        <div class="twinkle-star" style="bottom: 50%; right: 75%;"></div>
+                        
+                        <h3 class="text-responsive-xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4 sm:mb-6 text-center bg-gradient-to-r from-blue-100 to-purple-100 rounded-xl p-2 sm:p-3 shadow-lg border-2 border-blue-400 relative z-10">📋 Student Information</h3>
+                        <div class="space-y-3 sm:space-y-4 relative z-10">
+                            <div class="bg-gradient-to-r from-blue-100 to-blue-200 p-3 sm:p-4 rounded-xl shadow-md border-l-4 border-blue-500">
+                                <p class="text-responsive-base"><span class="font-semibold text-blue-700">👦 Student Name:</span> <span class="font-bold text-gray-800">${studentData.name}</span></p>
+                            </div>
+                            <div class="bg-gradient-to-r from-purple-100 to-purple-200 p-3 sm:p-4 rounded-xl shadow-md border-l-4 border-purple-500">
+                                <p class="text-responsive-base"><span class="font-semibold text-purple-700">👨 Father's Name:</span> <span class="font-bold text-gray-800">${studentData.fatherName}</span></p>
+                            </div>
+                            <div class="bg-gradient-to-r from-indigo-100 to-indigo-200 p-3 sm:p-4 rounded-xl shadow-md border-l-4 border-indigo-500">
+                                <p class="text-responsive-base"><span class="font-semibold text-indigo-700">📚 Class:</span> <span class="font-bold text-gray-800">${classNum}</span></p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Subject-wise Performance Table -->
-                <div class="bg-gray-50 rounded-2xl p-3 sm:p-6 mb-6 sm:mb-8">
-                    <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6 text-center">📚 Subject-wise Performance</h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full bg-white rounded-xl shadow-lg overflow-hidden min-w-full">
-                            <thead class="bg-gradient-to-r from-purple-500 to-blue-500 text-white">
-                                <tr>
-                                    <th class="py-4 px-2 sm:py-5 sm:px-4 text-left font-bold text-sm sm:text-base md:text-lg">Subject</th>
-                                    <th class="py-4 px-2 sm:py-5 sm:px-4 text-center font-bold text-sm sm:text-base md:text-lg">Obtained</th>
-                                    <th class="py-4 px-2 sm:py-5 sm:px-4 text-center font-bold text-sm sm:text-base md:text-lg">Maximum</th>
-                                    <th class="py-4 px-2 sm:py-5 sm:px-4 text-center font-bold text-sm sm:text-base md:text-lg">OM/MM</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${subjectsHTML}
-                                <tr class="bg-gradient-to-r from-yellow-100 to-orange-100 font-bold text-base sm:text-lg md:text-xl">
-                                    <td class="py-4 px-2 sm:py-5 sm:px-4">🎯 TOTAL</td>
-                                    <td class="py-4 px-2 sm:py-5 sm:px-4 text-center text-blue-600">${totalObtained}</td>
-                                    <td class="py-4 px-2 sm:py-5 sm:px-4 text-center">${totalMaximum}</td>
-                                    <td class="py-4 px-2 sm:py-5 sm:px-4 text-center font-bold">${totalObtained}/${totalMaximum}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 p-1 rounded-xl sm:rounded-2xl mb-4 sm:mb-6 lg:mb-8 report-slide-right shadow-2xl">
+                    <div class="bg-white bg-opacity-95 p-2 sm:p-4 lg:p-6 rounded-xl sm:rounded-2xl">
+                        <h3 class="text-responsive-xl font-bold bg-gradient-to-r from-green-600 via-blue-600 to-purple-600 bg-clip-text text-transparent mb-3 sm:mb-4 lg:mb-6 text-center bg-gradient-to-r from-green-100 to-purple-100 rounded-xl p-3 border-2 border-green-400">📚 Subject-wise Performance</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl shadow-lg overflow-hidden responsive-table border-2 border-blue-300 table-magical-shine">
+                                <thead class="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white">
+                                    <tr>
+                                        <th class="py-3 sm:py-4 lg:py-5 px-2 sm:px-4 text-left font-bold text-responsive-sm">Subject</th>
+                                        <th class="py-3 sm:py-4 lg:py-5 px-2 sm:px-4 text-center font-bold text-responsive-sm">Obtained</th>
+                                        <th class="py-3 sm:py-4 lg:py-5 px-2 sm:px-4 text-center font-bold text-responsive-sm">Maximum</th>
+                                        <th class="py-3 sm:py-4 lg:py-5 px-2 sm:px-4 text-center font-bold text-responsive-sm">OM/MM</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${subjectsHTML}
+                                    <tr class="bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-600 font-bold text-white hover:from-purple-400 hover:via-pink-400 hover:to-indigo-500 hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105 cursor-pointer hover:text-black">
+                                        <td class="py-3 sm:py-4 lg:py-5 px-2 sm:px-4 text-responsive-base">🎯 TOTAL</td>
+                                        <td class="py-3 sm:py-4 lg:py-5 px-2 sm:px-4 text-center text-responsive-base">${totalObtained}</td>
+                                        <td class="py-3 sm:py-4 lg:py-5 px-2 sm:px-4 text-center text-responsive-base">${totalMaximum}</td>
+                                        <td class="py-3 sm:py-4 lg:py-5 px-2 sm:px-4 text-center font-bold text-responsive-base">${totalObtained}/${totalMaximum}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Performance Summary -->
-                <div class="bg-gradient-to-r from-orange-100 to-pink-100 p-6 sm:p-8 rounded-2xl border-4 border-orange-300">
-                    <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">📊 Performance Summary</h3>
-                    <div class="space-y-4 text-center">
-                        <div class="bg-white p-4 rounded-xl shadow-md">
-                            <p class="text-base sm:text-lg md:text-xl"><span class="font-semibold">📈 Total Marks:</span> <span class="font-bold text-blue-600">${totalObtained}/${totalMaximum}</span></p>
-                        </div>
-                        <div class="bg-white p-4 rounded-xl shadow-md">
-                            <p class="text-base sm:text-lg md:text-xl"><span class="font-semibold">🎯 Percentage:</span> <span class="${percentage >= 85 ? 'text-green-600 font-bold text-xl sm:text-2xl md:text-3xl' : percentage >= 60 ? 'text-blue-600 font-bold text-xl sm:text-2xl' : 'text-red-600 font-bold text-xl sm:text-2xl'}">${percentage}%</span></p>
-                        </div>
-                        <div class="bg-white p-4 rounded-xl shadow-md">
-                            <p class="text-base sm:text-lg md:text-xl"><span class="font-semibold">🏆 Grade:</span> <span class="font-bold text-xl sm:text-2xl md:text-3xl ${percentage >= 85 ? 'text-green-600' : percentage >= 60 ? 'text-blue-600' : 'text-red-600'}">${getGrade(percentage)}</span></p>
+                <div class="bg-gradient-to-r from-orange-400 via-pink-500 to-red-500 p-1 rounded-xl sm:rounded-2xl report-slide-left-delayed shadow-2xl">
+                    <div class="bg-white bg-opacity-95 p-3 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl">
+                        <h3 class="text-responsive-xl font-bold bg-gradient-to-r from-orange-600 via-pink-600 to-red-600 bg-clip-text text-transparent mb-4 sm:mb-6 text-center bg-gradient-to-r from-orange-100 to-pink-100 rounded-xl p-3 border-2 border-orange-400">📊 Performance Summary</h3>
+                        <div class="space-y-3 sm:space-y-4 text-center">
+                            <div class="bg-gradient-to-r from-blue-100 to-blue-200 p-3 sm:p-4 rounded-xl shadow-md border-2 border-blue-400 transform transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-blue-500/50 hover:bg-gradient-to-r hover:from-blue-200 hover:to-blue-300 hover:border-blue-500 cursor-pointer group relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
+                                <div class="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:rotate-12 text-blue-600">✨</div>
+                                <p class="text-responsive-base relative z-10 group-hover:text-blue-900 transition-colors duration-300"><span class="font-semibold text-blue-700 group-hover:text-blue-800">📈 Total Marks:</span> <span class="font-bold text-blue-800 group-hover:text-blue-900 group-hover:text-responsive-lg transition-all duration-300">${totalObtained}/${totalMaximum}</span></p>
+                            </div>
+                            <div class="bg-gradient-to-r from-purple-100 to-purple-200 p-3 sm:p-4 rounded-xl shadow-md border-2 border-purple-400 transform transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-purple-500/50 hover:bg-gradient-to-r hover:from-purple-200 hover:to-purple-300 hover:border-purple-500 cursor-pointer group relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-purple-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
+                                <div class="absolute top-1 left-1 opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:rotate-45 text-purple-600">🎯</div>
+                                <div class="absolute bottom-1 right-1 opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-125 text-purple-600">💫</div>
+                                <p class="text-responsive-base relative z-10 group-hover:text-purple-900 transition-colors duration-300"><span class="font-semibold text-purple-700 group-hover:text-purple-800">🎯 Percentage:</span> <span class="${percentage >= 85 ? 'text-green-600 font-bold text-responsive-xl group-hover:text-green-700' : percentage >= 60 ? 'text-blue-600 font-bold text-responsive-lg group-hover:text-blue-700' : 'text-red-600 font-bold text-responsive-lg group-hover:text-red-700'} group-hover:text-responsive-xl transition-all duration-300">${percentage}%</span></p>
+                            </div>
+
+                            <div class="bg-gradient-to-r from-pink-100 to-pink-200 p-3 sm:p-4 rounded-xl shadow-md border-2 border-pink-400 transform transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-pink-500/50 hover:bg-gradient-to-r hover:from-pink-200 hover:to-pink-300 hover:border-pink-500 cursor-pointer group relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-r from-pink-400/20 to-pink-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
+                                <div class="absolute top-1 left-1 opacity-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:rotate-180 text-pink-600">🥇</div>
+                                <div class="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:bounce text-pink-600">⭐</div>
+                                <div class="absolute bottom-1 left-1 opacity-0 group-hover:opacity-100 transition-all duration-400 transform group-hover:scale-150 text-pink-600">🎉</div>
+                                <p class="text-responsive-base relative z-10 group-hover:text-pink-900 transition-colors duration-300"><span class="font-semibold text-pink-700 group-hover:text-pink-800">🥇 Class Rank:</span> <span class="font-bold text-responsive-xl ${rankData.rank === 1 ? 'text-yellow-600 group-hover:text-yellow-700' : rankData.rank <= 3 ? 'text-orange-600 group-hover:text-orange-700' : 'text-blue-600 group-hover:text-blue-700'} group-hover:text-responsive-2xl transition-all duration-300">${rankData.rank}/${rankData.totalStudents}</span></p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Motivational Quote -->
-                <div class="mt-8 text-center">
-                    <div class="bg-gradient-to-r from-indigo-100 to-purple-100 p-6 rounded-2xl border-4 border-indigo-300">
-                        <h4 class="text-lg font-bold text-indigo-800 mb-2">💫 Daily Motivation</h4>
-                        <p class="text-base text-indigo-700 font-semibold italic">"${getMotivationalQuote()}"</p>
+                <div class="mt-4 sm:mt-6 lg:mt-8 text-center">
+                    <div class="bg-gradient-to-r from-indigo-400 via-purple-500 to-pink-500 p-1 rounded-xl sm:rounded-2xl shadow-2xl">
+                        <div class="bg-white bg-opacity-95 p-4 sm:p-6 rounded-xl sm:rounded-2xl">
+                            <h4 class="text-responsive-base font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">💫 Daily Motivation</h4>
+                            <p class="text-responsive-sm text-gray-700 font-semibold italic bg-gradient-to-r from-indigo-100 to-pink-100 p-3 rounded-lg border-2 border-purple-300">"${getMotivationalQuote()}"</p>
+                        </div>
                     </div>
                 </div>
 
                 ${isHighAchiever ? `
-                    <div class="mt-6 text-center">
-                        <div class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white p-6 rounded-2xl shadow-2xl">
-                            <h3 class="text-2xl font-bold mb-2">🎉 CONGRATULATIONS! 🎉</h3>
-                            <p class="text-lg">Outstanding performance! Keep up the excellent work!</p>
+                    <div class="mt-4 sm:mt-6 text-center">
+                        <div class="bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 text-white p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-2xl border-4 border-yellow-300 relative overflow-hidden">
+                            <!-- Floating stars and emojis -->
+                            <div class="absolute top-2 left-2 text-2xl animate-bounce" style="animation-delay: 0s;">⭐</div>
+                            <div class="absolute top-2 right-2 text-2xl animate-bounce" style="animation-delay: 0.5s;">🌟</div>
+                            <div class="absolute bottom-2 left-2 text-2xl animate-bounce" style="animation-delay: 1s;">✨</div>
+                            <div class="absolute bottom-2 right-2 text-2xl animate-bounce" style="animation-delay: 1.5s;">💫</div>
+                            <div class="absolute top-1/2 left-4 text-xl animate-pulse" style="animation-delay: 0.3s;">🎊</div>
+                            <div class="absolute top-1/2 right-4 text-xl animate-pulse" style="animation-delay: 0.8s;">🎉</div>
+                            
+                            <!-- Main trophy and content -->
+                            <div class="relative z-10">
+                                <div class="text-6xl sm:text-8xl mb-4 animate-pulse">🏆</div>
+                                <h3 class="text-responsive-2xl font-bold mb-2 drop-shadow-lg">🎉 CONGRATULATIONS! 🎉</h3>
+                                <p class="text-responsive-lg font-semibold mb-3">Outstanding Performance!</p>
+                                <div class="bg-white bg-opacity-20 rounded-lg p-3 mb-3">
+                                    <p class="text-responsive-base font-bold">🥇 Class Rank: ${rankData.rank}/${rankData.totalStudents}</p>
+                                    <p class="text-responsive-base font-bold">📊 Score: ${percentage}%</p>
+                                </div>
+                                <p class="text-responsive-base">Keep up the excellent work! You're a star! ⭐</p>
+                                
+                                <!-- Additional decorative elements -->
+                                <div class="flex justify-center space-x-2 mt-4">
+                                    <span class="text-2xl animate-spin" style="animation-duration: 3s;">🌟</span>
+                                    <span class="text-3xl animate-pulse">🏆</span>
+                                    <span class="text-2xl animate-spin" style="animation-duration: 3s; animation-direction: reverse;">⭐</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 ` : ''}
@@ -672,18 +1841,16 @@
             reportCard.classList.remove('hidden');
             reportCard.classList.add('slide-in-up');
 
-            // Trigger celebration animation for high achievers
             if (isHighAchiever) {
                 triggerCelebration();
             }
 
-            // Scroll to report card
             setTimeout(() => {
-                reportCard.scrollIntoView({ behavior: 'smooth' });
-            }, 200);
+                reportCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 300);
         }
 
-        // Get grade based on percentage
+        // Helper functions
         function getGrade(percentage) {
             if (percentage >= 90) return 'A+';
             if (percentage >= 80) return 'A';
@@ -694,19 +1861,15 @@
             return 'F';
         }
 
-        // Get random motivational quote
         function getMotivationalQuote() {
             const quotes = [
                 "Success is not final, failure is not fatal: it is the courage to continue that counts.",
                 "The future belongs to those who believe in the beauty of their dreams.",
-                "It is during our darkest moments that we must focus to see the light.",
                 "Believe you can and you're halfway there.",
                 "The only impossible journey is the one you never begin.",
                 "In the middle of difficulty lies opportunity.",
                 "Success is not how high you have climbed, but how you make a positive difference to the world.",
                 "Don't watch the clock; do what it does. Keep going.",
-                "The way to get started is to quit talking and begin doing.",
-                "Innovation distinguishes between a leader and a follower.",
                 "Your limitation—it's only your imagination.",
                 "Push yourself, because no one else is going to do it for you.",
                 "Great things never come from comfort zones.",
@@ -716,7 +1879,7 @@
             return quotes[Math.floor(Math.random() * quotes.length)];
         }
 
-        // Trigger celebration animation with shower effects
+        // Enhanced celebration animation
         function triggerCelebration() {
             const celebration = document.getElementById('celebration');
             celebration.classList.remove('hidden');
@@ -727,62 +1890,75 @@
                     const confetti = document.createElement('div');
                     confetti.className = 'confetti';
                     confetti.style.left = Math.random() * 100 + '%';
-                    confetti.style.backgroundColor = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7'][Math.floor(Math.random() * 5)];
+                    confetti.style.backgroundColor = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#ffd700', '#ff69b4'][Math.floor(Math.random() * 7)];
                     confetti.style.animationDelay = Math.random() * 2 + 's';
                     celebration.appendChild(confetti);
                     
-                    setTimeout(() => {
-                        confetti.remove();
-                    }, 3000);
-                }, i * 100);
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 80);
             }
             
-            // Create shower particles
-            const showerEmojis = ['🌟', '⭐', '✨', '🎉', '🎊', '🏆', '👏', '🎯', '💫', '🌈'];
-            for (let i = 0; i < 30; i++) {
+            // Create golden shower particles for high achievers
+            const goldenEmojis = ['🏆', '🥇', '⭐', '🌟', '✨', '💎', '👑', '🎖️', '🏅', '💫', '🌠', '⚡', '🔥', '💥', '🎯'];
+            for (let i = 0; i < 35; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'golden-shower';
+                    particle.textContent = goldenEmojis[Math.floor(Math.random() * goldenEmojis.length)];
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 2 + 's';
+                    celebration.appendChild(particle);
+                    
+                    setTimeout(() => particle.remove(), 5000);
+                }, i * 120);
+            }
+            
+            // Create firework effects
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const firework = document.createElement('div');
+                    firework.className = 'firework';
+                    firework.style.left = Math.random() * 100 + '%';
+                    firework.style.top = Math.random() * 100 + '%';
+                    firework.style.backgroundColor = ['#ffd700', '#ff69b4', '#00ff00', '#ff4500', '#9370db'][Math.floor(Math.random() * 5)];
+                    firework.style.animationDelay = Math.random() * 3 + 's';
+                    celebration.appendChild(firework);
+                    
+                    setTimeout(() => firework.remove(), 2000);
+                }, i * 200);
+            }
+            
+            // Create regular shower particles
+            const showerEmojis = ['🌟', '⭐', '✨', '🎉', '🎊', '🏆', '👏', '🎯', '💫', '🌈', '🎪', '🎭', '🎨', '🎵', '🎶', '🔮', '💖', '💝'];
+            for (let i = 0; i < 45; i++) {
                 setTimeout(() => {
                     const particle = document.createElement('div');
                     particle.className = 'shower-particle';
                     particle.textContent = showerEmojis[Math.floor(Math.random() * showerEmojis.length)];
                     particle.style.left = Math.random() * 100 + '%';
                     particle.style.animationDelay = Math.random() * 2 + 's';
-                    particle.style.animationDuration = (3 + Math.random() * 2) + 's';
                     celebration.appendChild(particle);
                     
-                    setTimeout(() => {
-                        particle.remove();
-                    }, 5000);
-                }, i * 150);
+                    setTimeout(() => particle.remove(), 4000);
+                }, i * 100);
             }
             
-            setTimeout(() => {
-                celebration.classList.add('hidden');
-            }, 6000);
+            setTimeout(() => celebration.classList.add('hidden'), 8000);
         }
 
-        // Admin Panel Functionality
-        const adminLogin = document.getElementById('adminLogin');
-        const adminDashboard = document.getElementById('adminDashboard');
-        const adminPasswordInput = document.getElementById('adminPassword');
-        const loginBtn = document.getElementById('loginBtn');
-
+        // Admin login
         loginBtn.addEventListener('click', () => {
             if (adminPasswordInput.value === adminPassword) {
                 adminLogin.classList.add('hidden');
                 adminDashboard.classList.remove('hidden');
-                adminPasswordInput.value = ''; // Clear password after successful login
+                adminPasswordInput.value = '';
             } else {
                 alert('❌ Incorrect password! Try "admin123"');
                 adminPasswordInput.value = '';
             }
         });
 
-        // Default subjects in order
-        const defaultSubjects = ['Hindi', 'English', 'Maths', 'EVS', 'Sanskrit'];
-        let currentStudentId = null;
-        let isEditMode = false;
-
-        // Admin class selection handler
+        // Admin class selection
         document.getElementById('adminClassSelect').addEventListener('change', async (e) => {
             const selectedClass = e.target.value;
             const studentSelect = document.getElementById('adminStudentSelect');
@@ -810,20 +1986,16 @@
                     studentSelect.disabled = false;
                 } catch (error) {
                     console.error('Error fetching students:', error);
-                    studentSelect.innerHTML = '<option value="">Error loading students</option>';
                 }
-            } else {
-                studentSelect.innerHTML = '<option value="">First select a class...</option>';
             }
         });
 
-        // Admin student selection handler
+        // Admin student selection
         document.getElementById('adminStudentSelect').addEventListener('change', async (e) => {
             const selectedStudent = e.target.value;
             const selectedClass = document.getElementById('adminClassSelect').value;
 
             if (selectedStudent === 'new') {
-                // Add new student mode
                 isEditMode = false;
                 currentStudentId = null;
                 document.getElementById('formTitle').textContent = '➕ Add New Student';
@@ -833,7 +2005,6 @@
                 document.getElementById('studentForm').classList.remove('hidden');
                 document.getElementById('studentClass').value = selectedClass;
             } else if (selectedStudent && selectedClass) {
-                // Edit existing student mode
                 isEditMode = true;
                 currentStudentId = selectedStudent;
                 document.getElementById('formTitle').textContent = '✏️ Edit Student';
@@ -865,7 +2036,7 @@
             });
         }
 
-        // Add subject field
+        // Add subject functionality
         document.getElementById('addSubjectBtn').addEventListener('click', addSubject);
 
         function addSubject() {
@@ -875,11 +2046,11 @@
         function addSubjectWithData(subjectName = '', obtained = 0, maximum = 10, isDefault = false) {
             const container = document.getElementById('allSubjects');
             const subjectDiv = document.createElement('div');
-            subjectDiv.className = 'bg-white p-3 sm:p-4 rounded-2xl shadow-lg border-4 border-blue-200 btn-hover';
+            subjectDiv.className = 'bg-gradient-to-r from-gray-700 to-slate-700 p-2 sm:p-3 lg:p-4 rounded-xl sm:rounded-2xl shadow-lg border-2 sm:border-4 border-blue-500 btn-hover';
             
             const removeButton = isDefault ? '' : `
-                <div class="flex justify-center mt-3">
-                    <button type="button" onclick="this.parentElement.parentElement.remove()" class="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-4 py-2 rounded-xl font-bold btn-hover shadow-lg border-2 border-red-400 text-sm">
+                <div class="flex justify-center mt-2 sm:mt-3">
+                    <button type="button" onclick="this.parentElement.parentElement.remove()" class="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-3 sm:px-4 py-2 rounded-lg sm:rounded-xl font-bold btn-hover shadow-lg border-2 border-red-400 text-responsive-xs touch-button">
                         🗑️ Remove
                     </button>
                 </div>
@@ -889,20 +2060,19 @@
             const placeholder = isDefault ? '' : 'placeholder="Subject Name"';
             
             subjectDiv.innerHTML = `
-                <div class="space-y-3">
-                    <!-- Mobile: All fields in column, Desktop: All fields in row -->
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div class="space-y-2 sm:space-y-3">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
                         <div>
-                            <label class="block text-xs sm:text-sm font-bold text-gray-700 mb-1">Subject Name:</label>
-                            <input type="text" class="subject-name w-full p-2 sm:p-3 border-3 sm:border-4 border-gray-300 rounded-lg sm:rounded-xl focus:border-blue-500 focus:outline-none bg-blue-50 font-bold text-sm sm:text-base" value="${subjectName}" ${readonlyAttr} ${placeholder}>
+                            <label class="block text-responsive-xs font-bold text-gray-300 mb-1">Subject Name:</label>
+                            <input type="text" class="subject-name w-full p-2 sm:p-3 border-2 sm:border-3 lg:border-4 border-blue-500 rounded-lg sm:rounded-xl focus:border-blue-400 focus:outline-none bg-gray-700 text-white placeholder-gray-400 font-bold text-responsive-xs touch-button" value="${subjectName}" ${readonlyAttr} ${placeholder}>
                         </div>
                         <div>
-                            <label class="block text-xs sm:text-sm font-bold text-gray-700 mb-1">Obtained Marks:</label>
-                            <input type="number" class="subject-obtained w-full p-2 sm:p-3 border-3 sm:border-4 border-gray-300 rounded-lg sm:rounded-xl focus:border-blue-500 focus:outline-none bg-blue-50 font-bold text-center text-sm sm:text-base" min="0" value="${obtained}">
+                            <label class="block text-responsive-xs font-bold text-gray-300 mb-1">Obtained Marks:</label>
+                            <input type="number" class="subject-obtained w-full p-2 sm:p-3 border-2 sm:border-3 lg:border-4 border-blue-500 rounded-lg sm:rounded-xl focus:border-blue-400 focus:outline-none bg-gray-700 text-white font-bold text-center text-responsive-xs touch-button" min="0" value="${obtained}">
                         </div>
                         <div>
-                            <label class="block text-xs sm:text-sm font-bold text-gray-700 mb-1">Maximum Marks:</label>
-                            <input type="number" class="subject-maximum w-full p-2 sm:p-3 border-3 sm:border-4 border-gray-300 rounded-lg sm:rounded-xl focus:border-blue-500 focus:outline-none bg-blue-50 font-bold text-center text-sm sm:text-base" min="1" value="${maximum}">
+                            <label class="block text-responsive-xs font-bold text-gray-300 mb-1">Maximum Marks:</label>
+                            <input type="number" class="subject-maximum w-full p-2 sm:p-3 border-2 sm:border-3 lg:border-4 border-blue-500 rounded-lg sm:rounded-xl focus:border-blue-400 focus:outline-none bg-gray-700 text-white font-bold text-center text-responsive-xs touch-button" min="1" value="${maximum}">
                         </div>
                     </div>
                     ${removeButton}
@@ -911,7 +2081,7 @@
             container.appendChild(subjectDiv);
         }
 
-        // Clear form
+        // Form management functions
         function clearForm() {
             document.getElementById('studentName').value = '';
             document.getElementById('fatherName').value = '';
@@ -920,14 +2090,12 @@
             document.getElementById('successMessage').classList.add('hidden');
         }
 
-        // Load student data for editing
         function loadStudentData(studentData, classNum) {
             document.getElementById('studentName').value = studentData.name || '';
             document.getElementById('fatherName').value = studentData.fatherName || '';
             document.getElementById('studentClass').value = classNum;
             document.getElementById('successMessage').classList.add('hidden');
             
-            // Clear and load all subjects
             document.getElementById('allSubjects').innerHTML = '';
             const subjects = studentData.subjects || {};
             
@@ -945,52 +2113,39 @@
             });
         }
 
-        // Show message function
         function showMessage(message, type) {
             const messageDiv = document.getElementById('successMessage');
             if (!messageDiv) {
-                console.error('Success message div not found');
-                alert(message); // Fallback to alert
+                alert(message);
                 return;
             }
             
             messageDiv.textContent = message;
             
             if (type === 'success') {
-                messageDiv.className = 'bg-green-100 border-4 border-green-400 text-green-800 px-6 py-4 rounded-2xl mb-4 text-center font-bold';
+                messageDiv.className = 'bg-green-100 border-2 sm:border-4 border-green-400 text-green-800 px-4 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl mb-3 sm:mb-4 text-center font-bold text-responsive-sm';
             } else {
-                messageDiv.className = 'bg-red-100 border-4 border-red-400 text-red-800 px-6 py-4 rounded-2xl mb-4 text-center font-bold';
+                messageDiv.className = 'bg-red-100 border-2 sm:border-4 border-red-400 text-red-800 px-4 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl mb-3 sm:mb-4 text-center font-bold text-responsive-sm';
             }
             
             messageDiv.classList.remove('hidden');
-            
-            // Hide message after 4 seconds
-            setTimeout(() => {
-                messageDiv.classList.add('hidden');
-            }, 4000);
+            setTimeout(() => messageDiv.classList.add('hidden'), 4000);
         }
 
-        // Save student function
+        // Save and delete functions
         async function saveStudent() {
-            console.log('Save student function called');
-            
             const name = document.getElementById('studentName').value.trim();
             const fatherName = document.getElementById('fatherName').value.trim();
             const studentClass = document.getElementById('studentClass').value;
 
-            console.log('Form data:', { name, fatherName, studentClass });
-
             if (!name || !fatherName || !studentClass) {
-                showMessage('❌ Please fill in all required fields (Student Name, Father\'s Name, and Class)!', 'error');
+                showMessage('❌ Please fill in all required fields!', 'error');
                 return;
             }
 
-            // Collect subjects data
             const subjects = {};
             const subjectFields = document.querySelectorAll('#allSubjects > div');
             
-            console.log('Found subject fields:', subjectFields.length);
-
             for (let field of subjectFields) {
                 const subjectNameInput = field.querySelector('.subject-name');
                 const obtainedInput = field.querySelector('.subject-obtained');
@@ -1001,13 +2156,11 @@
                     const obtained = parseInt(obtainedInput.value) || 0;
                     const maximum = parseInt(maximumInput.value) || 10;
 
-                    if (subjectName && subjectName.length > 0 && maximum > 0) {
+                    if (subjectName && maximum > 0) {
                         subjects[subjectName] = { obtained, maximum };
                     }
                 }
             }
-
-            console.log('Collected subjects:', subjects);
 
             if (Object.keys(subjects).length === 0) {
                 showMessage('❌ Please add at least one subject!', 'error');
@@ -1015,54 +2168,30 @@
             }
 
             try {
-                const studentData = {
-                    name,
-                    fatherName,
-                    class: studentClass,
-                    subjects
-                };
-
-                console.log('Saving student data:', studentData);
+                const studentData = { name, fatherName, class: studentClass, subjects };
 
                 if (isEditMode && currentStudentId) {
-                    // Update existing student
                     await database.ref(`students/class${studentClass}/${currentStudentId}`).set(studentData);
-                    showMessage(`✅ Student "${name}" has been updated successfully!`, 'success');
-                    console.log('Student updated successfully');
+                    showMessage(`✅ Student "${name}" updated successfully!`, 'success');
                 } else {
-                    // Add new student
                     const newStudentRef = database.ref(`students/class${studentClass}`).push();
                     await newStudentRef.set(studentData);
-                    showMessage(`✅ Student "${name}" has been added successfully to Class ${studentClass}!`, 'success');
-                    console.log('New student added successfully');
+                    showMessage(`✅ Student "${name}" added successfully!`, 'success');
                 }
                 
-                // Scroll to admin dashboard after delay
                 setTimeout(() => {
-                    const adminDashboard = document.getElementById('adminDashboard');
-                    if (adminDashboard) {
-                        adminDashboard.scrollIntoView({ behavior: 'smooth' });
-                    }
-                }, 1500);
-                
-                // Refresh student list
-                setTimeout(() => {
+                    document.getElementById('adminDashboard').scrollIntoView({ behavior: 'smooth' });
                     const adminClassSelect = document.getElementById('adminClassSelect');
-                    if (adminClassSelect) {
-                        adminClassSelect.dispatchEvent(new Event('change'));
-                    }
+                    adminClassSelect.dispatchEvent(new Event('change'));
                 }, 2000);
 
             } catch (error) {
                 console.error('Error saving student:', error);
-                showMessage(`❌ Error saving student "${name}". Please try again.`, 'error');
+                showMessage('❌ Error saving student. Please try again.', 'error');
             }
         }
 
-        // Delete student function
         async function deleteStudent() {
-            console.log('Delete student function called');
-            
             if (!currentStudentId || !isEditMode) {
                 showMessage('❌ No student selected for deletion!', 'error');
                 return;
@@ -1073,31 +2202,16 @@
             
             if (confirm(`Are you sure you want to delete ${studentName}? This action cannot be undone.`)) {
                 try {
-                    console.log('Deleting student:', currentStudentId, 'from class:', studentClass);
-                    
                     await database.ref(`students/class${studentClass}/${currentStudentId}`).remove();
                     showMessage(`✅ Student "${studentName}" deleted successfully!`, 'success');
-                    console.log('Student deleted successfully');
                     
-                    // Reset variables
                     currentStudentId = null;
                     isEditMode = false;
                     
-                    // Scroll to admin dashboard after delay
-                    setTimeout(() => {
-                        const adminDashboard = document.getElementById('adminDashboard');
-                        if (adminDashboard) {
-                            adminDashboard.scrollIntoView({ behavior: 'smooth' });
-                        }
-                    }, 1500);
-                    
-                    // Hide form and refresh student list
                     setTimeout(() => {
                         document.getElementById('studentForm').classList.add('hidden');
                         const adminClassSelect = document.getElementById('adminClassSelect');
-                        if (adminClassSelect) {
-                            adminClassSelect.dispatchEvent(new Event('change'));
-                        }
+                        adminClassSelect.dispatchEvent(new Event('change'));
                     }, 2000);
                     
                 } catch (error) {
@@ -1107,36 +2221,20 @@
             }
         }
 
-        // Add event listeners after DOM is loaded
+        // Event listeners
         document.addEventListener('DOMContentLoaded', function() {
-            // Save button event listener
             const saveBtn = document.getElementById('saveStudentBtn');
-            if (saveBtn) {
-                saveBtn.addEventListener('click', saveStudent);
-                console.log('Save button event listener added');
-            } else {
-                console.error('Save button not found');
-            }
-
-            // Delete button event listener
             const deleteBtn = document.getElementById('deleteStudentBtn');
-            if (deleteBtn) {
-                deleteBtn.addEventListener('click', deleteStudent);
-                console.log('Delete button event listener added');
-            } else {
-                console.error('Delete button not found');
-            }
+            
+            if (saveBtn) saveBtn.addEventListener('click', saveStudent);
+            if (deleteBtn) deleteBtn.addEventListener('click', deleteStudent);
         });
 
-
-
-        // Initialize with some sample data (for demo purposes)
+        // Initialize sample data
         async function initializeSampleData() {
             try {
-                // Check if data already exists
                 const snapshot = await database.ref('students').once('value');
                 if (!snapshot.exists()) {
-                    // Add sample data with default subjects
                     const sampleData = {
                         students: {
                             class1: {
@@ -1175,8 +2273,7 @@
                                         "English": { obtained: 8, maximum: 10 },
                                         "Maths": { obtained: 9, maximum: 10 },
                                         "EVS": { obtained: 10, maximum: 10 },
-                                        "Sanskrit": { obtained: 8, maximum: 10 },
-                                        "Drawing": { obtained: 9, maximum: 10 }
+                                        "Sanskrit": { obtained: 8, maximum: 10 }
                                     }
                                 }
                             }
@@ -1191,17 +2288,114 @@
             }
         }
 
-        // Initialize the app
+        // Force immediate marquee animation start and ensure visibility
+        function startMarqueesImmediately() {
+            const topMarquee = document.querySelector('.marquee-content-top');
+            const bottomMarquee = document.querySelector('.marquee-content-bottom');
+            const topMarqueeContainer = document.querySelector('.marquee-top');
+            const bottomMarqueeContainer = document.querySelector('.marquee-bottom');
+            
+            // Force visibility and animation for both marquees
+            if (topMarquee) {
+                topMarquee.style.display = 'inline-block';
+                topMarquee.style.visibility = 'visible';
+                topMarquee.style.opacity = '1';
+                topMarquee.style.animationPlayState = 'running';
+                topMarquee.style.animationDelay = '0s';
+                topMarquee.style.transform = 'translateZ(0)';
+            }
+            
+            if (bottomMarquee) {
+                bottomMarquee.style.display = 'inline-block';
+                bottomMarquee.style.visibility = 'visible';
+                bottomMarquee.style.opacity = '1';
+                bottomMarquee.style.animationPlayState = 'running';
+                bottomMarquee.style.animationDelay = '0s';
+                bottomMarquee.style.transform = 'translateZ(0)';
+            }
+            
+            // Ensure marquee containers are fixed and visible
+            if (topMarqueeContainer) {
+                topMarqueeContainer.style.position = 'fixed';
+                topMarqueeContainer.style.top = '0';
+                topMarqueeContainer.style.left = '0';
+                topMarqueeContainer.style.right = '0';
+                topMarqueeContainer.style.zIndex = '999999';
+                topMarqueeContainer.style.width = '100vw';
+                topMarqueeContainer.style.display = 'block';
+                topMarqueeContainer.style.visibility = 'visible';
+                topMarqueeContainer.style.opacity = '1';
+            }
+            
+            if (bottomMarqueeContainer) {
+                bottomMarqueeContainer.style.position = 'fixed';
+                bottomMarqueeContainer.style.bottom = '0';
+                bottomMarqueeContainer.style.left = '0';
+                bottomMarqueeContainer.style.right = '0';
+                bottomMarqueeContainer.style.zIndex = '999999';
+                bottomMarqueeContainer.style.width = '100vw';
+                bottomMarqueeContainer.style.display = 'block';
+                bottomMarqueeContainer.style.visibility = 'visible';
+                bottomMarqueeContainer.style.opacity = '1';
+            }
+        }
+        
+        // Ensure marquees remain visible on scroll
+        function ensureMarqueeVisibility() {
+            const topMarquee = document.querySelector('.marquee-top');
+            const bottomMarquee = document.querySelector('.marquee-bottom');
+            
+            if (topMarquee) {
+                topMarquee.style.position = 'fixed';
+                topMarquee.style.top = '0';
+                topMarquee.style.zIndex = '999999';
+            }
+            
+            if (bottomMarquee) {
+                bottomMarquee.style.position = 'fixed';
+                bottomMarquee.style.bottom = '0';
+                bottomMarquee.style.zIndex = '999999';
+            }
+        }
+        
+        // Add scroll listener to maintain marquee position
+        window.addEventListener('scroll', ensureMarqueeVisibility);
+        window.addEventListener('resize', ensureMarqueeVisibility);
+
+        // Initialize everything with multiple attempts
+        document.addEventListener('DOMContentLoaded', function() {
+            startMarqueesImmediately();
+            // Additional initialization after a short delay
+            setTimeout(startMarqueesImmediately, 100);
+            setTimeout(startMarqueesImmediately, 500);
+        });
+        
+        // Start immediately when script loads
+        startMarqueesImmediately();
+        
+        // Additional initialization attempts
+        setTimeout(startMarqueesImmediately, 50);
+        setTimeout(startMarqueesImmediately, 200);
+        setTimeout(startMarqueesImmediately, 1000);
+        
+        // Initialize on window load as well
+        window.addEventListener('load', function() {
+            startMarqueesImmediately();
+            setTimeout(startMarqueesImmediately, 100);
+        });
+        
+
+
+        
         initializeSampleData();
+        updateButtonStates();
     </script>
 
     <!-- Bottom Marquee -->
     <div class="marquee-bottom">
         <div class="marquee-content-bottom">
-            💻 This site is developed by Mr. Deepak Kumar Vaishy 💻, 🌟🚀Assistant Teacher at Primary School Karanpur. !! 🌟 📧
-            💻 This site is developed by Mr. Deepak Kumar Vaishy 💻, 🌟🚀Assistant Teacher at Primary School Karanpur. !! 🌟  📧
-            
+            🚀 Proudly Developed by Mr. Deepak Kumar Vaishya 🚀 Assistant Teacher & Tech Innovator 🚀 Transforming Education Through Technology 🚀 Custom Web Solutions & Digital Learning Platforms 🚀 Contact for Professional Development Services 🚀 Innovation in Education 🚀 Building Digital Solutions 🚀 Technology for Learning 🚀 
         </div>
     </div>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96cd4604d7d254b0',t:'MTc1NDgwNTYzMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96ed361e042f4174',t:'MTc1NTE0MDUyNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
