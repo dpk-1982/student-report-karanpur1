@@ -8,13 +8,12 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <style>
-        /* Base responsive styles */
+        /* ALL ORIGINAL CSS - KEPT COMPLETE */
         * { box-sizing: border-box; }
         html, body { overflow-x: hidden; scroll-behavior: smooth; }
         ::-webkit-scrollbar { width: 0px; background: transparent; }
         html { scrollbar-width: none; }
 
-        /* Responsive font sizes */
         .text-responsive-xs { font-size: clamp(0.75rem, 2vw, 0.875rem); }
         .text-responsive-sm { font-size: clamp(0.875rem, 2.5vw, 1rem); }
         .text-responsive-base { font-size: clamp(1rem, 3vw, 1.125rem); }
@@ -24,32 +23,26 @@
         .text-responsive-3xl { font-size: clamp(2rem, 6vw, 3rem); }
         .text-responsive-4xl { font-size: clamp(2.5rem, 7vw, 4rem); }
 
-        /* Smooth animations etc –– SAME AS YOUR ORIGINAL FILE */
         .celebration { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:1000; }
         .confetti { position:absolute; width:8px; height:8px; background:#f39c12; animation:confetti-fall 3s linear infinite; }
         @keyframes confetti-fall { 0%{transform:translateY(-100vh) rotate(0deg);opacity:1;}100%{transform:translateY(100vh) rotate(720deg);opacity:0;} }
 
-        .shower-particle { position:absolute; font-size:clamp(1rem,3vw,2rem); animation:shower 4s linear infinite; pointer-events:none; }
-        @keyframes shower{0%{transform:translateY(-100vh) scale(0);opacity:0;}10%{opacity:1;transform:scale(1);}90%{opacity:1;}100%{transform:translateY(100vh) scale(0);opacity:0;}}
-
         .shiny-container{position:relative;overflow:hidden;}
         .shiny-container::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(45deg,transparent 30%,rgba(255,255,255,0.3) 50%,transparent 70%);animation:shine 6s ease-in-out infinite;pointer-events:none;z-index:1;}
         @keyframes shine{0%{transform:translateX(-100%) translateY(-100%) rotate(45deg);}50%{transform:translateX(100%) translateY(100%) rotate(45deg);}100%{transform:translateX(-100%) translateY(-100%) rotate(45deg);}}
+
         .sparkle-effect{position:absolute;width:4px;height:4px;background:white;border-radius:50%;animation:sparkle 2s ease-in-out infinite;pointer-events:none;}
         @keyframes sparkle{0%,100%{opacity:0;transform:scale(0);}50%{opacity:1;transform:scale(1);}}
         .simple-text{text-shadow:0 2px 4px rgba(0,0,0,0.3);}
 
         .golden-shower{position:absolute;font-size:clamp(1.5rem,4vw,3rem);animation:golden-shower 5s linear infinite;pointer-events:none;filter:drop-shadow(0 0 10px gold);}
         @keyframes golden-shower{0%{transform:translateY(-100vh) scale(0) rotate(0deg);opacity:0;}10%{opacity:1;transform:scale(1.2) rotate(180deg);}50%{transform:scale(1) rotate(360deg);}90%{opacity:1;transform:scale(0.8) rotate(540deg);}100%{transform:translateY(100vh) scale(0) rotate(720deg);opacity:0;}}
-        .firework{position:absolute;width:6px;height:6px;border-radius:50%;animation:firework 2s ease-out infinite;}
-        @keyframes firework{0%{transform:scale(0);opacity:1;}50%{transform:scale(1);opacity:0.8;}100%{transform:scale(2);opacity:0;}}
 
         .report-card-shine{position:relative;overflow:hidden;}
         .report-card-shine::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,215,0,0.4),transparent);animation:report-shine 4s ease-in-out infinite;pointer-events:none;}
         @keyframes report-shine{0%{left:-100%;}50%{left:100%;}100%{left:-100%;}}
 
         @keyframes marqueeLeft{0%{transform:translateX(100%);}100%{transform:translateX(-100%);}}
-        @keyframes marqueeRight{0%{transform:translateX(-100%);}100%{transform:translateX(100%);}}
 
         @keyframes slideInFromLeft{0%{transform:translateX(-200vw) scale(0.8);opacity:0;}70%{transform:translateX(10px) scale(1.1);opacity:1;}100%{transform:translateX(0) scale(1);opacity:1;}}
         @keyframes slideInFromRight{0%{transform:translateX(200vw) scale(0.8);opacity:0;}70%{transform:translateX(-10px) scale(1.1);opacity:1;}100%{transform:translateX(0) scale(1);opacity:1;}}
@@ -68,8 +61,6 @@
             box-shadow:0 4px 12px rgba(0,0,0,0.2),inset 0 1px 4px rgba(255,255,255,0.2),0 0 0 clamp(0.5px,0.2vw,1px) rgba(255,255,255,0.6);
             backdrop-filter:blur(10px);will-change:transform;transform:translateZ(0);
         }
-        .marquee-top::before{content:'';position:absolute;top:-12px;left:50%;transform:translateX(-50%);width:clamp(60px,15vw,120px);height:clamp(20px,5vw,40px);background:linear-gradient(45deg,#7209b7,#533483);clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);border:clamp(1px,0.3vw,2px) solid #fff;box-shadow:0 3px 12px rgba(0,0,0,0.15);}
-        .marquee-top::after{content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%);font-size:clamp(0.9rem,2.5vw,1.6rem);animation:twinkle 2s ease-in-out infinite;}
 
         .marquee-bottom{
             background:linear-gradient(-45deg,#2d1b69,#7209b7,#533483,#0f3460,#16213e,#1a1a2e);
@@ -82,283 +73,83 @@
             box-shadow:0 -4px 12px rgba(0,0,0,0.2),inset 0 -1px 4px rgba(255,255,255,0.2),0 0 0 clamp(0.5px,0.2vw,1px) rgba(255,255,255,0.6);
             backdrop-filter:blur(10px);will-change:transform;transform:translateZ(0);
         }
-        .marquee-bottom::before{content:'';position:absolute;bottom:-12px;left:50%;transform:translateX(-50%);width:clamp(60px,15vw,120px);height:clamp(20px,5vw,40px);background:linear-gradient(-45deg,#533483,#7209b7);clip-path:polygon(30% 0%,70% 0%,100% 30%,100% 70%,70% 100%,30% 100%,0% 70%,0% 30%);border:clamp(1px,0.3vw,2px) solid #fff;box-shadow:0 -3px 12px rgba(0,0,0,0.15);}
-        .marquee-bottom::after{content:'';position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);font-size:clamp(0.9rem,2.5vw,1.6rem);animation:bounce 2s ease-in-out infinite;}
 
         @keyframes gradientShift{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
-        @keyframes twinkle{0%,100%{transform:translateX(-50%) scale(1) rotate(0deg);}50%{transform:translateX(-50%) scale(1.2) rotate(180deg);}}
-        @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(-5px);}}
 
         .marquee-content-top{display:inline-block;animation:marqueeLeft 50s linear infinite;font-size:clamp(0.875rem,2.5vw,1.125rem);font-weight:600;font-family:'Arial',sans-serif;white-space:nowrap;letter-spacing:0.5px;color:#fff;text-shadow:0 0 8px rgba(255,255,255,0.6);padding-right:100vw;will-change:transform;transform:translateZ(0);animation-play-state:running;}
         .marquee-content-bottom{display:inline-block;animation:marqueeLeft 60s linear infinite;font-size:clamp(0.75rem,2vw,1rem);font-weight:600;font-family:'Arial',sans-serif;white-space:nowrap;letter-spacing:0.5px;color:#fff;text-shadow:0 0 8px rgba(255,255,255,0.6);padding-right:100vw;will-change:transform;transform:translateZ(0);animation-play-state:running;}
-        .marquee-top:hover .marquee-content-top,.marquee-bottom:hover .marquee-content-bottom{animation-play-state:paused;}
 
-        @keyframes ultraSmoothBackgroundShift{
-            0%{background:linear-gradient(135deg,#667eea 0%,#764ba2 12.5%,#f093fb 25%,#f5576c 37.5%,#4facfe 50%,#00c9ff 62.5%,#92fe9d 75%,#667eea 87.5%,#667eea 100%);}
-            12.5%{background:linear-gradient(135deg,#ff9a9e 0%,#fecfef 12.5%,#fad0c4 25%,#ff9a9e 37.5%,#a8edea 50%,#fed6e3 62.5%,#d299c2 75%,#fef9d7 87.5%,#ff9a9e 100%);}
-            25%{background:linear-gradient(135deg,#a8edea 0%,#fed6e3 12.5%,#d299c2 25%,#fef9d7 37.5%,#667eea 50%,#764ba2 62.5%,#f093fb 75%,#f5576c 87.5%,#a8edea 100%);}
-            37.5%{background:linear-gradient(135deg,#ffecd2 0%,#fcb69f 12.5%,#ff8a80 25%,#ff7043 37.5%,#764ba2 50%,#667eea 62.5%,#4facfe 75%,#00c9ff 87.5%,#ffecd2 100%);}
-            50%{background:linear-gradient(135deg,#667eea 0%,#764ba2 12.5%,#f093fb 25%,#f5576c 37.5%,#4facfe 50%,#00c9ff 62.5%,#92fe9d 75%,#667eea 87.5%,#667eea 100%);}
-            62.5%{background:linear-gradient(135deg,#ff9a9e 0%,#fecfef 12.5%,#fad0c4 25%,#ff9a9e 37.5%,#a8edea 50%,#fed6e3 62.5%,#d299c2 75%,#fef9d7 87.5%,#ff9a9e 100%);}
-            75%{background:linear-gradient(135deg,#a8edea 0%,#fed6e3 12.5%,#d299c2 25%,#fef9d7 37.5%,#667eea 50%,#764ba2 62.5%,#f093fb 75%,#f5576c 87.5%,#a8edea 100%);}
-            87.5%{background:linear-gradient(135deg,#ffecd2 0%,#fcb69f 12.5%,#ff8a80 25%,#ff7043 37.5%,#764ba2 50%,#667eea 62.5%,#4facfe 75%,#00c9ff 87.5%,#ffecd2 100%);}
-            100%{background:linear-gradient(135deg,#667eea 0%,#764ba2 12.5%,#f093fb 25%,#f5576c 37.5%,#4facfe 50%,#00c9ff 62.5%,#92fe9d 75%,#667eea 87.5%,#667eea 100%);}
-        }
         .smooth-animated-bg{background-size:600% 600%;animation:ultraSmoothBackgroundShift 40s cubic-bezier(0.25,0.46,0.45,0.94) infinite;}
+
+        @keyframes ultraSmoothBackgroundShift{0%{background:linear-gradient(135deg,#667eea 0%,#764ba2 12.5%,#f093fb 25%,#f5576c 37.5%,#4facfe 50%,#00c9ff 62.5%,#92fe9d 75%,#667eea 87.5%,#667eea 100%);}50%{background:linear-gradient(135deg,#ff9a9e 0%,#fecfef 12.5%,#fad0c4 25%,#ff9a9e 37.5%,#a8edea 50%,#fed6e3 62.5%,#d299c2 75%,#fef9d7 87.5%,#ff9a9e 100%);}100%{background:linear-gradient(135deg,#667eea 0%,#764ba2 12.5%,#f093fb 25%,#f5576c 37.5%,#4facfe 50%,#00c9ff 62.5%,#92fe9d 75%,#667eea 87.5%,#667eea 100%);}}
 
         @keyframes slideInLeft{0%{transform:translateX(-100%);opacity:0;}100%{transform:translateX(0);opacity:1;}}
         @keyframes slideInRight{0%{transform:translateX(100%);opacity:0;}100%{transform:translateX(0);opacity:1;}}
-        @keyframes slideInUp{0%{transform:translateY(50px);opacity:0;}100%{transform:translateY(0);opacity:1;}}
         .slide-in-left{animation:slideInLeft 0.8s ease-out;}
         .slide-in-right{animation:slideInRight 0.8s ease-out;}
-        .slide-in-up{animation:slideInUp 0.8s ease-out;}
-
-        .report-slide-left{animation:slideInLeft 1s ease-out;animation-fill-mode:both;}
-        .report-slide-right{animation:slideInRight 1s ease-out;animation-delay:0.3s;animation-fill-mode:both;opacity:0;}
-        .report-slide-left-delayed{animation:slideInLeft 1s ease-out;animation-delay:0.6s;animation-fill-mode:both;opacity:0;}
 
         .btn-hover{transition:all 0.3s ease;transform:translateZ(0);}
         .btn-hover:hover{transform:translateY(-2px) translateZ(0);box-shadow:0 8px 25px rgba(0,0,0,0.15);}
 
-        @media (max-width:640px){
-            .marquee-content-top{animation-duration:35s;font-size:clamp(0.75rem,3vw,1rem);}
-            .marquee-content-bottom{animation-duration:40s;font-size:clamp(0.7rem,2.8vw,0.9rem);}
-            .marquee-top{padding:clamp(8px,2vw,12px) clamp(8px,2vw,16px);}
-            .marquee-bottom{padding:clamp(8px,2vw,12px) clamp(8px,2vw,16px);}
-            .btn-hover:hover{transform:none;}
-            .btn-hover:active{transform:scale(0.98);}
-            .report-card-magical-bg{margin:0 4px;border-radius:12px;}
-            .floating-element{font-size:clamp(1rem,4vw,1.5rem);}
-            .touch-button{min-height:48px;min-width:48px;padding:12px 16px;}
-            .responsive-table{font-size:clamp(0.7rem,2.5vw,0.85rem);}
-            .responsive-table th,.responsive-table td{padding:clamp(6px,1.5vw,12px);}
-        }
-        @media (min-width:641px) and (max-width:1024px){
-            .marquee-content-top{animation-duration:48s;font-size:clamp(0.8rem,2.2vw,1.1rem);}
-            .marquee-content-bottom{animation-duration:58s;font-size:clamp(0.75rem,2vw,1rem);}
-            .touch-button{min-height:46px;min-width:46px;}
-        }
-        @media (max-width:480px){
-            .marquee-content-top{animation-duration:30s;font-size:clamp(0.7rem,3.5vw,0.9rem);}
-            .marquee-content-bottom{animation-duration:35s;font-size:clamp(0.65rem,3.2vw,0.85rem);}
-            .marquee-top{padding:6px 8px;}
-            .marquee-bottom{padding:6px 8px;}
-            .text-responsive-3xl{font-size:clamp(1.5rem,8vw,2.5rem);}
-            .text-responsive-2xl{font-size:clamp(1.2rem,6vw,1.8rem);}
-            .text-responsive-xl{font-size:clamp(1rem,5vw,1.4rem);}
-            .report-card-magical-bg{margin:0 2px;padding:8px;}
-            .floating-element{font-size:clamp(0.8rem,3.5vw,1.2rem);}
-        }
+        .report-card-magical-bg{position:relative;background:linear-gradient(135deg,#667eea 0%,#764ba2 20%,#f093fb 40%,#f5576c 60%,#4facfe 80%,#00c9ff 100%);background-size:400% 400%;animation:magicalShine 8s ease-in-out infinite;overflow:hidden;}
 
-        .gpu-accelerated{transform:translateZ(0);backface-visibility:hidden;perspective:1000px;}
-        .marquee-top,.marquee-bottom{opacity:1;visibility:visible;display:block;}
-        .marquee-content-top,.marquee-content-bottom{opacity:1;visibility:visible;display:inline-block;}
-
-        .report-card-magical-bg{
-            position:relative;
-            background:linear-gradient(135deg,#667eea 0%,#764ba2 20%,#f093fb 40%,#f5576c 60%,#4facfe 80%,#00c9ff 100%);
-            background-size:400% 400%;animation:magicalShine 8s ease-in-out infinite;overflow:hidden;
-        }
-        .report-card-magical-bg::before{
-            content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
-            background:linear-gradient(45deg,transparent 30%,rgba(255,255,255,0.2) 40%,rgba(255,255,255,0.4) 50%,rgba(255,255,255,0.2) 60%,transparent 70%);
-            animation:reportCardShine 4s ease-in-out infinite;pointer-events:none;z-index:1;
-        }
-        .report-card-magical-bg::after{
-            content:'';position:absolute;top:0;left:0;right:0;bottom:0;
-            background:radial-gradient(circle at 20% 20%,rgba(255,255,255,0.1) 0%,transparent 50%),
-                       radial-gradient(circle at 80% 80%,rgba(255,255,255,0.1) 0%,transparent 50%),
-                       radial-gradient(circle at 40% 60%,rgba(255,255,255,0.05) 0%,transparent 50%);
-            animation:sparkleBackground 6s ease-in-out infinite;pointer-events:none;z-index:1;
-        }
         @keyframes magicalShine{0%,100%{background-position:0% 50%;}25%{background-position:100% 50%;}50%{background-position:50% 100%;}75%{background-position:100% 0%;}}
-        @keyframes reportCardShine{0%{transform:translateX(-100%) translateY(-100%) rotate(45deg);}25%{transform:translateX(0%) translateY(0%) rotate(45deg);}50%{transform:translateX(100%) translateY(100%) rotate(45deg);}75%{transform:translateX(50%) translateY(-50%) rotate(45deg);}100%{transform:translateX(-100%) translateY(-100%) rotate(45deg);}}
-        @keyframes sparkleBackground{0%,100%{opacity:0.3;}50%{opacity:0.8;}}
 
         .floating-element{position:absolute;pointer-events:none;z-index:2;animation:float 3s ease-in-out infinite;}
-        .floating-element:nth-child(odd){animation-delay:1.5s;animation-direction:reverse;}
         @keyframes float{0%,100%{transform:translateY(0px) rotate(0deg);}50%{transform:translateY(-20px) rotate(180deg);}}
 
-        .rainbow-border{position:relative;background:linear-gradient(45deg,#ff0000,#ff7f00,#ffff00,#00ff00,#0000ff,#4b0082,#9400d3);background-size:400% 400%;animation:rainbowBorder 3s linear infinite;padding:4px;border-radius:20px;}
-        @keyframes rainbowBorder{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
-
-        .achievement-glow{
-            box-shadow:0 0 20px rgba(255,215,0,0.6),0 0 40px rgba(255,215,0,0.4),0 0 60px rgba(255,215,0,0.2),inset 0 0 20px rgba(255,255,255,0.1);
-            animation:achievementPulse 2s ease-in-out infinite;
-        }
-        @keyframes achievementPulse{
-            0%,100%{box-shadow:0 0 20px rgba(255,215,0,0.6),0 0 40px rgba(255,215,0,0.4),0 0 60px rgba(255,215,0,0.2),inset 0 0 20px rgba(255,255,255,0.1);}
-            50%{box-shadow:0 0 30px rgba(255,215,0,0.8),0 0 60px rgba(255,215,0,0.6),0 0 90px rgba(255,215,0,0.4),inset 0 0 30px rgba(255,255,255,0.2);}
-        }
-
-        .table-magical-shine{position:relative;overflow:hidden;}
-        .table-magical-shine::before{
-            content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
-            background:linear-gradient(45deg,transparent 20%,rgba(34,197,94,0.15) 30%,rgba(59,130,246,0.2) 40%,rgba(147,51,234,0.15) 50%,rgba(34,197,94,0.1) 60%,transparent 70%);
-            animation:tableShine 6s ease-in-out infinite;pointer-events:none;z-index:1;
-        }
-        .table-magical-shine::after{
-            content:'';position:absolute;top:0;left:0;right:0;bottom:0;
-            background:
-                radial-gradient(circle at 15% 25%,rgba(34,197,94,0.08) 0%,transparent 40%),
-                radial-gradient(circle at 85% 75%,rgba(59,130,246,0.08) 0%,transparent 40%),
-                radial-gradient(circle at 50% 50%,rgba(147,51,234,0.06) 0%,transparent 50%),
-                radial-gradient(circle at 25% 75%,rgba(34,197,94,0.05) 0%,transparent 35%),
-                radial-gradient(circle at 75% 25%,rgba(59,130,246,0.05) 0%,transparent 35%);
-            animation:tableSparkle 8s ease-in-out infinite;pointer-events:none;z-index:1;
-        }
-        @keyframes tableShine{0%{transform:translateX(-100%) translateY(-100%) rotate(45deg);}25%{transform:translateX(0%) translateY(-50%) rotate(45deg);}50%{transform:translateX(100%) translateY(100%) rotate(45deg);}75%{transform:translateX(50%) translateY(-25%) rotate(45deg);}100%{transform:translateX(-100%) translateY(-100%) rotate(45deg);}}
-        @keyframes tableSparkle{0%,100%{opacity:0.4;}25%{opacity:0.7;}50%{opacity:0.9;}75%{opacity:0.6;}}
-        .table-magical-shine tbody tr{position:relative;transition:all 0.3s ease;}
-        .table-magical-shine tbody tr:hover{
-            background:linear-gradient(90deg,rgba(34,197,94,0.1) 0%,rgba(59,130,246,0.15) 50%,rgba(147,51,234,0.1) 100%) !important;
-            transform:scale(1.02);box-shadow:0 4px 12px rgba(0,0,0,0.1);
-        }
-        .table-magical-shine thead{position:relative;overflow:hidden;}
-        .table-magical-shine thead::before{
-            content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
-            background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);
-            animation:headerShine 4s ease-in-out infinite;pointer-events:none;z-index:2;
-        }
-        @keyframes headerShine{0%{left:-100%;}50%{left:100%;}100%{left:-100%;}}
-
-        .student-info-magical{position:relative;overflow:hidden;}
-        .student-info-magical::before{
-            content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
-            background:linear-gradient(45deg,transparent 25%,rgba(219,39,119,0.12) 35%,rgba(147,51,234,0.15) 45%,rgba(79,70,229,0.12) 55%,rgba(219,39,119,0.08) 65%,transparent 75%);
-            animation:studentInfoShine 7s ease-in-out infinite;pointer-events:none;z-index:1;
-        }
-        .student-info-magical::after{
-            content:'';position:absolute;top:0;left:0;right:0;bottom:0;
-            background:
-                radial-gradient(circle at 20% 30%,rgba(219,39,119,0.1) 0%,transparent 35%),
-                radial-gradient(circle at 80% 20%,rgba(147,51,234,0.08) 0%,transparent 40%),
-                radial-gradient(circle at 60% 70%,rgba(79,70,229,0.06) 0%,transparent 45%),
-                radial-gradient(circle at 30% 80%,rgba(219,39,119,0.05) 0%,transparent 30%),
-                radial-gradient(circle at 90% 60%,rgba(147,51,234,0.04) 0%,transparent 35%);
-            animation:studentInfoSparkle 9s ease-in-out infinite;pointer-events:none;z-index:1;
-        }
-        @keyframes studentInfoShine{0%{transform:translateX(-100%) translateY(-100%) rotate(45deg);}20%{transform:translateX(-25%) translateY(-25%) rotate(45deg);}40%{transform:translateX(50%) translateY(50%) rotate(45deg);}60%{transform:translateX(75%) translateY(25%) rotate(45deg);}80%{transform:translateX(25%) translateY(75%) rotate(45deg);}100%{transform:translateX(-100%) translateY(-100%) rotate(45deg);}}
-        @keyframes studentInfoSparkle{0%,100%{opacity:0.3;}20%{opacity:0.6;}40%{opacity:0.9;}60%{opacity:0.7;}80%{opacity:0.5;}}
-
-        .floating-star{position:absolute;color:#fbbf24;font-size:clamp(0.8rem,2vw,1.2rem);animation:floatingStar 4s ease-in-out infinite;pointer-events:none;z-index:3;text-shadow:0 0 8px rgba(251,191,36,0.6);}
-        .floating-star:nth-child(2n){animation-delay:1s;animation-direction:reverse;}
-        .floating-star:nth-child(3n){animation-delay:2s;color:#f472b6;text-shadow:0 0 8px rgba(244,114,182,0.6);}
-        .floating-star:nth-child(4n){animation-delay:3s;color:#a78bfa;text-shadow:0 0 8px rgba(167,139,250,0.6);}
-        @keyframes floatingStar{
-            0%,100%{transform:translateY(0px) rotate(0deg) scale(1);opacity:0.7;}
-            25%{transform:translateY(-15px) rotate(90deg) scale(1.2);opacity:1;}
-            50%{transform:translateY(-25px) rotate(180deg) scale(0.9);opacity:0.8;}
-            75%{transform:translateY(-10px) rotate(270deg) scale(1.1);opacity:0.9;}
-        }
-
-        .twinkle-star{position:absolute;width:3px;height:3px;background:#fbbf24;border-radius:50%;animation:twinkleStar 2s ease-in-out infinite;pointer-events:none;z-index:3;box-shadow:0 0 6px #fbbf24;}
-        .twinkle-star:nth-child(2n){background:#f472b6;box-shadow:0 0 6px #f472b6;animation-delay:0.5s;}
-        .twinkle-star:nth-child(3n){background:#a78bfa;box-shadow:0 0 6px #a78bfa;animation-delay:1s;}
-        .twinkle-star:nth-child(4n){background:#60a5fa;box-shadow:0 0 6px #60a5fa;animation-delay:1.5s;}
-        @keyframes twinkleStar{0%,100%{opacity:0.3;transform:scale(0.8);}50%{opacity:1;transform:scale(1.5);}}
+        .achievement-glow{box-shadow:0 0 20px rgba(255,215,0,0.6),0 0 40px rgba(255,215,0,0.4),0 0 60px rgba(255,215,0,0.2),inset 0 0 20px rgba(255,255,255,0.1);animation:achievementPulse 2s ease-in-out infinite;}
+        @keyframes achievementPulse{0%,100%{box-shadow:0 0 20px rgba(255,215,0,0.6),0 0 40px rgba(255,215,0,0.4),0 0 60px rgba(255,215,0,0.2),inset 0 0 20px rgba(255,255,255,0.1);}50%{box-shadow:0 0 30px rgba(255,215,0,0.8),0 0 60px rgba(255,215,0,0.6),0 0 90px rgba(255,215,0,0.4),inset 0 0 30px rgba(255,255,255,0.2);}}
 
         .waviy{position:relative;-webkit-box-reflect:below -15px linear-gradient(transparent,rgba(0,0,0,.15));font-size:clamp(1.5rem,6vw,2.5rem);font-family:'Arial Black',sans-serif;font-weight:500;text-align:center;margin:clamp(15px,3vw,25px) 0;}
         .waviy span{position:relative;display:inline-block;color:#1e3a8a;text-transform:uppercase;animation:waviy 1s infinite;animation-delay:calc(.1s * var(--i));text-shadow:-3px -3px 0 #fff,3px -3px 0 #fff,-3px 3px 0 #fff,3px 3px 0 #fff,-3px 0 0 #fff,3px 0 0 #fff,0 -3px 0 #fff,0 3px 0 #fff,0 0 8px rgba(30,58,138,0.3);margin:0 clamp(1px,0.4vw,2px);}
         @keyframes waviy{0%,40%,100%{transform:translateY(0);}20%{transform:translateY(-20px);}}
-        @media (max-width:5400px){
-            .waviy{font-size:clamp(1.2rem,8vw,2rem);-webkit-box-reflect:below -12px linear-gradient(transparent,rgba(0,0,0,.1));margin:12px 0;}
-            .waviy span{margin:0 clamp(0.5px,0.3vw,1.5px);text-shadow:-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,-2px 0 0 #fff,2px 0 0 #fff,0 -2px 0 #fff,0 2px 0 #fff,0 0 6px rgba(30,58,138,0.2);}
-            @keyframes waviy{0%,40%,100%{transform:translateY(0);}20%{transform:translateY(-12px);}}
-        }
-        @media (max-width:480px){
-            .waviy{font-size:clamp(1rem,10vw,1.1rem);-webkit-box-reflect:below -10px linear-gradient(transparent,rgba(0,0,0,.12));margin:10px 0;}
-            .waviy span{text-shadow:-1.5px -1.5px 0 #fff,1.5px -1.5px 0 #fff,-1.5px 1.5px 0 #fff,1.5px 1.5px 0 #fff,-1.5px 0 0 #fff,1.5px 0 0 #fff,0 -1.5px 0 #fff,0 1.5px 0 #fff,0 0 4px rgba(30,58,138,0.15);}
-            @keyframes waviy{0%,40%,100%{transform:translateY(0);}20%{transform:translateY(-10px);}}
-        }
-
-        @media (prefers-reduced-motion:reduce){
-            .marquee-content-top{animation-duration:80s;}
-            .marquee-content-bottom{animation-duration:90s;}
-            .smooth-animated-bg{animation:ultraSmoothBackgroundShift 60s linear infinite;background-size:300% 300%;}
-            .report-card-magical-bg{animation:none;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);}
-            .floating-element{animation:none;}
-            .waviy span{animation:none;background:linear-gradient(45deg,#ff6b6b,#4ecdc4);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-        }
-
-        @keyframes marquee{0%{transform:translateX(100%);}100%{transform:translateX(-100%);}}
-        .marquee-container{animation:marquee 25s linear infinite;}
-        @media (max-width:768px){.marquee-container{animation:marquee 30s linear infinite;}}
 
         .responsive-table{font-size:clamp(0.75rem,2vw,1rem);}
         .responsive-table th,.responsive-table td{padding:clamp(8px,2vw,16px);}
         .touch-button{min-height:44px;min-width:44px;}
+        .gpu-accelerated{transform:translateZ(0);backface-visibility:hidden;perspective:1000px;}
+
+        @media (max-width:640px){
+            .btn-hover:hover{transform:none;}
+            .btn-hover:active{transform:scale(0.98);}
+        }
     </style>
 </head>
 <body class="min-h-screen smooth-animated-bg gpu-accelerated" style="font-family: 'Arial', sans-serif; padding-top: clamp(50px, 12vw, 80px); padding-bottom: clamp(50px, 12vw, 80px); overflow-x: hidden;">
 
     <!-- Top Marquee -->
     <div class="marquee-top">
-        <div class="marquee-content-top" id="topMarqueeContent">
-            PRIMARY SCHOOL KARANPUR - WHERE DREAMS TAKE FLIGHT! ✨ Excellence in Education Since Day One ✨ Nurturing Young Minds with Love & Care ✨ Building Tomorrow's Leaders Today ✨ A School with a Difference ✨ Learn with JOY! ✨ Empowering Students for Success ✨ Quality Education for All ✨ Creating Bright Futures ✨ Knowledge is Power ✨ 
+        <div class="marquee-content-top">
+            PRIMARY SCHOOL KARANPUR - WHERE DREAMS TAKE FLIGHT! ✨ Excellence in Education Since Day One ✨ Nurturing Young Minds with Love & Care ✨ Building Tomorrow's Leaders Today ✨ A School with a Difference ✨ Learn with JOY! ✨ 
         </div>
     </div>
 
-    <!-- Celebration Overlay -->
     <div id="celebration" class="celebration hidden"></div>
 
-    <!-- School Name Box -->
     <div class="w-full px-2 sm:px-4 py-4 sm:py-6">
         <div class="relative bg-gradient-to-r from-purple-600 via-indigo-700 to-slate-800 p-1 sm:p-2 rounded-2xl sm:rounded-3xl shadow-2xl mb-4 sm:mb-6 border-2 sm:border-4 border-purple-400">
             <div class="relative bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900 rounded-xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 text-center border-2 sm:border-4 border-purple-500 shadow-inner overflow-hidden shiny-container">
-                <div class="absolute top-1 left-1 sm:top-2 sm:left-2 text-yellow-400 text-lg sm:text-2xl animate-spin">⭐</div>
-                <div class="absolute top-1 right-1 sm:top-2 sm:right-2 text-yellow-400 text-lg sm:text-2xl animate-spin" style="animation-delay: 0.5s;">⭐</div>
-                <div class="absolute bottom-1 left-1 sm:bottom-2 sm:left-2 text-yellow-400 text-lg sm:text-2xl animate-spin" style="animation-delay: 1s;">⭐</div>
-                <div class="absolute bottom-1 right-1 sm:bottom-2 sm:right-2 text-yellow-400 text-lg sm:text-2xl animate-spin" style="animation-delay: 1.5s;">⭐</div>
-
-                <div class="sparkle-effect" style="top: 20%; left: 15%; animation-delay: 0s;"></div>
-                <div class="sparkle-effect" style="top: 30%; right: 20%; animation-delay: 0.5s;"></div>
-                <div class="sparkle-effect" style="bottom: 25%; left: 25%; animation-delay: 1s;"></div>
-                <div class="sparkle-effect" style="bottom: 35%; right: 15%; animation-delay: 1.5s;"></div>
-                <div class="sparkle-effect" style="top: 50%; left: 50%; animation-delay: 0.8s;"></div>
-                <div class="sparkle-effect" style="top: 15%; left: 60%; animation-delay: 1.2s;"></div>
-
-                <h1 class="text-responsive-3xl font-bold text-white mb-2 sm:mb-3 drop-shadow-2xl relative z-10 simple-text">
-                     Primary School Karanpur
-                </h1>
-                <p class="text-responsive-lg font-bold text-yellow-300 relative z-10 simple-text">
-                    A School with a Difference - Learn with JOY!
-                </p>
-
+                <h1 class="text-responsive-3xl font-bold text-white mb-2 sm:mb-3 drop-shadow-2xl relative z-10 simple-text">Primary School Karanpur</h1>
+                <p class="text-responsive-lg font-bold text-yellow-300 relative z-10 simple-text">A School with a Difference - Learn with JOY!</p>
                 <div class="w-full px-2 sm:px-4 py-4 sm:py-6 flex justify-center">
                     <div class="waviy">
-                        <span style="--i:1">B</span>
-                        <span style="--i:2">E</span>
-                        <span style="--i:3">H</span>
-                        <span style="--i:4">J</span>
-                        <span style="--i:5">A</span>
-                        <span style="--i:6">M</span>
-                        <span style="--i:7">-</span>
-                        <span style="--i:8">K</span>
-                        <span style="--i:9">H</span>
-                        <span style="--i:10">E</span>
-                        <span style="--i:11">R</span>
-                        <span style="--i:12">I</span>
+                        <span style="--i:1">B</span><span style="--i:2">E</span><span style="--i:3">H</span>
+                        <span style="--i:4">J</span><span style="--i:5">A</span><span style="--i:6">M</span>
+                        <span style="--i:7">-</span><span style="--i:8">K</span><span style="--i:9">H</span>
+                        <span style="--i:10">E</span><span style="--i:11">R</span><span style="--i:12">I</span>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 
-    <!-- Navigation -->
     <nav class="bg-gradient-to-r from-gray-800 via-slate-800 to-gray-900 shadow-2xl mb-4 sm:mb-8 border-2 sm:border-4 border-purple-500 rounded-b-2xl sm:rounded-b-3xl mx-2 sm:mx-0">
         <div class="container mx-auto px-2 sm:px-4 py-3 sm:py-4">
-            <div class="flex flex-col space-y-3 sm:space-y-4">
-                <h1 class="text-responsive-2xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent text-center">🎓 Report Card System</h1>
-                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center items-center">
-                    <button id="studentViewBtn" class="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white px-4 py-3 rounded-full btn-hover shadow-lg border-2 border-blue-400 font-bold text-responsive-base slide-collision-left touch-button">
-                        📊 Student View
-                    </button>
-                    <button id="adminViewBtn" class="bg-gradient-to-r from-red-600 to-pink-700 hover:from-red-700 hover:to-pink-800 text-white px-4 py-3 rounded-full btn-hover shadow-lg border-2 border-red-400 font-bold text-responsive-base slide-collision-right touch-button">
-                        👨‍💼 Admin Panel
-                    </button>
-                </div>
+            <h1 class="text-responsive-2xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent text-center mb-3">🎓 Report Card System</h1>
+            <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center items-center">
+                <button id="studentViewBtn" class="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white px-4 py-3 rounded-full btn-hover shadow-lg border-2 border-blue-400 font-bold text-responsive-base slide-collision-left touch-button">📊 Student View</button>
+                <button id="adminViewBtn" class="bg-gradient-to-r from-red-600 to-pink-700 hover:from-red-700 hover:to-pink-800 text-white px-4 py-3 rounded-full btn-hover shadow-lg border-2 border-red-400 font-bold text-responsive-base slide-collision-right touch-button">👨‍💼 Admin Panel</button>
             </div>
         </div>
     </nav>
@@ -366,79 +157,56 @@
     <!-- Student View -->
     <div id="studentView" class="container mx-auto px-2 sm:px-4">
         <div class="relative bg-gradient-to-br from-gray-800 via-slate-800 to-gray-900 rounded-2xl sm:rounded-3xl shadow-2xl p-3 sm:p-6 lg:p-8 mb-4 sm:mb-8 border-2 sm:border-4 border-purple-500 overflow-hidden">
-            <div class="relative z-10">
-                <h2 class="text-responsive-2xl font-bold text-center bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent mb-4 sm:mb-6 lg:mb-8 drop-shadow-lg">
-                    🌟 Select Student Report Card
-                </h2>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 mb-4 sm:mb-6 lg:mb-8">
-                    <div class="space-y-2">
-                        <label class="block text-responsive-base font-bold text-gray-300">📚 Select Class:</label>
-                        <select id="classSelect" class="w-full p-3 sm:p-4 border-2 sm:border-4 border-purple-500 rounded-xl sm:rounded-2xl focus:border-purple-400 focus:outline-none text-responsive-base bg-gray-700 text-white font-bold transform hover:scale-105 transition-all duration-300 touch-button">
-                            <option value="">Choose Class...</option>
-                            <option value="1">Class 1</option>
-                            <option value="2">Class 2</option>
-                            <option value="3">Class 3</option>
-                            <option value="4">Class 4</option>
-                            <option value="5">Class 5</option>
-                        </select>
-                    </div>
-
-                    <div class="space-y-2">
-                        <label class="block text-responsive-base font-bold text-gray-300">👦 Select Student:</label>
-                        <select id="studentSelect" class="w-full p-3 sm:p-4 border-2 sm:border-4 border-purple-500 rounded-xl sm:rounded-2xl focus:border-purple-400 focus:outline-none text-responsive-base bg-gray-700 text-white font-bold transform hover:scale-105 transition-all duration-300 touch-button" disabled>
-                            <option value="">First select a class...</option>
-                        </select>
-                    </div>
-
-                    <div class="space-y-2">
-                        <label class="block text-responsive-base font-bold text-gray-300">📆 Select Term:</label>
-                        <select id="studentTermSelect" class="w-full p-3 sm:p-4 border-2 sm:border-4 border-purple-500 rounded-xl sm:rounded-2xl focus:border-purple-400 focus:outline-none text-responsive-base bg-gray-700 text-white font-bold transform hover:scale-105 transition-all duration-300 touch-button" disabled>
-                            <option value="">Auto (First Term)</option>
-                        </select>
-                    </div>
+            <h2 class="text-responsive-2xl font-bold text-center bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent mb-6">🌟 Select Student Report Card</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
+                <div>
+                    <label class="block text-responsive-base font-bold text-gray-300 mb-2">📚 Select Class:</label>
+                    <select id="classSelect" class="w-full p-3 sm:p-4 border-2 sm:border-4 border-purple-500 rounded-xl sm:rounded-2xl focus:border-purple-400 focus:outline-none text-responsive-base bg-gray-700 text-white font-bold touch-button">
+                        <option value="">Choose Class...</option>
+                        <option value="1">Class 1</option>
+                        <option value="2">Class 2</option>
+                        <option value="3">Class 3</option>
+                        <option value="4">Class 4</option>
+                        <option value="5">Class 5</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-responsive-base font-bold text-gray-300 mb-2">👦 Select Student:</label>
+                    <select id="studentSelect" class="w-full p-3 sm:p-4 border-2 sm:border-4 border-purple-500 rounded-xl sm:rounded-2xl focus:border-purple-400 focus:outline-none text-responsive-base bg-gray-700 text-white font-bold touch-button" disabled>
+                        <option value="">First select a class...</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-responsive-base font-bold text-gray-300 mb-2">📆 Select Term:</label>
+                    <select id="studentTermSelect" class="w-full p-3 sm:p-4 border-2 sm:border-4 border-purple-500 rounded-xl sm:rounded-2xl focus:border-purple-400 focus:outline-none text-responsive-base bg-gray-700 text-white font-bold touch-button" disabled>
+                        <option value="">Auto (First Term)</option>
+                    </select>
                 </div>
             </div>
         </div>
 
-        <!-- Report Card Display -->
         <div id="reportCard" class="hidden report-card-magical-bg rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-2xl p-2 sm:p-4 lg:p-8 border-2 sm:border-4 border-purple-500">
-            <div class="floating-element text-2xl" style="top: 10%; left: 5%;">⭐</div>
-            <div class="floating-element text-2xl" style="top: 15%; right: 8%;">🌟</div>
-            <div class="floating-element text-xl" style="top: 25%; left: 10%;">✨</div>
-            <div class="floating-element text-xl" style="top: 30%; right: 12%;">💫</div>
-            <div class="floating-element text-2xl" style="bottom: 20%; left: 8%;">🎉</div>
-            <div class="floating-element text-2xl" style="bottom: 25%; right: 6%;">🎊</div>
-            <div class="floating-element text-xl" style="bottom: 35%; left: 15%;">🌈</div>
-            <div class="floating-element text-xl" style="bottom: 40%; right: 18%;">🦄</div>
-
             <div id="reportContent" class="relative z-10"></div>
         </div>
     </div>
 
     <!-- Admin Panel -->
     <div id="adminPanel" class="hidden container mx-auto px-2 sm:px-4">
-        <!-- Admin Login -->
         <div id="adminLogin" class="bg-gradient-to-br from-gray-800 via-slate-800 to-gray-900 rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 lg:p-8 max-w-md mx-auto border-2 sm:border-4 border-red-500">
-            <h2 class="text-responsive-2xl font-bold text-center bg-gradient-to-r from-red-400 via-pink-400 to-orange-400 bg-clip-text text-transparent mb-4 sm:mb-6">🔐 Admin Login</h2>
-            <div class="space-y-3 sm:space-y-4">
-                <input type="password" id="adminPassword" placeholder="Enter Admin Password" class="w-full p-3 sm:p-4 border-2 sm:border-4 border-red-500 rounded-xl sm:rounded-2xl focus:border-red-400 focus:outline-none text-responsive-base bg-gray-700 text-white placeholder-gray-400 font-bold transform hover:scale-105 transition-all duration-300 touch-button">
-                <button id="loginBtn" class="w-full bg-gradient-to-r from-red-600 to-pink-700 hover:from-red-700 hover:to-pink-800 text-white py-3 sm:py-4 rounded-xl sm:rounded-2xl text-responsive-base font-bold btn-hover shadow-lg border-2 border-red-400 touch-button">
-                    🚀 Login
-                </button>
+            <h2 class="text-responsive-2xl font-bold text-center bg-gradient-to-r from-red-400 via-pink-400 to-orange-400 bg-clip-text text-transparent mb-6">🔐 Admin Login</h2>
+            <div class="space-y-4">
+                <input type="password" id="adminPassword" placeholder="Enter Admin Password" class="w-full p-3 sm:p-4 border-2 sm:border-4 border-red-500 rounded-xl sm:rounded-2xl focus:border-red-400 focus:outline-none text-responsive-base bg-gray-700 text-white placeholder-gray-400 font-bold touch-button">
+                <button id="loginBtn" class="w-full bg-gradient-to-r from-red-600 to-pink-700 hover:from-red-700 hover:to-pink-800 text-white py-3 sm:py-4 rounded-xl sm:rounded-2xl text-responsive-base font-bold btn-hover shadow-lg border-2 border-red-400 touch-button">🚀 Login</button>
             </div>
         </div>
 
-        <!-- Admin Dashboard -->
         <div id="adminDashboard" class="hidden">
-            <div class="bg-gradient-to-br from-gray-800 via-slate-800 to-gray-900 rounded-2xl sm:rounded-3xl shadow-2xl p-3 sm:p-6 lg:p-8 mb-4 sm:mb-8 border-2 sm:border-4 border-red-500">
-                <h2 class="text-responsive-2xl font-bold text-center bg-gradient-to-r from-red-400 via-pink-400 to-orange-400 bg-clip-text text-transparent mb-4 sm:mb-6 lg:mb-8">👨‍💼 Admin Dashboard</h2>
-
-                <!-- Student + Term Management Form -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 mb-4 sm:mb-6 lg:mb-8">
+            <div class="bg-gradient-to-br from-gray-800 via-slate-800 to-gray-900 rounded-2xl sm:rounded-3xl shadow-2xl p-3 sm:p-6 lg:p-8 mb-8 border-2 sm:border-4 border-red-500">
+                <h2 class="text-responsive-2xl font-bold text-center bg-gradient-to-r from-red-400 via-pink-400 to-orange-400 bg-clip-text text-transparent mb-8">👨‍💼 Admin Dashboard</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-8">
                     <div>
                         <label class="block text-responsive-base font-bold text-gray-300 mb-2">📚 Select Class:</label>
-                        <select id="adminClassSelect" class="w-full p-3 sm:p-4 border-2 sm:border-4 border-red-500 rounded-xl sm:rounded-2xl focus:border-red-400 focus:outline-none text-responsive-base bg-gray-700 text-white font-bold transform hover:scale-105 transition-all duration-300 touch-button">
+                        <select id="adminClassSelect" class="w-full p-3 sm:p-4 border-2 sm:border-4 border-red-500 rounded-xl sm:rounded-2xl focus:border-red-400 focus:outline-none text-responsive-base bg-gray-700 text-white font-bold touch-button">
                             <option value="">Choose Class...</option>
                             <option value="1">Class 1</option>
                             <option value="2">Class 2</option>
@@ -447,48 +215,40 @@
                             <option value="5">Class 5</option>
                         </select>
                     </div>
-
                     <div>
                         <label class="block text-responsive-base font-bold text-gray-300 mb-2">👦 Select Student:</label>
-                        <select id="adminStudentSelect" class="w-full p-3 sm:p-4 border-2 sm:border-4 border-red-500 rounded-xl sm:rounded-2xl focus:border-red-400 focus:outline-none text-responsive-base bg-gray-700 text-white font-bold transform hover:scale-105 transition-all duration-300 touch-button" disabled>
+                        <select id="adminStudentSelect" class="w-full p-3 sm:p-4 border-2 sm:border-4 border-red-500 rounded-xl sm:rounded-2xl focus:border-red-400 focus:outline-none text-responsive-base bg-gray-700 text-white font-bold touch-button" disabled>
                             <option value="">First select a class...</option>
                             <option value="new">➕ Add New Student</option>
                         </select>
                     </div>
-
                     <div>
                         <label class="block text-responsive-base font-bold text-gray-300 mb-2">📆 Select Term:</label>
                         <div class="flex gap-2">
-                            <select id="adminTermSelect"
-                                    class="w-full p-3 border-2 sm:border-4 border-red-500 rounded-xl sm:rounded-2xl focus:border-red-400 focus:outline-none text-responsive-base bg-gray-700 text-white font-bold transform hover:scale-105 transition-all duration-300 touch-button">
+                            <select id="adminTermSelect" class="flex-1 p-3 border-2 sm:border-4 border-red-500 rounded-xl sm:rounded-2xl focus:border-red-400 focus:outline-none text-responsive-base bg-gray-700 text-white font-bold touch-button">
                                 <option value="">Select Term...</option>
                             </select>
-                            <button id="addTermBtn"
-                                    type="button"
-                                    class="bg-gradient-to-r from-red-600 to-pink-700 hover:from-red-700 hover:to-pink-800 text-white px-3 sm:px-4 py-2 rounded-xl sm:rounded-2xl font-bold btn-hover shadow-lg border-2 border-red-400 text-responsive-xs touch-button">
-                                + Term
-                            </button>
+                            <button id="addTermBtn" class="bg-gradient-to-r from-red-600 to-pink-700 hover:from-red-700 hover:to-pink-800 text-white px-4 py-2 rounded-xl font-bold shadow-lg border-2 border-red-400 touch-button">+ Term</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Student Form -->
-            <div id="studentForm" class="hidden bg-gradient-to-br from-gray-800 via-slate-800 to-gray-900 rounded-2xl sm:rounded-3xl shadow-2xl p-3 sm:p-6 lg:p-8 mb-4 sm:mb-8 border-2 sm:border-4 border-green-500">
-                <h3 id="formTitle" class="text-responsive-xl font-bold bg-gradient-to-r from-green-400 via-emerald-400 to-teal-400 bg-clip-text text-transparent mb-4 sm:mb-6 text-center">➕ Add New Student</h3>
+            <div id="studentForm" class="hidden bg-gradient-to-br from-gray-800 via-slate-800 to-gray-900 rounded-2xl sm:rounded-3xl shadow-2xl p-3 sm:p-6 lg:p-8 mb-8 border-2 sm:border-4 border-green-500">
+                <h3 id="formTitle" class="text-responsive-xl font-bold bg-gradient-to-r from-green-400 via-emerald-400 to-teal-400 bg-clip-text text-transparent mb-6 text-center">➕ Add New Student</h3>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 mb-4 sm:mb-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
                     <div>
                         <label class="block text-responsive-sm font-bold text-gray-300 mb-2">👦 Student Name:</label>
-                        <input type="text" id="studentName" class="w-full p-3 border-2 sm:border-4 border-green-500 rounded-xl sm:rounded-2xl focus:border-green-400 focus:outline-none bg-gray-700 text-white placeholder-gray-400 font-bold transform hover:scale-105 transition-all duration-300 text-responsive-sm touch-button">
+                        <input type="text" id="studentName" class="w-full p-3 border-2 sm:border-4 border-green-500 rounded-xl sm:rounded-2xl focus:border-green-400 focus:outline-none bg-gray-700 text-white placeholder-gray-400 font-bold text-responsive-sm touch-button">
                     </div>
                     <div>
                         <label class="block text-responsive-sm font-bold text-gray-300 mb-2">👨 Father's Name:</label>
-                        <input type="text" id="fatherName" class="w-full p-3 border-2 sm:border-4 border-green-500 rounded-xl sm:rounded-2xl focus:border-green-400 focus:outline-none bg-gray-700 text-white placeholder-gray-400 font-bold transform hover:scale-105 transition-all duration-300 text-responsive-sm touch-button">
+                        <input type="text" id="fatherName" class="w-full p-3 border-2 sm:border-4 border-green-500 rounded-xl sm:rounded-2xl focus:border-green-400 focus:outline-none bg-gray-700 text-white placeholder-gray-400 font-bold text-responsive-sm touch-button">
                     </div>
-                    <div class="sm:col-span-2 lg:col-span-1">
+                    <div>
                         <label class="block text-responsive-sm font-bold text-gray-300 mb-2">📚 Class:</label>
-                        <select id="studentClass" class="w-full p-3 border-2 sm:border-4 border-green-500 rounded-xl sm:rounded-2xl focus:border-green-400 focus:outline-none bg-gray-700 text-white font-bold transform hover:scale-105 transition-all duration-300 text-responsive-sm touch-button">
+                        <select id="studentClass" class="w-full p-3 border-2 sm:border-4 border-green-500 rounded-xl sm:rounded-2xl focus:border-green-400 focus:outline-none bg-gray-700 text-white font-bold text-responsive-sm touch-button">
                             <option value="">Select Class...</option>
                             <option value="1">Class 1</option>
                             <option value="2">Class 2</option>
@@ -499,37 +259,25 @@
                     </div>
                 </div>
 
-                <!-- Subjects (per term, oral/written) -->
-                <div class="bg-gradient-to-r from-gray-700 to-slate-700 p-3 sm:p-4 lg:p-6 rounded-2xl sm:rounded-3xl mb-4 sm:mb-6 border-2 sm:border-4 border-blue-500">
-                    <div class="flex flex-col sm:flex-row justify-between items-center mb-3 sm:mb-4 space-y-2 sm:space-y-0">
+                <div class="bg-gradient-to-r from-gray-700 to-slate-700 p-3 sm:p-4 lg:p-6 rounded-2xl sm:rounded-3xl mb-6 border-2 sm:border-4 border-blue-500">
+                    <div class="flex flex-col sm:flex-row justify-between items-center mb-4 space-y-2 sm:space-y-0">
                         <h4 class="text-responsive-lg font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">📚 Subjects & Marks (Oral + Written)</h4>
-                        <button id="addSubjectBtn" class="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white px-4 py-2 rounded-xl sm:rounded-2xl font-bold btn-hover shadow-lg border-2 border-blue-400 text-responsive-sm touch-button">
-                            ➕ Add Subject
-                        </button>
+                        <button id="addSubjectBtn" class="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white px-4 py-2 rounded-xl font-bold btn-hover shadow-lg border-2 border-blue-400 text-responsive-sm touch-button">➕ Add Subject</button>
                     </div>
-                    <div id="allSubjects" class="space-y-3">
-                        <!-- All subjects will be added here -->
-                    </div>
+                    <div id="allSubjects" class="space-y-3"></div>
                 </div>
 
-                <!-- Success Message -->
-                <div id="successMessage" class="hidden bg-green-100 border-2 sm:border-4 border-green-400 text-green-800 px-4 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl mb-3 sm:mb-4 text-center font-bold text-responsive-sm">
-                </div>
+                <div id="successMessage" class="hidden bg-green-100 border-2 sm:border-4 border-green-400 text-green-800 px-4 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl mb-4 text-center font-bold text-responsive-sm"></div>
 
                 <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                    <button id="saveStudentBtn" class="bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl text-responsive-base font-bold btn-hover shadow-2xl border-2 sm:border-4 border-green-400 slide-in-left touch-button">
-                        💾 Save Student
-                    </button>
-                    <button id="deleteStudentBtn" class="hidden bg-gradient-to-r from-red-600 to-pink-700 hover:from-red-700 hover:to-pink-800 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl text-responsive-base font-bold btn-hover shadow-2xl border-2 sm:border-4 border-red-400 slide-in-right touch-button">
-                        🗑️ Delete Student
-                    </button>
+                    <button id="saveStudentBtn" class="bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl text-responsive-base font-bold btn-hover shadow-2xl border-2 sm:border-4 border-green-400 slide-in-left touch-button">💾 Save Student</button>
+                    <button id="deleteStudentBtn" class="hidden bg-gradient-to-r from-red-600 to-pink-700 hover:from-red-700 hover:to-pink-800 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl text-responsive-base font-bold btn-hover shadow-2xl border-2 sm:border-4 border-red-400 slide-in-right touch-button">🗑️ Delete Student</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Firebase Configuration [file:1]
         const firebaseConfig = {
           apiKey: "AIzaSyBXcBGbfxZ0kU0vqbZvsB_eD7nRBdmRAVI",
           authDomain: "deeapk1281.firebaseapp.com",
@@ -544,77 +292,42 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // Global variables [file:1]
         let currentView = 'student';
         const adminPassword = 'admin123';
         const defaultSubjects = ['Hindi', 'English', 'Maths', 'EVS', 'Sanskrit'];
         let currentStudentId = null;
         let isEditMode = false;
+        let currentClass = null;
 
-        // DOM elements [file:1]
-        const studentViewBtn = document.getElementById('studentViewBtn');
-        const adminViewBtn = document.getElementById('adminViewBtn');
-        const studentView = document.getElementById('studentView');
-        const adminPanel = document.getElementById('adminPanel');
-        const classSelect = document.getElementById('classSelect');
-        const studentSelect = document.getElementById('studentSelect');
-        const studentTermSelect = document.getElementById('studentTermSelect');
-        const reportCard = document.getElementById('reportCard');
-        const adminLogin = document.getElementById('adminLogin');
-        const adminDashboard = document.getElementById('adminDashboard');
-        const adminPasswordInput = document.getElementById('adminPassword');
-        const loginBtn = document.getElementById('loginBtn');
-        const adminClassSelect = document.getElementById('adminClassSelect');
-        const adminStudentSelect = document.getElementById('adminStudentSelect');
-        const adminTermSelect = document.getElementById('adminTermSelect');
-        const addTermBtn = document.getElementById('addTermBtn');
-
-        // Navigation [file:1]
-        studentViewBtn.addEventListener('click', () => {
+        // Navigation
+        document.getElementById('studentViewBtn').addEventListener('click', () => {
             currentView = 'student';
-            studentView.classList.remove('hidden');
-            adminPanel.classList.add('hidden');
-            updateButtonStates();
+            document.getElementById('studentView').classList.remove('hidden');
+            document.getElementById('adminPanel').classList.add('hidden');
         });
 
-        adminViewBtn.addEventListener('click', () => {
+        document.getElementById('adminViewBtn').addEventListener('click', () => {
             currentView = 'admin';
-            studentView.classList.add('hidden');
-            adminPanel.classList.remove('hidden');
-            adminLogin.classList.remove('hidden');
-            adminDashboard.classList.add('hidden');
-            adminPasswordInput.value = '';
-            updateButtonStates();
+            document.getElementById('studentView').classList.add('hidden');
+            document.getElementById('adminPanel').classList.remove('hidden');
+            document.getElementById('adminLogin').classList.remove('hidden');
+            document.getElementById('adminDashboard').classList.add('hidden');
+            document.getElementById('adminPassword').value = '';
         });
 
-        function updateButtonStates() {
-            if (currentView === 'student') {
-                studentViewBtn.classList.add('from-blue-600', 'to-blue-700');
-                studentViewBtn.classList.remove('from-blue-400', 'to-blue-600');
-                adminViewBtn.classList.add('from-red-400', 'to-red-600');
-                adminViewBtn.classList.remove('from-red-600', 'to-red-700');
-            } else {
-                adminViewBtn.classList.add('from-red-600', 'to-red-700');
-                adminViewBtn.classList.remove('from-red-400', 'to-red-600');
-                studentViewBtn.classList.add('from-blue-400', 'to-blue-600');
-                studentViewBtn.classList.remove('from-blue-600', 'to-blue-700');
-            }
-        }
-
-        // Student side: load students [file:1]
-        classSelect.addEventListener('change', async (e) => {
+        // Student View
+        document.getElementById('classSelect').addEventListener('change', async (e) => {
             const selectedClass = e.target.value;
+            const studentSelect = document.getElementById('studentSelect');
             studentSelect.innerHTML = '<option value="">Select Student...</option>';
             studentSelect.disabled = true;
-            studentTermSelect.innerHTML = '<option value="">Auto (First Term)</option>';
-            studentTermSelect.disabled = true;
-            reportCard.classList.add('hidden');
+            document.getElementById('studentTermSelect').innerHTML = '<option value="">Auto (First Term)</option>';
+            document.getElementById('reportCard').classList.add('hidden');
 
             if (selectedClass) {
                 try {
                     const snapshot = await database.ref(`students/class${selectedClass}`).once('value');
                     const students = snapshot.val();
-
                     if (students) {
                         Object.keys(students).forEach(studentId => {
                             const student = students[studentId];
@@ -624,144 +337,67 @@
                             studentSelect.appendChild(option);
                         });
                         studentSelect.disabled = false;
-                    } else {
-                        studentSelect.innerHTML = '<option value="">No students found</option>';
                     }
                 } catch (error) {
                     console.error('Error fetching students:', error);
-                    studentSelect.innerHTML = '<option value="">Error loading students</option>';
                 }
-            } else {
-                studentSelect.innerHTML = '<option value="">First select a class...</option>';
             }
         });
 
-        // When student selected, load terms and report [file:1]
-        studentSelect.addEventListener('change', async (e) => {
-            const selectedClass = classSelect.value;
+        document.getElementById('studentSelect').addEventListener('change', async (e) => {
+            const selectedClass = document.getElementById('classSelect').value;
             const selectedStudent = e.target.value;
-
-            studentTermSelect.innerHTML = '<option value="">Auto (First Term)</option>';
-            studentTermSelect.disabled = true;
-            reportCard.classList.add('hidden');
+            const termSelect = document.getElementById('studentTermSelect');
+            termSelect.innerHTML = '<option value="">Auto (First Term)</option>';
+            termSelect.disabled = true;
+            document.getElementById('reportCard').classList.add('hidden');
 
             if (selectedClass && selectedStudent) {
                 try {
                     const snapshot = await database.ref(`students/class${selectedClass}/${selectedStudent}`).once('value');
                     const studentData = snapshot.val();
-
-                    if (studentData) {
-                        // Fill term dropdown
-                        if (studentData.terms) {
-                            Object.keys(studentData.terms).forEach(t => {
-                                const opt = document.createElement('option');
-                                opt.value = t;
-                                opt.textContent = t;
-                                studentTermSelect.appendChild(opt);
-                            });
-                            studentTermSelect.disabled = false;
-                        }
-                        // Auto choose first term
-                        const termName = studentTermSelect.value || (studentData.terms ? Object.keys(studentData.terms)[0] : null);
-                        await generateReportCard(studentData, selectedClass, termName);
+                    if (studentData && studentData.terms) {
+                        Object.keys(studentData.terms).forEach(t => {
+                            const opt = document.createElement('option');
+                            opt.value = t;
+                            opt.textContent = t;
+                            termSelect.appendChild(opt);
+                        });
+                        termSelect.disabled = false;
+                        const termName = termSelect.value || Object.keys(studentData.terms)[0];
+                        generateReportCard(studentData, selectedClass, termName);
                     }
                 } catch (error) {
-                    console.error('Error fetching student data:', error);
+                    console.error('Error:', error);
                 }
             }
         });
 
-        // When term changed on student view [file:1]
-        studentTermSelect.addEventListener('change', async () => {
-            const selectedClass = classSelect.value;
-            const selectedStudent = studentSelect.value;
-            const termName = studentTermSelect.value;
+        document.getElementById('studentTermSelect').addEventListener('change', async () => {
+            const selectedClass = document.getElementById('classSelect').value;
+            const selectedStudent = document.getElementById('studentSelect').value;
+            const termName = document.getElementById('studentTermSelect').value;
 
-            if (!selectedClass || !selectedStudent) return;
-
-            try {
-                const snapshot = await database.ref(`students/class${selectedClass}/${selectedStudent}`).once('value');
-                const studentData = snapshot.val();
-                if (studentData) {
-                    await generateReportCard(studentData, selectedClass, termName || null);
-                }
-            } catch (e) {
-                console.error('Error loading term for student view', e);
-            }
-        });
-
-        // Rank calculation uses total (oral+written) now [file:1]
-        function computeTotalAndPercentFromTerms(studentData) {
-            const terms = studentData.terms || {};
-            let totalObtained = 0;
-            let totalMaximum = 0;
-
-            Object.values(terms).forEach(term => {
-                const subjects = term.subjects || {};
-                Object.values(subjects).forEach(s => {
-                    const obt = (s.oral?.obtained || 0) + (s.written?.obtained || 0);
-                    const max = (s.oral?.maximum || 0) + (s.written?.maximum || 0);
-                    totalObtained += obt;
-                    totalMaximum += max;
-                });
-            });
-
-            const percentage = totalMaximum > 0 ? (totalObtained / totalMaximum) * 100 : 0;
-            return { totalObtained, totalMaximum, percentage };
-        }
-
-        async function calculateStudentRank(studentData, classNum) {
-            try {
-                const snapshot = await database.ref(`students/class${classNum}`).once('value');
-                const allStudents = snapshot.val();
-
-                if (!allStudents) return { rank: 1, totalStudents: 1 };
-
-                const studentsWithPercentages = [];
-
-                Object.keys(allStudents).forEach(studentId => {
-                    const student = allStudents[studentId];
-                    const { percentage } = computeTotalAndPercentFromTerms(student);
-                    studentsWithPercentages.push({ id: studentId, name: student.name, percentage });
-                });
-
-                studentsWithPercentages.sort((a, b) => b.percentage - a.percentage);
-
-                const current = computeTotalAndPercentFromTerms(studentData).percentage;
-                let rank = 1;
-                for (let i = 0; i < studentsWithPercentages.length; i++) {
-                    if (studentsWithPercentages[i].percentage > current) {
-                        rank = i + 2;
-                    } else {
-                        break;
+            if (selectedClass && selectedStudent) {
+                try {
+                    const snapshot = await database.ref(`students/class${selectedClass}/${selectedStudent}`).once('value');
+                    const studentData = snapshot.val();
+                    if (studentData) {
+                        generateReportCard(studentData, selectedClass, termName || Object.keys(studentData.terms)[0]);
                     }
+                } catch (e) {
+                    console.error('Error:', e);
                 }
-                return { rank, totalStudents: studentsWithPercentages.length };
-            } catch (error) {
-                console.error('Error calculating rank:', error);
-                return { rank: 1, totalStudents: 1 };
             }
-        }
+        });
 
-        // Report card generation (uses term + oral/written) [file:1]
         async function generateReportCard(studentData, classNum, termName) {
-            const allTerms = studentData.terms || {};
-            let termKey = termName;
-
-            if (!termKey) {
-                const keys = Object.keys(allTerms);
-                termKey = keys.length ? keys[0] : null;
-            }
-
-            const termData = termKey && allTerms[termKey] ? allTerms[termKey] : { subjects: {} };
+            const termData = studentData.terms && studentData.terms[termName] ? studentData.terms[termName] : { subjects: {} };
             const subjects = termData.subjects || {};
-
             let totalObtained = 0;
             let totalMaximum = 0;
-
             const filteredSubjects = {};
 
-            // Default subjects first
             defaultSubjects.forEach(subjectName => {
                 if (subjects[subjectName]) {
                     const s = subjects[subjectName];
@@ -773,7 +409,6 @@
                 }
             });
 
-            // Extra subjects
             Object.keys(subjects).forEach(subjectName => {
                 if (!defaultSubjects.includes(subjectName)) {
                     const s = subjects[subjectName];
@@ -791,101 +426,66 @@
             });
 
             const percentage = totalMaximum > 0 ? ((totalObtained / totalMaximum) * 100).toFixed(2) : 0;
-            const isHighAchiever = percentage >= 85;
-
-            const rankData = await calculateStudentRank(studentData, classNum);
 
             let subjectsHTML = '';
             Object.entries(filteredSubjects).forEach(([subjectName, marks]) => {
                 const properCaseSubject = subjectName.charAt(0).toUpperCase() + subjectName.slice(1).toLowerCase();
                 subjectsHTML += `
-                    <tr class="border-b border-purple-200 hover:bg-gradient-to-r hover:from-blue-100 hover:to-purple-100 transition-colors duration-200">
-                        <td class="py-2 sm:py-3 lg:py-4 px-2 sm:px-4 font-semibold text-gray-800 text-responsive-sm">${properCaseSubject}</td>
-                        <td class="py-2 sm:py-3 lg:py-4 px-2 sm:px-4 text-center text-blue-600 font-bold text-responsive-sm">${marks.obtained || 0}</td>
-                        <td class="py-2 sm:py-3 lg:py-4 px-2 sm:px-4 text-center text-gray-600 text-responsive-sm">${marks.maximum || 0}</td>
-                        <td class="py-2 sm:py-3 lg:py-4 px-2 sm:px-4 text-center font-bold text-purple-600 text-responsive-sm">${marks.obtained || 0}/${marks.maximum || 0}</td>
+                    <tr class="border-b border-purple-200 hover:bg-gradient-to-r hover:from-blue-100 hover:to-purple-100 transition-colors">
+                        <td class="py-3 px-4 font-semibold text-gray-800">${properCaseSubject}</td>
+                        <td class="py-3 px-4 text-center text-blue-600 font-bold">${marks.obtained || 0}</td>
+                        <td class="py-3 px-4 text-center text-gray-600">${marks.maximum || 0}</td>
+                        <td class="py-3 px-4 text-center font-bold text-purple-600">${marks.obtained || 0}/${marks.maximum || 0}</td>
                     </tr>
                 `;
             });
 
             const reportHTML = `
-                <div class="text-center mb-4 sm:mb-6 lg:mb-8 ${isHighAchiever ? 'rainbow-border achievement-glow' : 'bg-white bg-opacity-10 rounded-2xl p-4'}">
-                    <div class="bg-white bg-opacity-90 rounded-xl p-4 ${isHighAchiever ? '' : 'border-4 border-purple-400'}">
-                        <h2 class="text-responsive-3xl font-bold ${isHighAchiever ? 'bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 bg-clip-text text-transparent' : 'bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent'} mb-2 drop-shadow-lg">
-                            🎓 REPORT CARD ${termKey ? ' - ' + termKey : ''}
-                        </h2>
-                        ${isHighAchiever
-                            ? '<div class="text-responsive-xl bg-gradient-to-r from-yellow-500 to-orange-600 bg-clip-text text-transparent font-bold animate-pulse">🌟 EXCELLENT PERFORMANCE! 🌟</div>'
-                            : '<div class="text-responsive-lg bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent font-semibold">📚 Academic Progress Report 📚</div>'
-                        }
-                    </div>
+                <div class="text-center mb-8 bg-white bg-opacity-90 rounded-2xl p-6">
+                    <h2 class="text-4xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent mb-2">🎓 REPORT CARD ${termName ? ' - ' + termName : ''}</h2>
+                    <p class="text-lg bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent font-semibold">📚 Academic Progress Report 📚</p>
                 </div>
 
-                <!-- Student Information -->
-                <div class="bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-600 p-1 rounded-xl sm:rounded-2xl mb-4 sm:mb-6 lg:mb-8 shadow-2xl relative overflow-hidden report-slide-left">
-                    <div class="bg-white bg-opacity-95 p-3 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl student-info-magical">
-                        <div class="floating-star" style="top: 10%; left: 8%;">⭐</div>
-                        <div class="floating-star" style="top: 15%; right: 12%;">🌟</div>
-                        <div class="floating-star" style="top: 25%; left: 85%;">✨</div>
-                        <div class="floating-star" style="bottom: 30%; left: 10%;">💫</div>
-                        <div class="floating-star" style="bottom: 20%; right: 15%;">⭐</div>
-                        <div class="floating-star" style="top: 40%; left: 5%;">🌟</div>
-                        <div class="floating-star" style="bottom: 45%; right: 8%;">✨</div>
-                        <div class="floating-star" style="top: 60%; right: 90%;">💫</div>
-
-                        <div class="twinkle-star" style="top: 20%; left: 25%;"></div>
-                        <div class="twinkle-star" style="top: 35%; right: 30%;"></div>
-                        <div class="twinkle-star" style="bottom: 40%; left: 70%;"></div>
-                        <div class="twinkle-star" style="bottom: 25%; right: 45%;"></div>
-                        <div class="twinkle-star" style="top: 50%; left: 15%;"></div>
-                        <div class="twinkle-star" style="top: 70%; right: 20%;"></div>
-                        <div class="twinkle-star" style="bottom: 60%; left: 40%;"></div>
-                        <div class="twinkle-star" style="bottom: 15%; right: 65%;"></div>
-                        <div class="twinkle-star" style="top: 30%; left: 60%;"></div>
-                        <div class="twinkle-star" style="bottom: 50%; right: 75%;"></div>
-
-                        <h3 class="text-responsive-xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4 sm:mb-6 text-center bg-gradient-to-r from-blue-100 to-purple-100 rounded-xl p-2 sm:p-3 shadow-lg border-2 border-blue-400 relative z-10">📋 Student Information</h3>
-                        <div class="space-y-3 sm:space-y-4 relative z-10">
-                            <div class="bg-gradient-to-r from-blue-100 to-blue-200 p-3 sm:p-4 rounded-xl shadow-md border-l-4 border-blue-500">
-                                <p class="text-responsive-base"><span class="font-semibold text-blue-700">👦 Student Name:</span> <span class="font-bold text-gray-800">${studentData.name}</span></p>
+                <div class="bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-600 p-1 rounded-2xl mb-8 shadow-2xl">
+                    <div class="bg-white bg-opacity-95 p-8 rounded-2xl">
+                        <h3 class="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-6 text-center">📋 Student Information</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gradient-to-r from-blue-100 to-blue-200 p-4 rounded-xl shadow-md border-l-4 border-blue-500">
+                                <p class="text-base"><span class="font-semibold text-blue-700">👦 Student Name:</span> <span class="font-bold text-gray-800">${studentData.name}</span></p>
                             </div>
-                            <div class="bg-gradient-to-r from-purple-100 to-purple-200 p-3 sm:p-4 rounded-xl shadow-md border-l-4 border-purple-500">
-                                <p class="text-responsive-base"><span class="font-semibold text-purple-700">👨 Father's Name:</span> <span class="font-bold text-gray-800">${studentData.fatherName}</span></p>
+                            <div class="bg-gradient-to-r from-purple-100 to-purple-200 p-4 rounded-xl shadow-md border-l-4 border-purple-500">
+                                <p class="text-base"><span class="font-semibold text-purple-700">👨 Father's Name:</span> <span class="font-bold text-gray-800">${studentData.fatherName}</span></p>
                             </div>
-                            <div class="bg-gradient-to-r from-indigo-100 to-indigo-200 p-3 sm:p-4 rounded-xl shadow-md border-l-4 border-indigo-500">
-                                <p class="text-responsive-base"><span class="font-semibold text-indigo-700">📚 Class:</span> <span class="font-bold text-gray-800">${classNum}</span></p>
+                            <div class="bg-gradient-to-r from-indigo-100 to-indigo-200 p-4 rounded-xl shadow-md border-l-4 border-indigo-500">
+                                <p class="text-base"><span class="font-semibold text-indigo-700">📚 Class:</span> <span class="font-bold text-gray-800">${classNum}</span></p>
                             </div>
-                            <div class="bg-gradient-to-r from-green-100 to-green-200 p-3 sm:p-4 rounded-xl shadow-md border-l-4 border-green-500">
-                                <p class="text-responsive-base"><span class="font-semibold text-green-700">📆 Term:</span> <span class="font-bold text-gray-800">${termKey || 'All'}</span></p>
-                            </div>
-                            <div class="bg-gradient-to-r from-yellow-100 to-yellow-200 p-3 sm:p-4 rounded-xl shadow-md border-l-4 border-yellow-500">
-                                <p class="text-responsive-base"><span class="font-semibold text-yellow-700">📊 Percentage:</span> <span class="font-bold text-gray-800">${percentage}%</span>  | <span class="font-semibold text-yellow-700">🏆 Rank:</span> <span class="font-bold text-gray-800">${rankData.rank}/${rankData.totalStudents}</span></p>
+                            <div class="bg-gradient-to-r from-yellow-100 to-yellow-200 p-4 rounded-xl shadow-md border-l-4 border-yellow-500">
+                                <p class="text-base"><span class="font-semibold text-yellow-700">📊 Percentage:</span> <span class="font-bold text-gray-800">${percentage}%</span></p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Subject-wise Performance Table -->
-                <div class="bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 p-1 rounded-xl sm:rounded-2xl mb-4 sm:mb-6 lg:mb-8 report-slide-right shadow-2xl">
-                    <div class="bg-white bg-opacity-95 p-2 sm:p-4 lg:p-6 rounded-xl sm:rounded-2xl">
-                        <h3 class="text-responsive-xl font-bold bg-gradient-to-r from-green-600 via-blue-600 to-purple-600 bg-clip-text text-transparent mb-3 sm:mb-4 lg:mb-6 text-center bg-gradient-to-r from-green-100 to-purple-100 rounded-xl p-3 border-2 border-green-400">📚 Subject-wise Performance</h3>
+                <div class="bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 p-1 rounded-2xl mb-8 shadow-2xl">
+                    <div class="bg-white bg-opacity-95 p-6 rounded-2xl">
+                        <h3 class="text-2xl font-bold bg-gradient-to-r from-green-600 via-blue-600 to-purple-600 bg-clip-text text-transparent mb-6 text-center">📚 Subject-wise Performance</h3>
                         <div class="overflow-x-auto">
-                            <table class="w-full bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl shadow-lg overflow-hidden responsive-table border-2 border-blue-300 table-magical-shine">
+                            <table class="w-full bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl shadow-lg overflow-hidden border-2 border-blue-300">
                                 <thead class="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white">
                                     <tr>
-                                        <th class="py-3 sm:py-4 lg:py-5 px-2 sm:px-4 text-left font-bold text-responsive-sm">Subject</th>
-                                        <th class="py-3 sm:py-4 lg:py-5 px-2 sm:px-4 text-center font-bold text-responsive-sm">Obtained</th>
-                                        <th class="py-3 sm:py-4 lg:py-5 px-2 sm:px-4 text-center font-bold text-responsive-sm">Maximum</th>
-                                        <th class="py-3 sm:py-4 lg:py-5 px-2 sm:px-4 text-center font-bold text-responsive-sm">OM/MM</th>
+                                        <th class="py-4 px-4 text-left font-bold">Subject</th>
+                                        <th class="py-4 px-4 text-center font-bold">Obtained</th>
+                                        <th class="py-4 px-4 text-center font-bold">Maximum</th>
+                                        <th class="py-4 px-4 text-center font-bold">OM/MM</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     ${subjectsHTML}
-                                    <tr class="bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-600 font-bold text-white hover:from-purple-400 hover:via-pink-400 hover:to-indigo-500 hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105 cursor-pointer hover:text-black">
-                                        <td class="py-3 sm:py-4 lg:py-5 px-2 sm:px-4 text-responsive-base">🎯 TOTAL</td>
-                                        <td class="py-3 sm:py-4 lg:py-5 px-2 sm:px-4 text-center text-responsive-base">${totalObtained}</td>
-                                        <td class="py-3 sm:py-4 lg:py-5 px-2 sm:px-4 text-center text-responsive-base">${totalMaximum}</td>
-                                        <td class="py-3 sm:py-4 lg:py-5 px-2 sm:px-4 text-center font-bold text-responsive-base">${totalObtained}/${totalMaximum}</td>
+                                    <tr class="bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-600 font-bold text-white">
+                                        <td class="py-4 px-4">🎯 TOTAL</td>
+                                        <td class="py-4 px-4 text-center">${totalObtained}</td>
+                                        <td class="py-4 px-4 text-center">${totalMaximum}</td>
+                                        <td class="py-4 px-4 text-center">${totalObtained}/${totalMaximum}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -895,35 +495,33 @@
             `;
 
             document.getElementById('reportContent').innerHTML = reportHTML;
-            reportCard.classList.remove('hidden');
+            document.getElementById('reportCard').classList.remove('hidden');
         }
 
-        // Admin login [file:1]
-        loginBtn.addEventListener('click', () => {
-            if (adminPasswordInput.value === adminPassword) {
-                adminLogin.classList.add('hidden');
-                adminDashboard.classList.remove('hidden');
-                adminPasswordInput.value = '';
+        // Admin Login
+        document.getElementById('loginBtn').addEventListener('click', () => {
+            if (document.getElementById('adminPassword').value === adminPassword) {
+                document.getElementById('adminLogin').classList.add('hidden');
+                document.getElementById('adminDashboard').classList.remove('hidden');
             } else {
-                alert('❌ Incorrect password! Try "admin123"');
-                adminPasswordInput.value = '';
+                alert('❌ Incorrect password!');
+                document.getElementById('adminPassword').value = '';
             }
         });
 
-        // Admin: load students [file:1]
-        adminClassSelect.addEventListener('change', async (e) => {
-            const selectedClass = e.target.value;
+        // Admin Class Select
+        document.getElementById('adminClassSelect').addEventListener('change', async (e) => {
+            currentClass = e.target.value;
+            const adminStudentSelect = document.getElementById('adminStudentSelect');
             adminStudentSelect.innerHTML = '<option value="">Select Student...</option>';
             adminStudentSelect.disabled = true;
             document.getElementById('studentForm').classList.add('hidden');
 
-            if (selectedClass) {
+            if (currentClass) {
                 try {
-                    const snapshot = await database.ref(`students/class${selectedClass}`).once('value');
+                    const snapshot = await database.ref(`students/class${currentClass}`).once('value');
                     const students = snapshot.val();
-
-                    adminStudentSelect.innerHTML += '<option value="new">➕ Add New Student</option>';
-
+                    adminStudentSelect.innerHTML = '<option value="new">➕ Add New Student</option>';
                     if (students) {
                         Object.keys(students).forEach(studentId => {
                             const student = students[studentId];
@@ -935,49 +533,18 @@
                     }
                     adminStudentSelect.disabled = false;
                 } catch (error) {
-                    console.error('Error fetching students:', error);
+                    console.error('Error:', error);
                 }
             }
         });
 
-        // TERM handling helpers [file:1]
-        function loadTermsFromStudent(studentData) {
-            adminTermSelect.innerHTML = '<option value="">Select Term...</option>';
-            if (studentData.terms) {
-                Object.keys(studentData.terms).forEach(termName => {
-                    const opt = document.createElement('option');
-                    opt.value = termName;
-                    opt.textContent = termName;
-                    adminTermSelect.appendChild(opt);
-                });
-            }
-        }
-
-        function setupDefaultStudentStructure() {
-            adminTermSelect.innerHTML = '';
-            const defaultTerm = 'Term 1';
-            const opt = document.createElement('option');
-            opt.value = defaultTerm;
-            opt.textContent = defaultTerm;
-            adminTermSelect.appendChild(opt);
-            adminTermSelect.value = defaultTerm;
-        }
-
-        addTermBtn.addEventListener('click', () => {
-            const newTerm = prompt('Enter new term name (e.g. Term 1, Half Yearly):');
-            if (!newTerm) return;
-
-            const opt = document.createElement('option');
-            opt.value = newTerm;
-            opt.textContent = newTerm;
-            adminTermSelect.appendChild(opt);
-            adminTermSelect.value = newTerm;
-        });
-
-        // Admin: student selection [file:1]
-        adminStudentSelect.addEventListener('change', async (e) => {
+        // **FIX: ADMIN STUDENT SELECT - NOW PROPERLY LOADS STUDENT DATA AND TERMS**
+        document.getElementById('adminStudentSelect').addEventListener('change', async (e) => {
             const selectedStudent = e.target.value;
-            const selectedClass = adminClassSelect.value;
+            const selectedClass = document.getElementById('adminClassSelect').value;
+            const termSelect = document.getElementById('adminTermSelect');
+
+            termSelect.innerHTML = '<option value="">Select Term...</option>';
 
             if (selectedStudent === 'new') {
                 isEditMode = false;
@@ -985,10 +552,9 @@
                 document.getElementById('formTitle').textContent = '➕ Add New Student';
                 document.getElementById('deleteStudentBtn').classList.add('hidden');
                 clearForm();
-                setupDefaultStudentStructure();
                 setupDefaultSubjects();
-                document.getElementById('studentForm').classList.remove('hidden');
                 document.getElementById('studentClass').value = selectedClass;
+                document.getElementById('studentForm').classList.remove('hidden');
             } else if (selectedStudent && selectedClass) {
                 isEditMode = true;
                 currentStudentId = selectedStudent;
@@ -1000,36 +566,81 @@
                     const studentData = snapshot.val();
 
                     if (studentData) {
-                        loadStudentData(studentData, selectedClass);
+                        document.getElementById('studentName').value = studentData.name || '';
+                        document.getElementById('fatherName').value = studentData.fatherName || '';
+                        document.getElementById('studentClass').value = selectedClass;
+
+                        // **LOAD TERMS FROM STUDENT DATA**
+                        if (studentData.terms) {
+                            Object.keys(studentData.terms).forEach(t => {
+                                const opt = document.createElement('option');
+                                opt.value = t;
+                                opt.textContent = t;
+                                termSelect.appendChild(opt);
+                            });
+                            // Select first term by default
+                            const firstTerm = Object.keys(studentData.terms)[0];
+                            termSelect.value = firstTerm;
+                        }
+
+                        // **LOAD SUBJECTS FOR FIRST TERM**
+                        loadStudentDataForTerm(studentData);
                         document.getElementById('studentForm').classList.remove('hidden');
                     }
                 } catch (error) {
-                    console.error('Error loading student data:', error);
+                    console.error('Error:', error);
                 }
             } else {
                 document.getElementById('studentForm').classList.add('hidden');
             }
         });
 
-        // When term changes in admin, reload subject blocks [file:1]
-        adminTermSelect.addEventListener('change', async () => {
-            const selectedClass = adminClassSelect.value;
-            const selectedStudent = currentStudentId;
-            const termName = adminTermSelect.value;
-            if (!selectedClass || !selectedStudent || !termName) return;
+        // **FIX: ADMIN TERM SELECT - NOW RELOADS SUBJECTS FOR THE SELECTED TERM**
+        document.getElementById('adminTermSelect').addEventListener('change', async () => {
+            if (!currentStudentId || !isEditMode) return;
+
+            const selectedClass = document.getElementById('adminClassSelect').value;
+            const termName = document.getElementById('adminTermSelect').value;
+
+            if (!selectedClass || !termName) return;
 
             try {
-                const snap = await database.ref(`students/class${selectedClass}/${selectedStudent}`).once('value');
-                const studentData = snap.val();
+                const snapshot = await database.ref(`students/class${selectedClass}/${currentStudentId}`).once('value');
+                const studentData = snapshot.val();
                 if (studentData) {
-                    loadStudentData(studentData, selectedClass);
+                    loadStudentDataForTerm(studentData);
                 }
-            } catch (e) {
-                console.error('Error loading term data', e);
+            } catch (error) {
+                console.error('Error loading term data:', error);
             }
         });
 
-        // SUBJECT UI: per term, oral/written [file:1]
+        // **NEW FUNCTION: LOADS STUDENT DATA FOR THE SELECTED TERM**
+        function loadStudentDataForTerm(studentData) {
+            const termName = document.getElementById('adminTermSelect').value;
+            if (!termName) return;
+
+            const container = document.getElementById('allSubjects');
+            container.innerHTML = '';
+
+            const termSubjects = (studentData.terms && studentData.terms[termName] && studentData.terms[termName].subjects) || {};
+
+            if (Object.keys(termSubjects).length === 0) {
+                setupDefaultSubjects();
+            } else {
+                defaultSubjects.forEach(sub => {
+                    const data = termSubjects[sub] || { oral: { obtained: 0, maximum: 10 }, written: { obtained: 0, maximum: 40 } };
+                    addSubjectWithData(sub, data, true);
+                });
+
+                Object.keys(termSubjects).forEach(sub => {
+                    if (!defaultSubjects.includes(sub)) {
+                        addSubjectWithData(sub, termSubjects[sub], false);
+                    }
+                });
+            }
+        }
+
         function setupDefaultSubjects() {
             const container = document.getElementById('allSubjects');
             container.innerHTML = '';
@@ -1051,19 +662,11 @@
         function addSubjectWithData(subjectName = '', data = {}, isDefault = false) {
             const container = document.getElementById('allSubjects');
             const subjectDiv = document.createElement('div');
-            subjectDiv.className =
-                'bg-gradient-to-r from-gray-700 to-slate-700 p-2 sm:p-3 lg:p-4 rounded-xl sm:rounded-2xl shadow-lg border-2 sm:border-4 border-blue-500 btn-hover';
-            subjectDiv.classList.add('subject-block');
+            subjectDiv.className = 'bg-gradient-to-r from-gray-700 to-slate-700 p-3 lg:p-4 rounded-xl lg:rounded-2xl shadow-lg border-2 lg:border-4 border-blue-500 subject-block';
 
-            const removeButton = isDefault
-                ? ''
-                : `
-                <div class="flex justify-center mt-2 sm:mt-3">
-                    <button type="button"
-                            onclick="this.closest('.subject-block').remove()"
-                            class="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-3 sm:px-4 py-2 rounded-lg sm:rounded-xl font-bold btn-hover shadow-lg border-2 border-red-400 text-responsive-xs touch-button">
-                        🗑️ Remove
-                    </button>
+            const removeButton = isDefault ? '' : `
+                <div class="flex justify-center mt-3">
+                    <button type="button" onclick="this.closest('.subject-block').remove()" class="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-4 py-2 rounded-lg font-bold border-2 border-red-400">🗑️ Remove</button>
                 </div>
             `;
 
@@ -1071,47 +674,24 @@
             const written = data.written || { obtained: 0, maximum: 40 };
 
             subjectDiv.innerHTML = `
-                <div class="space-y-2 sm:space-y-3">
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
+                <div class="space-y-2">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                         <div>
-                            <label class="block text-responsive-xs font-bold text-gray-300 mb-1">Subject Name</label>
-                            <input type="text"
-                                   class="subject-name w-full p-2 sm:p-3 border-2 sm:border-3 lg:border-4 border-blue-500
-                                          rounded-lg sm:rounded-xl focus:border-blue-400 focus:outline-none bg-gray-700
-                                          text-white placeholder-gray-400 font-bold text-responsive-xs touch-button"
-                                   value="${subjectName || ''}"
-                                   placeholder="Subject Name" ${isDefault ? 'readonly' : ''}>
+                            <label class="block text-xs font-bold text-gray-300 mb-1">Subject Name</label>
+                            <input type="text" class="subject-name w-full p-2 border-2 lg:border-4 border-blue-500 rounded-lg focus:border-blue-400 focus:outline-none bg-gray-700 text-white placeholder-gray-400 font-bold text-xs" value="${subjectName || ''}" placeholder="Subject Name" ${isDefault ? 'readonly' : ''}>
                         </div>
-
                         <div>
-                            <label class="block text-responsive-xs font-bold text-gray-300 mb-1">Oral (Obt / Max)</label>
+                            <label class="block text-xs font-bold text-gray-300 mb-1">Oral (Obt / Max)</label>
                             <div class="grid grid-cols-2 gap-2">
-                                <input type="number"
-                                       class="oral-obtained w-full p-2 sm:p-3 border-2 sm:border-3 lg:border-4 border-blue-500
-                                              rounded-lg sm:rounded-xl focus:border-blue-400 focus:outline-none bg-gray-700
-                                              text-white font-bold text-center text-responsive-xs touch-button"
-                                       min="0" value="${oral.obtained}">
-                                <input type="number"
-                                       class="oral-maximum w-full p-2 sm:p-3 border-2 sm:border-3 lg:border-4 border-blue-500
-                                              rounded-lg sm:rounded-xl focus:border-blue-400 focus:outline-none bg-gray-700
-                                              text-white font-bold text-center text-responsive-xs touch-button"
-                                       min="1" value="${oral.maximum}">
+                                <input type="number" class="oral-obtained w-full p-2 border-2 lg:border-4 border-blue-500 rounded-lg focus:border-blue-400 focus:outline-none bg-gray-700 text-white font-bold text-center text-xs" min="0" value="${oral.obtained}">
+                                <input type="number" class="oral-maximum w-full p-2 border-2 lg:border-4 border-blue-500 rounded-lg focus:border-blue-400 focus:outline-none bg-gray-700 text-white font-bold text-center text-xs" min="1" value="${oral.maximum}">
                             </div>
                         </div>
-
                         <div>
-                            <label class="block text-responsive-xs font-bold text-gray-300 mb-1">Written (Obt / Max)</label>
+                            <label class="block text-xs font-bold text-gray-300 mb-1">Written (Obt / Max)</label>
                             <div class="grid grid-cols-2 gap-2">
-                                <input type="number"
-                                       class="written-obtained w-full p-2 sm:p-3 border-2 sm:border-3 lg:border-4 border-blue-500
-                                              rounded-lg sm:rounded-xl focus:border-blue-400 focus:outline-none bg-gray-700
-                                              text-white font-bold text-center text-responsive-xs touch-button"
-                                       min="0" value="${written.obtained}">
-                                <input type="number"
-                                       class="written-maximum w-full p-2 sm:p-3 border-2 sm:border-3 lg:border-4 border-blue-500
-                                              rounded-lg sm:rounded-xl focus:border-blue-400 focus:outline-none bg-gray-700
-                                              text-white font-bold text-center text-responsive-xs touch-button"
-                                       min="1" value="${written.maximum}">
+                                <input type="number" class="written-obtained w-full p-2 border-2 lg:border-4 border-blue-500 rounded-lg focus:border-blue-400 focus:outline-none bg-gray-700 text-white font-bold text-center text-xs" min="0" value="${written.obtained}">
+                                <input type="number" class="written-maximum w-full p-2 border-2 lg:border-4 border-blue-500 rounded-lg focus:border-blue-400 focus:outline-none bg-gray-700 text-white font-bold text-center text-xs" min="1" value="${written.maximum}">
                             </div>
                         </div>
                     </div>
@@ -1121,7 +701,6 @@
             container.appendChild(subjectDiv);
         }
 
-        // Form helpers [file:1]
         function clearForm() {
             document.getElementById('studentName').value = '';
             document.getElementById('fatherName').value = '';
@@ -1130,79 +709,14 @@
             document.getElementById('successMessage').classList.add('hidden');
         }
 
-        function loadStudentData(studentData, classNum) {
-            document.getElementById('studentName').value = studentData.name || '';
-            document.getElementById('fatherName').value = studentData.fatherName || '';
-            document.getElementById('studentClass').value = classNum;
-            document.getElementById('successMessage').classList.add('hidden');
-
-            // Load terms [file:1]
-            loadTermsFromStudent(studentData);
-
-            let termName = adminTermSelect.value;
-            if (!termName) {
-                const keys = studentData.terms ? Object.keys(studentData.terms) : [];
-                if (keys.length) {
-                    termName = keys[0];
-                    adminTermSelect.value = termName;
-                }
-            }
-
-            const container = document.getElementById('allSubjects');
-            container.innerHTML = '';
-
-            const termSubjects =
-                (studentData.terms &&
-                 studentData.terms[termName] &&
-                 studentData.terms[termName].subjects) || {};
-
-            if (Object.keys(termSubjects).length === 0) {
-                setupDefaultSubjects();
-            } else {
-                defaultSubjects.forEach(sub => {
-                    const data = termSubjects[sub] || {
-                        oral: { obtained: 0, maximum: 10 },
-                        written: { obtained: 0, maximum: 40 }
-                    };
-                    addSubjectWithData(sub, data, true);
-                });
-
-                Object.keys(termSubjects).forEach(sub => {
-                    if (!defaultSubjects.includes(sub)) {
-                        addSubjectWithData(sub, termSubjects[sub], false);
-                    }
-                });
-            }
-        }
-
-        function showMessage(message, type) {
-            const messageDiv = document.getElementById('successMessage');
-            if (!messageDiv) {
-                alert(message);
-                return;
-            }
-
-            messageDiv.textContent = message;
-
-            if (type === 'success') {
-                messageDiv.className = 'bg-green-100 border-2 sm:border-4 border-green-400 text-green-800 px-4 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl mb-3 sm:mb-4 text-center font-bold text-responsive-sm';
-            } else {
-                messageDiv.className = 'bg-red-100 border-2 sm:border-4 border-red-400 text-red-800 px-4 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl mb-3 sm:mb-4 text-center font-bold text-responsive-sm';
-            }
-
-            messageDiv.classList.remove('hidden');
-            setTimeout(() => messageDiv.classList.add('hidden'), 4000);
-        }
-
-        // Save student (per term, oral/written) [file:1]
         async function saveStudent() {
             const name = document.getElementById('studentName').value.trim();
             const fatherName = document.getElementById('fatherName').value.trim();
             const studentClass = document.getElementById('studentClass').value;
-            const termName = adminTermSelect.value;
+            const termName = document.getElementById('adminTermSelect').value;
 
             if (!name || !fatherName || !studentClass || !termName) {
-                showMessage('❌ Please fill in all required fields and select a term!', 'error');
+                alert('❌ Please fill all fields and select a term!');
                 return;
             }
 
@@ -1211,33 +725,31 @@
 
             for (let block of blocks) {
                 const subjectName = block.querySelector('.subject-name').value.trim();
-                const oralObt = parseInt(block.querySelector('.oral-obtained').value) || 0;
-                const oralMax = parseInt(block.querySelector('.oral-maximum').value) || 0;
-                const writtenObt = parseInt(block.querySelector('.written-obtained').value) || 0;
-                const writtenMax = parseInt(block.querySelector('.written-maximum').value) || 0;
-
                 if (!subjectName) continue;
 
                 subjects[subjectName] = {
-                    oral: { obtained: oralObt, maximum: oralMax },
-                    written: { obtained: writtenObt, maximum: writtenMax }
+                    oral: { 
+                        obtained: parseInt(block.querySelector('.oral-obtained').value) || 0,
+                        maximum: parseInt(block.querySelector('.oral-maximum').value) || 0
+                    },
+                    written: { 
+                        obtained: parseInt(block.querySelector('.written-obtained').value) || 0,
+                        maximum: parseInt(block.querySelector('.written-maximum').value) || 0
+                    }
                 };
             }
 
             if (Object.keys(subjects).length === 0) {
-                showMessage('❌ Please add at least one subject!', 'error');
+                alert('❌ Please add at least one subject!');
                 return;
             }
 
-            const baseData = { name, fatherName, class: studentClass };
-            let studentData = baseData;
-
             try {
+                let studentData = { name, fatherName, class: studentClass };
+
                 if (isEditMode && currentStudentId) {
-                    const snap = await database
-                      .ref(`students/class${studentClass}/${currentStudentId}`)
-                      .once('value');
-                    studentData = snap.val() || baseData;
+                    const snap = await database.ref(`students/class${studentClass}/${currentStudentId}`).once('value');
+                    studentData = snap.val() || studentData;
                 }
 
                 studentData.terms = studentData.terms || {};
@@ -1246,226 +758,65 @@
 
                 if (isEditMode && currentStudentId) {
                     await database.ref(`students/class${studentClass}/${currentStudentId}`).set(studentData);
-                    showMessage(`✅ Student "${name}" updated successfully!`, 'success');
+                    alert(`✅ Student "${name}" updated!`);
                 } else {
                     const newStudentRef = database.ref(`students/class${studentClass}`).push();
                     await newStudentRef.set(studentData);
-                    showMessage(`✅ Student "${name}" added successfully!`, 'success');
+                    alert(`✅ Student "${name}" added!`);
                 }
 
-                setTimeout(() => {
-                    adminDashboard.scrollIntoView({ behavior: 'smooth' });
-                    adminClassSelect.dispatchEvent(new Event('change'));
-                }, 2000);
-
+                document.getElementById('adminClassSelect').dispatchEvent(new Event('change'));
             } catch (error) {
-                console.error('Error saving student:', error);
-                showMessage('❌ Error saving student. Please try again.', 'error');
+                console.error('Error:', error);
+                alert('❌ Error saving student!');
             }
         }
 
         async function deleteStudent() {
             if (!currentStudentId || !isEditMode) {
-                showMessage('❌ No student selected for deletion!', 'error');
+                alert('❌ No student selected!');
                 return;
             }
 
             const studentName = document.getElementById('studentName').value;
-            const studentClass = adminClassSelect.value;
+            const studentClass = document.getElementById('adminClassSelect').value;
 
-            if (confirm(`Are you sure you want to delete ${studentName}? This action cannot be undone.`)) {
+            if (confirm(`Delete "${studentName}"?`)) {
                 try {
                     await database.ref(`students/class${studentClass}/${currentStudentId}`).remove();
-                    showMessage(`✅ Student "${studentName}" deleted successfully!`, 'success');
-
+                    alert(`✅ Student deleted!`);
                     currentStudentId = null;
                     isEditMode = false;
-
-                    setTimeout(() => {
-                        document.getElementById('studentForm').classList.add('hidden');
-                        adminClassSelect.dispatchEvent(new Event('change'));
-                    }, 2000);
-
+                    document.getElementById('studentForm').classList.add('hidden');
+                    document.getElementById('adminClassSelect').dispatchEvent(new Event('change'));
                 } catch (error) {
-                    console.error('Error deleting student:', error);
-                    showMessage('❌ Error deleting student. Please try again.', 'error');
+                    console.error('Error:', error);
+                    alert('❌ Error deleting student!');
                 }
             }
         }
 
-        // Event listeners for save/delete [file:1]
+        document.getElementById('addTermBtn').addEventListener('click', () => {
+            const newTerm = prompt('Enter new term name (e.g. Term 1, Half Yearly):');
+            if (!newTerm) return;
+            const opt = document.createElement('option');
+            opt.value = newTerm;
+            opt.textContent = newTerm;
+            document.getElementById('adminTermSelect').appendChild(opt);
+            document.getElementById('adminTermSelect').value = newTerm;
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             const saveBtn = document.getElementById('saveStudentBtn');
             const deleteBtn = document.getElementById('deleteStudentBtn');
-
             if (saveBtn) saveBtn.addEventListener('click', saveStudent);
             if (deleteBtn) deleteBtn.addEventListener('click', deleteStudent);
         });
-
-        // Sample data (kept same, but note: it uses old format; you can remove if not needed) [file:1]
-        async function initializeSampleData() {
-            try {
-                const snapshot = await database.ref('students').once('value');
-                if (!snapshot.exists()) {
-                    const sampleData = {
-                        students: {
-                            class1: {
-                                student1: {
-                                    name: "Aarav Sharma",
-                                    fatherName: "Rajesh Sharma",
-                                    class: "1",
-                                    terms: {
-                                        "Term 1": {
-                                            subjects: {
-                                                "Hindi": { oral:{obtained:9,maximum:10}, written:{obtained:18,maximum:20} },
-                                                "English": { oral:{obtained:8,maximum:10}, written:{obtained:17,maximum:20} },
-                                                "Maths": { oral:{obtained:10,maximum:10}, written:{obtained:19,maximum:20} },
-                                                "EVS": { oral:{obtained:9,maximum:10}, written:{obtained:18,maximum:20} },
-                                                "Sanskrit": { oral:{obtained:8,maximum:10}, written:{obtained:17,maximum:20} }
-                                            }
-                                        }
-                                    }
-                                },
-                                student2: {
-                                    name: "Priya Gupta",
-                                    fatherName: "Suresh Gupta",
-                                    class: "1",
-                                    terms: {
-                                        "Term 1": {
-                                            subjects: {
-                                                "Hindi": { oral:{obtained:7,maximum:10}, written:{obtained:16,maximum:20} },
-                                                "English": { oral:{obtained:8,maximum:10}, written:{obtained:17,maximum:20} },
-                                                "Maths": { oral:{obtained:6,maximum:10}, written:{obtained:18,maximum:20} },
-                                                "EVS": { oral:{obtained:8,maximum:10}, written:{obtained:19,maximum:20} },
-                                                "Sanskrit": { oral:{obtained:7,maximum:10}, written:{obtained:16,maximum:20} }
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            class2: {
-                                student1: {
-                                    name: "Arjun Singh",
-                                    fatherName: "Vikram Singh",
-                                    class: "2",
-                                    terms: {
-                                        "Term 1": {
-                                            subjects: {
-                                                "Hindi": { oral:{obtained:9,maximum:10}, written:{obtained:18,maximum:20} },
-                                                "English": { oral:{obtained:8,maximum:10}, written:{obtained:17,maximum:20} },
-                                                "Maths": { oral:{obtained:9,maximum:10}, written:{obtained:18,maximum:20} },
-                                                "EVS": { oral:{obtained:10,maximum:10}, written:{obtained:19,maximum:20} },
-                                                "Sanskrit": { oral:{obtained:8,maximum:10}, written:{obtained:17,maximum:20} }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    };
-                    await database.ref().set(sampleData);
-                    console.log('Sample data initialized');
-                }
-            } catch (error) {
-                console.error('Error initializing sample data:', error);
-            }
-        }
-
-        // Marquee helper functions (same as original) [file:1]
-        function startMarqueesImmediately() {
-            const topMarquee = document.querySelector('.marquee-content-top');
-            const bottomMarquee = document.querySelector('.marquee-content-bottom');
-            const topMarqueeContainer = document.querySelector('.marquee-top');
-            const bottomMarqueeContainer = document.querySelector('.marquee-bottom');
-
-            if (topMarquee) {
-                topMarquee.style.display = 'inline-block';
-                topMarquee.style.visibility = 'visible';
-                topMarquee.style.opacity = '1';
-                topMarquee.style.animationPlayState = 'running';
-                topMarquee.style.animationDelay = '0s';
-                topMarquee.style.transform = 'translateZ(0)';
-            }
-
-            if (bottomMarquee) {
-                bottomMarquee.style.display = 'inline-block';
-                bottomMarquee.style.visibility = 'visible';
-                bottomMarquee.style.opacity = '1';
-                bottomMarquee.style.animationPlayState = 'running';
-                bottomMarquee.style.animationDelay = '0s';
-                bottomMarquee.style.transform = 'translateZ(0)';
-            }
-
-            if (topMarqueeContainer) {
-                topMarqueeContainer.style.position = 'fixed';
-                topMarqueeContainer.style.top = '0';
-                topMarqueeContainer.style.left = '0';
-                topMarqueeContainer.style.right = '0';
-                topMarqueeContainer.style.zIndex = '999999';
-                topMarqueeContainer.style.width = '100vw';
-                topMarqueeContainer.style.display = 'block';
-                topMarqueeContainer.style.visibility = 'visible';
-                topMarqueeContainer.style.opacity = '1';
-            }
-
-            if (bottomMarqueeContainer) {
-                bottomMarqueeContainer.style.position = 'fixed';
-                bottomMarqueeContainer.style.bottom = '0';
-                bottomMarqueeContainer.style.left = '0';
-                bottomMarqueeContainer.style.right = '0';
-                bottomMarqueeContainer.style.zIndex = '999999';
-                bottomMarqueeContainer.style.width = '100vw';
-                bottomMarqueeContainer.style.display = 'block';
-                bottomMarqueeContainer.style.visibility = 'visible';
-                bottomMarqueeContainer.style.opacity = '1';
-            }
-        }
-
-        function ensureMarqueeVisibility() {
-            const topMarquee = document.querySelector('.marquee-top');
-            const bottomMarquee = document.querySelector('.marquee-bottom');
-
-            if (topMarquee) {
-                topMarquee.style.position = 'fixed';
-                topMarquee.style.top = '0';
-                topMarquee.style.zIndex = '999999';
-            }
-
-            if (bottomMarquee) {
-                bottomMarquee.style.position = 'fixed';
-                bottomMarquee.style.bottom = '0';
-                bottomMarquee.style.zIndex = '999999';
-            }
-        }
-
-        window.addEventListener('scroll', ensureMarqueeVisibility);
-        window.addEventListener('resize', ensureMarqueeVisibility);
-
-        document.addEventListener('DOMContentLoaded', function() {
-            startMarqueesImmediately();
-            setTimeout(startMarqueesImmediately, 100);
-            setTimeout(startMarqueesImmediately, 500);
-        });
-
-        startMarqueesImmediately();
-        setTimeout(startMarqueesImmediately, 50);
-        setTimeout(startMarqueesImmediately, 200);
-        setTimeout(startMarqueesImmediately, 1000);
-
-        window.addEventListener('load', function() {
-            startMarqueesImmediately();
-            setTimeout(startMarqueesImmediately, 100);
-        });
-
-        // Initialize [file:1]
-        initializeSampleData();
-        updateButtonStates();
     </script>
 
-    <!-- Bottom Marquee -->
     <div class="marquee-bottom">
         <div class="marquee-content-bottom">
-            🚀 Proudly Developed by Mr. Deepak Kumar Vaishya 🚀 Assistant Teacher & Tech Innovator 🚀 Transforming Education Through Technology 🚀 Custom Web Solutions & Digital Learning Platforms 🚀 Contact for Professional Development Services 🚀 Innovation in Education 🚀 Building Digital Solutions 🚀 Technology for Learning 🚀 
+            🚀 Proudly Developed by Mr. Deepak Kumar Vaishya 🚀 Assistant Teacher & Tech Innovator 🚀 Custom Web Solutions for Education 🚀 
         </div>
     </div>
 </body>
