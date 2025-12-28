@@ -3,166 +3,548 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🌟 Student Report Card System</title>
+    <title>Student Report Card System - Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-    <style>
-        /* ALL ORIGINAL CSS - KEPT COMPLETE */
+    <style id="masterThemeStyles">
         * { box-sizing: border-box; }
-        html, body { overflow-x: hidden; scroll-behavior: smooth; }
+        
+        :root {
+            --master-font-color: #ffffff;
+            --master-base-size: 16px;
+            --report-card-bg: rgba(255, 255, 255, 0.95);
+            --report-card-text: #000000;
+            --report-card-header-bg: #1e3a8a;
+            --report-card-header-text: #ffffff;
+            --report-card-table-header: #6b7280;
+            --report-card-table-text: #1f2937;
+        }
+        
+        html, body { 
+            overflow-x: hidden; 
+            scroll-behavior: smooth;
+        }
+        
         ::-webkit-scrollbar { width: 0px; background: transparent; }
         html { scrollbar-width: none; }
-
-        .text-responsive-xs { font-size: clamp(0.75rem, 2vw, 0.875rem); }
-        .text-responsive-sm { font-size: clamp(0.875rem, 2.5vw, 1rem); }
-        .text-responsive-base { font-size: clamp(1rem, 3vw, 1.125rem); }
-        .text-responsive-lg { font-size: clamp(1.125rem, 3.5vw, 1.25rem); }
-        .text-responsive-xl { font-size: clamp(1.25rem, 4vw, 1.5rem); }
-        .text-responsive-2xl { font-size: clamp(1.5rem, 5vw, 2rem); }
-        .text-responsive-3xl { font-size: clamp(2rem, 6vw, 3rem); }
-        .text-responsive-4xl { font-size: clamp(2.5rem, 7vw, 4rem); }
-
-        .celebration { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:1000; }
-        .confetti { position:absolute; width:8px; height:8px; background:#f39c12; animation:confetti-fall 3s linear infinite; }
-        @keyframes confetti-fall { 0%{transform:translateY(-100vh) rotate(0deg);opacity:1;}100%{transform:translateY(100vh) rotate(720deg);opacity:0;} }
-
-        .shiny-container{position:relative;overflow:hidden;}
-        .shiny-container::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(45deg,transparent 30%,rgba(255,255,255,0.3) 50%,transparent 70%);animation:shine 6s ease-in-out infinite;pointer-events:none;z-index:1;}
-        @keyframes shine{0%{transform:translateX(-100%) translateY(-100%) rotate(45deg);}50%{transform:translateX(100%) translateY(100%) rotate(45deg);}100%{transform:translateX(-100%) translateY(-100%) rotate(45deg);}}
-
-        .sparkle-effect{position:absolute;width:4px;height:4px;background:white;border-radius:50%;animation:sparkle 2s ease-in-out infinite;pointer-events:none;}
-        @keyframes sparkle{0%,100%{opacity:0;transform:scale(0);}50%{opacity:1;transform:scale(1);}}
-        .simple-text{text-shadow:0 2px 4px rgba(0,0,0,0.3);}
-
-        .golden-shower{position:absolute;font-size:clamp(1.5rem,4vw,3rem);animation:golden-shower 5s linear infinite;pointer-events:none;filter:drop-shadow(0 0 10px gold);}
-        @keyframes golden-shower{0%{transform:translateY(-100vh) scale(0) rotate(0deg);opacity:0;}10%{opacity:1;transform:scale(1.2) rotate(180deg);}50%{transform:scale(1) rotate(360deg);}90%{opacity:1;transform:scale(0.8) rotate(540deg);}100%{transform:translateY(100vh) scale(0) rotate(720deg);opacity:0;}}
-
-        .report-card-shine{position:relative;overflow:hidden;}
-        .report-card-shine::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,215,0,0.4),transparent);animation:report-shine 4s ease-in-out infinite;pointer-events:none;}
-        @keyframes report-shine{0%{left:-100%;}50%{left:100%;}100%{left:-100%;}}
-
-        @keyframes marqueeLeft{0%{transform:translateX(100%);}100%{transform:translateX(-100%);}}
-
-        @keyframes slideInFromLeft{0%{transform:translateX(-200vw) scale(0.8);opacity:0;}70%{transform:translateX(10px) scale(1.1);opacity:1;}100%{transform:translateX(0) scale(1);opacity:1;}}
-        @keyframes slideInFromRight{0%{transform:translateX(200vw) scale(0.8);opacity:0;}70%{transform:translateX(-10px) scale(1.1);opacity:1;}100%{transform:translateX(0) scale(1);opacity:1;}}
-        .slide-collision-left{animation:slideInFromLeft 1.5s cubic-bezier(0.68,-0.55,0.265,1.55);}
-        .slide-collision-right{animation:slideInFromRight 1.5s cubic-bezier(0.68,-0.55,0.265,1.55);animation-delay:0.2s;opacity:0;animation-fill-mode:forwards;}
-
-        .marquee-top{
-            background:linear-gradient(45deg,#1a1a2e,#16213e,#0f3460,#533483,#7209b7,#2d1b69);
-            background-size:400% 400%;
-            animation:gradientShift 8s ease infinite;
-            overflow:hidden;white-space:nowrap;
-            padding:clamp(10px,2.5vw,16px) clamp(12px,3vw,20px);
-            position:fixed;top:0;left:0;right:0;z-index:10000;
-            clip-path:polygon(0 0,100% 0,100% 70%,95% 85%,85% 95%,75% 100%,25% 100%,15% 95%,5% 85%,0 70%);
-            border:clamp(1px,0.4vw,2px) solid #fff;border-bottom:none;
-            box-shadow:0 4px 12px rgba(0,0,0,0.2),inset 0 1px 4px rgba(255,255,255,0.2),0 0 0 clamp(0.5px,0.2vw,1px) rgba(255,255,255,0.6);
-            backdrop-filter:blur(10px);will-change:transform;transform:translateZ(0);
+        
+        * { color: var(--master-font-color) !important; }
+        
+        .report-card-magical-bg,
+        .report-card-magical-bg *:not(.school-banner):not(.school-banner *):not(.motivation-quote):not(.motivation-quote *) {
+            color: var(--report-card-text) !important;
+        }
+        
+        body, html { font-size: var(--master-base-size); }
+        
+        .text-responsive-xs { font-size: calc(var(--master-base-size) * 0.75) !important; }
+        .text-responsive-sm { font-size: calc(var(--master-base-size) * 0.875) !important; }
+        .text-responsive-base { font-size: var(--master-base-size) !important; }
+        .text-responsive-lg { font-size: calc(var(--master-base-size) * 1.125) !important; }
+        .text-responsive-xl { font-size: calc(var(--master-base-size) * 1.25) !important; }
+        .text-responsive-2xl { font-size: calc(var(--master-base-size) * 1.5) !important; }
+        .text-responsive-3xl { font-size: calc(var(--master-base-size) * 2) !important; }
+        .text-responsive-4xl { font-size: calc(var(--master-base-size) * 2.5) !important; }
+        
+        .school-banner-front {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-size: 300% 300%;
+            animation: gradShift 8s ease infinite;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            border: 4px solid #ffd700;
+        }
+        
+        .school-banner-front h1 {
+            font-size: clamp(2.5rem, 8vw, 3rem) !important;
+            font-weight: 400 !important;
+            color: #ffffff !important;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.6), -2px -2px 4px rgba(255,255,255,0.3);
+            margin: 0 !important;
+            letter-spacing: 2px;
+            animation: bannerPulse 2s ease-in-out infinite;
+        }
+        
+        .school-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .info-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        
+        .info-card h3 {
+            font-size: clamp(1rem, 3vw, 1.3rem) !important;
+            font-weight: 700 !important;
+            color: #ffd700 !important;
+            margin: 0 0 10px 0 !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        .info-card p {
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem) !important;
+            color: #ffffff !important;
+            margin: 5px 0 !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+        }
+        
+        .address-label {
+            font-size: clamp(1rem, 4vw, 1.5rem) !important;
+            font-weight: 700 !important;
+            color: #ffd700 !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            margin: 10px 0 0 0 !important;
+            letter-spacing: 1px;
+        }
+        
+        @keyframes bannerPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        @keyframes gradShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .school-banner-report {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-size: 300% 300%;
+            animation: gradShift 8s ease infinite;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border: 2px solid #ffd700;
+        }
+        
+        .school-banner-report h1 {
+            font-size: clamp(1.2rem, 5vw, 2rem) !important;
+            font-weight: 900 !important;
+            color: #ffffff !important;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin: 0 !important;
+            letter-spacing: 2px;
+        }
+        
+        .trophy-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .animated-trophy {
+            font-size: clamp(3rem, 15vw, 8rem) !important;
+            animation: trophyBounce 2s ease-in-out infinite, trophySpin 3s linear infinite;
+            filter: drop-shadow(0 10px 20px rgba(255,215,0,0.6));
+            text-shadow: 0 0 10px rgba(255,215,0,0.8);
+        }
+        
+        @keyframes trophyBounce {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(5deg); }
+            75% { transform: translateY(-20px) rotate(-5deg); }
+        }
+        
+        @keyframes trophySpin {
+            0% { filter: drop-shadow(0 0 5px rgba(255,215,0,0.4)); }
+            50% { filter: drop-shadow(0 0 20px rgba(255,215,0,0.8)); }
+            100% { filter: drop-shadow(0 0 5px rgba(255,215,0,0.4)); }
+        }
+        
+        .motivation-quote {
+            background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(255,193,7,0.1));
+            border-left: 5px solid #ffd700;
+            border-right: 5px solid #ffd700;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .motivation-quote p {
+            font-size: clamp(1rem, 3vw, 1.3rem) !important;
+            font-weight: 600 !important;
+            color: #ffd700 !important;
+            font-style: italic;
+            margin: 0 !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
 
-        .marquee-bottom{
-            background:linear-gradient(-45deg,#2d1b69,#7209b7,#533483,#0f3460,#16213e,#1a1a2e);
-            background-size:400% 400%;animation:gradientShift 10s ease infinite reverse;
-            overflow:hidden;white-space:nowrap;
-            padding:clamp(10px,2.5vw,16px) clamp(12px,3vw,20px);
-            position:fixed;bottom:0;left:0;right:0;z-index:10000;
-            clip-path:polygon(0 30%,5% 15%,15% 5%,25% 0%,75% 0%,85% 5%,95% 15%,100% 30%,100% 100%,0 100%);
-            border:clamp(1px,0.4vw,2px) solid #fff;border-top:none;
-            box-shadow:0 -4px 12px rgba(0,0,0,0.2),inset 0 -1px 4px rgba(255,255,255,0.2),0 0 0 clamp(0.5px,0.2vw,1px) rgba(255,255,255,0.6);
-            backdrop-filter:blur(10px);will-change:transform;transform:translateZ(0);
+        .marquee-top {
+            background: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460, #533483, #7209b7, #2d1b69);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 12px 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10000;
+            clip-path: polygon(0 0, 100% 0, 100% 70%, 95% 85%, 85% 95%, 75% 100%, 25% 100%, 15% 95%, 5% 85%, 0 70%);
+            border: 1px solid #fff;
+            border-bottom: none;
+            backdrop-filter: blur(10px);
+        }
+        
+        .marquee-bottom {
+            background: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460, #533483, #7209b7, #2d1b69);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 12px 20px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 10000;
+            clip-path: polygon(0 30%, 5% 15%, 15% 5%, 25% 0, 75% 0, 85% 5%, 95% 15%, 100% 30%, 100% 100%, 0 100%);
+            border: 1px solid #fff;
+            border-top: none;
+            backdrop-filter: blur(10px);
+        }
+        
+        .marquee-content-top, .marquee-content-bottom {
+            display: inline-block;
+            animation: marqueeLeft 50s linear infinite;
+            color: white !important;
+            font-weight: 600;
+            padding-right: 100vw;
+        }
+        
+        @keyframes gradientShift { 
+            0% { background-position: 0% 50%; } 
+            50% { background-position: 100% 50%; } 
+            100% { background-position: 0% 50%; } 
+        }
+        
+        @keyframes marqueeLeft { 
+            0% { transform: translateX(100%); } 
+            100% { transform: translateX(-100%); } 
+        }
+        
+        .smooth-animated-bg { 
+            background-size: 600% 600%;
+            animation: ultraSmoothBackgroundShift 40s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+        }
+        
+        @keyframes ultraSmoothBackgroundShift {
+            0% { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+            50% { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); }
+            100% { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        }
+        
+        .bg-gray-900 { background-color: #111827 !important; }
+        .bg-slate-800 { background-color: #1e293b !important; }
+        
+        .btn-hover { transition: all 0.3s ease; }
+        .btn-hover:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
+        
+        .report-card-magical-bg { 
+            background: var(--report-card-bg) !important;
+            background-size: 400% 400%;
+            border: 2px solid var(--report-card-header-bg) !important;
+        }
+        
+        .achievement-glow { 
+            box-shadow: 0 0 20px rgba(255,215,0,0.6);
+            animation: achievementPulse 2s infinite;
+        }
+        
+        @keyframes achievementPulse { 
+            0%, 100% { transform: scale(1); } 
+            50% { transform: scale(1.05); } 
         }
 
-        @keyframes gradientShift{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+        label, option { color: var(--master-font-color) !important; }
+        option { background: #333; }
+        input, select, textarea { 
+            color: var(--master-font-color) !important;
+            background-color: rgba(0,0,0,0.5) !important;
+        }
+        
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        .report-card-magical-bg table {
+            background: var(--report-card-bg) !important;
+        }
+        
+        .report-card-magical-bg thead {
+            background: var(--report-card-header-bg) !important;
+        }
+        
+        .report-card-magical-bg thead th {
+            color: var(--report-card-header-text) !important;
+        }
+        
+        .report-card-magical-bg tbody td {
+            color: var(--report-card-table-text) !important;
+        }
+        
+        .report-card-magical-bg tfoot {
+            background: #e5e7eb !important;
+        }
+        
+        .report-card-magical-bg tfoot td {
+            color: var(--report-card-table-text) !important;
+        }
 
-        .marquee-content-top{display:inline-block;animation:marqueeLeft 50s linear infinite;font-size:clamp(0.875rem,2.5vw,1.125rem);font-weight:600;font-family:'Arial',sans-serif;white-space:nowrap;letter-spacing:0.5px;color:#fff;text-shadow:0 0 8px rgba(255,255,255,0.6);padding-right:100vw;will-change:transform;transform:translateZ(0);animation-play-state:running;}
-        .marquee-content-bottom{display:inline-block;animation:marqueeLeft 60s linear infinite;font-size:clamp(0.75rem,2vw,1rem);font-weight:600;font-family:'Arial',sans-serif;white-space:nowrap;letter-spacing:0.5px;color:#fff;text-shadow:0 0 8px rgba(255,255,255,0.6);padding-right:100vw;will-change:transform;transform:translateZ(0);animation-play-state:running;}
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
 
-        .smooth-animated-bg{background-size:600% 600%;animation:ultraSmoothBackgroundShift 40s cubic-bezier(0.25,0.46,0.45,0.94) infinite;}
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
 
-        @keyframes ultraSmoothBackgroundShift{0%{background:linear-gradient(135deg,#667eea 0%,#764ba2 12.5%,#f093fb 25%,#f5576c 37.5%,#4facfe 50%,#00c9ff 62.5%,#92fe9d 75%,#667eea 87.5%,#667eea 100%);}50%{background:linear-gradient(135deg,#ff9a9e 0%,#fecfef 12.5%,#fad0c4 25%,#ff9a9e 37.5%,#a8edea 50%,#fed6e3 62.5%,#d299c2 75%,#fef9d7 87.5%,#ff9a9e 100%);}100%{background:linear-gradient(135deg,#667eea 0%,#764ba2 12.5%,#f093fb 25%,#f5576c 37.5%,#4facfe 50%,#00c9ff 62.5%,#92fe9d 75%,#667eea 87.5%,#667eea 100%);}}
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #fbbf24;
+        }
 
-        @keyframes slideInLeft{0%{transform:translateX(-100%);opacity:0;}100%{transform:translateX(0);opacity:1;}}
-        @keyframes slideInRight{0%{transform:translateX(100%);opacity:0;}100%{transform:translateX(0);opacity:1;}}
-        .slide-in-left{animation:slideInLeft 0.8s ease-out;}
-        .slide-in-right{animation:slideInRight 0.8s ease-out;}
+        .checkbox-item label {
+            margin: 0;
+            cursor: pointer;
+            flex: 1;
+        }
 
-        .btn-hover{transition:all 0.3s ease;transform:translateZ(0);}
-        .btn-hover:hover{transform:translateY(-2px) translateZ(0);box-shadow:0 8px 25px rgba(0,0,0,0.15);}
+        .admin-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
 
-        .report-card-magical-bg{position:relative;background:linear-gradient(135deg,#667eea 0%,#764ba2 20%,#f093fb 40%,#f5576c 60%,#4facfe 80%,#00c9ff 100%);background-size:400% 400%;animation:magicalShine 8s ease-in-out infinite;overflow:hidden;}
+        .admin-tab-btn {
+            padding: 10px 20px;
+            background: #4b5563;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: var(--master-base-size);
+        }
 
-        @keyframes magicalShine{0%,100%{background-position:0% 50%;}25%{background-position:100% 50%;}50%{background-position:50% 100%;}75%{background-position:100% 0%;}}
+        .admin-tab-btn.active {
+            background: #667eea;
+            color: white;
+        }
 
-        .floating-element{position:absolute;pointer-events:none;z-index:2;animation:float 3s ease-in-out infinite;}
-        @keyframes float{0%,100%{transform:translateY(0px) rotate(0deg);}50%{transform:translateY(-20px) rotate(180deg);}}
+        .admin-tab-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
 
-        .achievement-glow{box-shadow:0 0 20px rgba(255,215,0,0.6),0 0 40px rgba(255,215,0,0.4),0 0 60px rgba(255,215,0,0.2),inset 0 0 20px rgba(255,255,255,0.1);animation:achievementPulse 2s ease-in-out infinite;}
-        @keyframes achievementPulse{0%,100%{box-shadow:0 0 20px rgba(255,215,0,0.6),0 0 40px rgba(255,215,0,0.4),0 0 60px rgba(255,215,0,0.2),inset 0 0 20px rgba(255,255,255,0.1);}50%{box-shadow:0 0 30px rgba(255,215,0,0.8),0 0 60px rgba(255,215,0,0.6),0 0 90px rgba(255,215,0,0.4),inset 0 0 30px rgba(255,255,255,0.2);}}
+        .tab-content {
+            display: none;
+        }
 
-        .waviy{position:relative;-webkit-box-reflect:below -15px linear-gradient(transparent,rgba(0,0,0,.15));font-size:clamp(1.5rem,6vw,2.5rem);font-family:'Arial Black',sans-serif;font-weight:500;text-align:center;margin:clamp(15px,3vw,25px) 0;}
-        .waviy span{position:relative;display:inline-block;color:#1e3a8a;text-transform:uppercase;animation:waviy 1s infinite;animation-delay:calc(.1s * var(--i));text-shadow:-3px -3px 0 #fff,3px -3px 0 #fff,-3px 3px 0 #fff,3px 3px 0 #fff,-3px 0 0 #fff,3px 0 0 #fff,0 -3px 0 #fff,0 3px 0 #fff,0 0 8px rgba(30,58,138,0.3);margin:0 clamp(1px,0.4vw,2px);}
-        @keyframes waviy{0%,40%,100%{transform:translateY(0);}20%{transform:translateY(-20px);}}
+        .tab-content.active {
+            display: block;
+        }
 
-        .responsive-table{font-size:clamp(0.75rem,2vw,1rem);}
-        .responsive-table th,.responsive-table td{padding:clamp(8px,2vw,16px);}
-        .touch-button{min-height:44px;min-width:44px;}
-        .gpu-accelerated{transform:translateZ(0);backface-visibility:hidden;perspective:1000px;}
+        .student-profile-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%);
+            padding: 20px;
+            border-radius: 15px;
+            color: white;
+            margin-bottom: 20px;
+        }
 
-        @media (max-width:640px){
-            .btn-hover:hover{transform:none;}
-            .btn-hover:active{transform:scale(0.98);}
+        .student-profile-card h4 {
+            margin-top: 0;
+            font-size: calc(var(--master-base-size) * 1.125);
+            color: white !important;
+        }
+
+        .profile-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .profile-field {
+            background: rgba(255,255,255,0.1);
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .profile-field label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            font-size: calc(var(--master-base-size) * 0.9);
+            color: white !important;
+        }
+
+        .profile-field input, .profile-field textarea, .profile-field select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(0,0,0,0.3);
+            color: white !important;
+        }
+
+        .subject-row {
+            background: #374151;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #60a5fa;
+            margin-bottom: 15px;
+        }
+
+        .subject-row input[type="text"] {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            background: #4b5563;
+            border: 2px solid #60a5fa;
+            color: white;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: var(--master-base-size);
+        }
+
+        .subject-row input[type="number"] {
+            padding: 6px;
+            background: #4b5563;
+            border: 1px solid #60a5fa;
+            color: white;
+            border-radius: 4px;
+            text-align: center;
+            font-size: var(--master-base-size);
+        }
+
+        .error-message {
+            background: #fee2e2;
+            border-left: 4px solid #dc2626;
+            color: #991b1b;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .success-message {
+            background: #dcfce7;
+            border-left: 4px solid #16a34a;
+            color: #15803d;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fbbf24;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
-<body class="min-h-screen smooth-animated-bg gpu-accelerated" style="font-family: 'Arial', sans-serif; padding-top: clamp(50px, 12vw, 80px); padding-bottom: clamp(50px, 12vw, 80px); overflow-x: hidden;">
+<body class="min-h-screen smooth-animated-bg" style="padding-top: 80px; padding-bottom: 80px;">
 
     <!-- Top Marquee -->
     <div class="marquee-top">
-        <div class="marquee-content-top">
-            PRIMARY SCHOOL KARANPUR - WHERE DREAMS TAKE FLIGHT! ✨ Excellence in Education Since Day One ✨ Nurturing Young Minds with Love & Care ✨ Building Tomorrow's Leaders Today ✨ A School with a Difference ✨ Learn with JOY! ✨ 
+        <div class="marquee-content-top" style="font-size: var(--master-base-size);">
+            PRIMARY SCHOOL KARANPUR - WHERE DREAMS TAKE FLIGHT! 🎓 Excellence in Education Since Day One 🌟 Nurturing Leaders of Tomorrow! ✨
         </div>
     </div>
 
-    <div id="celebration" class="celebration hidden"></div>
+    <!-- Navigation -->
+    <nav class="bg-gray-900 shadow-2xl mb-8 border-b-4 border-purple-500 rounded-b-3xl mx-2">
+      
+       <div id="frontPage" class="container mx-auto px-4 mb-12">
+        <div class="school-banner-front">
+            <h1>🎓 PRIMARY SCHOOL KARANPUR 🎓</h1>
+            <p class="address-label">📍 BEHJAM :- LAKHIMPUR-KHERI, UTTAR PRADESH 📍</p>
+         </div>
+      
+        <div class="container mx-auto px-4 py-4">
+            <h1 class="text-center mb-4" style="font-size: calc(var(--master-base-size) * 2); color: var(--master-font-color); font-weight: bold;">📋 Report Card System 📋</h1>
+            <div class="flex flex-wrap gap-2 justify-center">
+                <button id="studentViewBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full btn-hover font-bold border-4 border-yellow-400 transition-all" style="font-size: var(--master-base-size);">Student View</button>
+                <button id="adminViewBtn" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-full btn-hover font-bold border-4 border-yellow-400 transition-all" style="font-size: var(--master-base-size);">Admin Panel</button>
+                <button id="masterAdminBtn" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-full btn-hover font-bold border-4 border-yellow-400 transition-all" style="font-size: var(--master-base-size);">⚙️ Master Admin</button>
+            </div>
+        </div>
+    </nav>
 
-    <div class="w-full px-2 sm:px-4 py-4 sm:py-6">
-        <div class="relative bg-gradient-to-r from-purple-600 via-indigo-700 to-slate-800 p-1 sm:p-2 rounded-2xl sm:rounded-3xl shadow-2xl mb-4 sm:mb-6 border-2 sm:border-4 border-purple-400">
-            <div class="relative bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900 rounded-xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 text-center border-2 sm:border-4 border-purple-500 shadow-inner overflow-hidden shiny-container">
-                <h1 class="text-responsive-3xl font-bold text-white mb-2 sm:mb-3 drop-shadow-2xl relative z-10 simple-text">Primary School Karanpur</h1>
-                <p class="text-responsive-lg font-bold text-yellow-300 relative z-10 simple-text">A School with a Difference - Learn with JOY!</p>
-                <div class="w-full px-2 sm:px-4 py-4 sm:py-6 flex justify-center">
-                    <div class="waviy">
-                        <span style="--i:1">B</span><span style="--i:2">E</span><span style="--i:3">H</span>
-                        <span style="--i:4">J</span><span style="--i:5">A</span><span style="--i:6">M</span>
-                        <span style="--i:7">-</span><span style="--i:8">K</span><span style="--i:9">H</span>
-                        <span style="--i:10">E</span><span style="--i:11">R</span><span style="--i:12">I</span>
-                    </div>
+    <!-- FRONT PAGE - SCHOOL INFORMATION -->
+    <div id="frontPage" class="container mx-auto px-4 mb-12">
+       
+            
+            <div class="school-info-grid" style="margin-top: 30px;">
+                <div class="info-card">
+                    <h3>📚 Mission</h3>
+                    <p>Excellence in Education & Character Development for All</p>
+                </div>
+                <div class="info-card">
+                    <h3>🌟 Vision</h3>
+                    <p>Building Confident & Responsible Global Citizens</p>
+                </div>
+                <div class="info-card">
+                    <h3>📞 Contact</h3>
+                    <p>Phone: +91-XXXX-XXXX-XX<br>Email: info@psk.edu.in</p>
+                </div>
+                <div class="info-card">
+                    <h3>⏰ Staff</h3>
+                    <p>Well qualified Staff  !</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <nav class="bg-gradient-to-r from-gray-800 via-slate-800 to-gray-900 shadow-2xl mb-4 sm:mb-8 border-2 sm:border-4 border-purple-500 rounded-b-2xl sm:rounded-b-3xl mx-2 sm:mx-0">
-        <div class="container mx-auto px-2 sm:px-4 py-3 sm:py-4">
-            <h1 class="text-responsive-2xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent text-center mb-3">🎓 Report Card System</h1>
-            <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center items-center">
-                <button id="studentViewBtn" class="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white px-4 py-3 rounded-full btn-hover shadow-lg border-2 border-blue-400 font-bold text-responsive-base slide-collision-left touch-button">📊 Student View</button>
-                <button id="adminViewBtn" class="bg-gradient-to-r from-red-600 to-pink-700 hover:from-red-700 hover:to-pink-800 text-white px-4 py-3 rounded-full btn-hover shadow-lg border-2 border-red-400 font-bold text-responsive-base slide-collision-right touch-button">👨‍💼 Admin Panel</button>
-            </div>
-        </div>
-    </nav>
-
     <!-- Student View -->
-    <div id="studentView" class="container mx-auto px-2 sm:px-4">
-        <div class="relative bg-gradient-to-br from-gray-800 via-slate-800 to-gray-900 rounded-2xl sm:rounded-3xl shadow-2xl p-3 sm:p-6 lg:p-8 mb-4 sm:mb-8 border-2 sm:border-4 border-purple-500 overflow-hidden">
-            <h2 class="text-responsive-2xl font-bold text-center bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent mb-6">🌟 Select Student Report Card</h2>
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
+    <div id="studentView" style="display: none;" class="container mx-auto px-4">
+        <div class="bg-gray-800 rounded-3xl p-6 mb-8 border-4 border-purple-500 shadow-xl">
+            <h2 class="text-center font-bold mb-6" style="font-size: calc(var(--master-base-size) * 1.5); color: var(--master-font-color);">📊 View Report Card</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                    <label class="block text-responsive-base font-bold text-gray-300 mb-2">📚 Select Class:</label>
-                    <select id="classSelect" class="w-full p-3 sm:p-4 border-2 sm:border-4 border-purple-500 rounded-xl sm:rounded-2xl focus:border-purple-400 focus:outline-none text-responsive-base bg-gray-700 text-white font-bold touch-button">
-                        <option value="">Choose Class...</option>
+                    <label class="block mb-2 font-bold" style="font-size: var(--master-base-size); color: var(--master-font-color);">Select Class:</label>
+                    <select id="classSelect" class="w-full p-3 rounded-xl border-2 border-purple-400" style="font-size: var(--master-base-size);">
+                        <option value="">-- Choose Class --</option>
                         <option value="1">Class 1</option>
                         <option value="2">Class 2</option>
                         <option value="3">Class 3</option>
@@ -171,43 +553,39 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block text-responsive-base font-bold text-gray-300 mb-2">👦 Select Student:</label>
-                    <select id="studentSelect" class="w-full p-3 sm:p-4 border-2 sm:border-4 border-purple-500 rounded-xl sm:rounded-2xl focus:border-purple-400 focus:outline-none text-responsive-base bg-gray-700 text-white font-bold touch-button" disabled>
-                        <option value="">First select a class...</option>
+                    <label class="block mb-2 font-bold" style="font-size: var(--master-base-size); color: var(--master-font-color);">Select Student:</label>
+                    <select id="studentSelect" class="w-full p-3 rounded-xl border-2 border-purple-400" disabled style="font-size: var(--master-base-size);">
+                        <option value="">-- Choose Student --</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block text-responsive-base font-bold text-gray-300 mb-2">📆 Select Term:</label>
-                    <select id="studentTermSelect" class="w-full p-3 sm:p-4 border-2 sm:border-4 border-purple-500 rounded-xl sm:rounded-2xl focus:border-purple-400 focus:outline-none text-responsive-base bg-gray-700 text-white font-bold touch-button" disabled>
-                        <option value="">Auto (First Term)</option>
+                    <label class="block mb-2 font-bold" style="font-size: var(--master-base-size); color: var(--master-font-color);">Select Term:</label>
+                    <select id="studentTermSelect" class="w-full p-3 rounded-xl border-2 border-purple-400" disabled style="font-size: var(--master-base-size);">
+                        <option value="">-- Choose Term --</option>
                     </select>
                 </div>
             </div>
         </div>
-
-        <div id="reportCard" class="hidden report-card-magical-bg rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-2xl p-2 sm:p-4 lg:p-8 border-2 sm:border-4 border-purple-500">
+        <div id="reportCard" class="hidden report-card-magical-bg rounded-3xl p-6 shadow-2xl">
             <div id="reportContent" class="relative z-10"></div>
         </div>
     </div>
 
     <!-- Admin Panel -->
-    <div id="adminPanel" class="hidden container mx-auto px-2 sm:px-4">
-        <div id="adminLogin" class="bg-gradient-to-br from-gray-800 via-slate-800 to-gray-900 rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 lg:p-8 max-w-md mx-auto border-2 sm:border-4 border-red-500">
-            <h2 class="text-responsive-2xl font-bold text-center bg-gradient-to-r from-red-400 via-pink-400 to-orange-400 bg-clip-text text-transparent mb-6">🔐 Admin Login</h2>
-            <div class="space-y-4">
-                <input type="password" id="adminPassword" placeholder="Enter Admin Password" class="w-full p-3 sm:p-4 border-2 sm:border-4 border-red-500 rounded-xl sm:rounded-2xl focus:border-red-400 focus:outline-none text-responsive-base bg-gray-700 text-white placeholder-gray-400 font-bold touch-button">
-                <button id="loginBtn" class="w-full bg-gradient-to-r from-red-600 to-pink-700 hover:from-red-700 hover:to-pink-800 text-white py-3 sm:py-4 rounded-xl sm:rounded-2xl text-responsive-base font-bold btn-hover shadow-lg border-2 border-red-400 touch-button">🚀 Login</button>
-            </div>
+    <div id="adminPanel" style="display: none;" class="container mx-auto px-4">
+        <div id="adminLogin" class="bg-gray-800 rounded-3xl p-8 max-w-md mx-auto border-4 border-red-500 shadow-2xl">
+            <h2 class="text-center font-bold mb-6" style="font-size: calc(var(--master-base-size) * 1.5); color: var(--master-font-color);">🔐 Admin Login</h2>
+            <input type="password" id="adminPasswordInput" placeholder="Enter Admin Password" class="w-full p-3 mb-4 rounded-xl border-2 border-red-400" style="font-size: var(--master-base-size);">
+            <button id="loginBtn" class="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl font-bold btn-hover transition-all" style="font-size: var(--master-base-size);">Login</button>
         </div>
-
         <div id="adminDashboard" class="hidden">
-            <div class="bg-gradient-to-br from-gray-800 via-slate-800 to-gray-900 rounded-2xl sm:rounded-3xl shadow-2xl p-3 sm:p-6 lg:p-8 mb-8 border-2 sm:border-4 border-red-500">
-                <h2 class="text-responsive-2xl font-bold text-center bg-gradient-to-r from-red-400 via-pink-400 to-orange-400 bg-clip-text text-transparent mb-8">👨‍💼 Admin Dashboard</h2>
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-8">
+            <div class="bg-gray-800 p-6 rounded-3xl border-4 border-red-500 mb-8 shadow-xl">
+                <h2 class="text-center font-bold mb-6" style="font-size: calc(var(--master-base-size) * 1.5); color: var(--master-font-color);">👨‍💼 Admin Dashboard</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                        <label class="block text-responsive-base font-bold text-gray-300 mb-2">📚 Select Class:</label>
-                        <select id="adminClassSelect" class="w-full p-3 sm:p-4 border-2 sm:border-4 border-red-500 rounded-xl sm:rounded-2xl focus:border-red-400 focus:outline-none text-responsive-base bg-gray-700 text-white font-bold touch-button">
-                            <option value="">Choose Class...</option>
+                        <label class="block mb-2 font-bold" style="font-size: var(--master-base-size); color: var(--master-font-color);">Select Class:</label>
+                        <select id="adminClassSelect" class="w-full p-3 rounded-xl border-2 border-red-400" style="font-size: var(--master-base-size);">
+                            <option value="">-- Choose Class --</option>
                             <option value="1">Class 1</option>
                             <option value="2">Class 2</option>
                             <option value="3">Class 3</option>
@@ -216,608 +594,1166 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-responsive-base font-bold text-gray-300 mb-2">👦 Select Student:</label>
-                        <select id="adminStudentSelect" class="w-full p-3 sm:p-4 border-2 sm:border-4 border-red-500 rounded-xl sm:rounded-2xl focus:border-red-400 focus:outline-none text-responsive-base bg-gray-700 text-white font-bold touch-button" disabled>
-                            <option value="">First select a class...</option>
-                            <option value="new">➕ Add New Student</option>
-                        </select>
+                        <label class="block mb-2 font-bold" style="font-size: var(--master-base-size); color: var(--master-font-color);">Select Student:</label>
+                        <select id="adminStudentSelect" class="w-full p-3 rounded-xl border-2 border-red-400" disabled style="font-size: var(--master-base-size);"></select>
                     </div>
                     <div>
-                        <label class="block text-responsive-base font-bold text-gray-300 mb-2">📆 Select Term:</label>
+                        <label class="block mb-2 font-bold" style="font-size: var(--master-base-size); color: var(--master-font-color);">Select Term:</label>
                         <div class="flex gap-2">
-                            <select id="adminTermSelect" class="flex-1 p-3 border-2 sm:border-4 border-red-500 rounded-xl sm:rounded-2xl focus:border-red-400 focus:outline-none text-responsive-base bg-gray-700 text-white font-bold touch-button">
-                                <option value="">Select Term...</option>
-                            </select>
-                            <button id="addTermBtn" class="bg-gradient-to-r from-red-600 to-pink-700 hover:from-red-700 hover:to-pink-800 text-white px-4 py-2 rounded-xl font-bold shadow-lg border-2 border-red-400 touch-button">+ Term</button>
+                            <select id="adminTermSelect" class="flex-1 p-3 rounded-xl border-2 border-red-400" style="font-size: var(--master-base-size);"></select>
+                            <button id="addTermBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 rounded-xl font-bold btn-hover" style="font-size: var(--master-base-size);">➕</button>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div id="studentForm" class="hidden bg-gradient-to-br from-gray-800 via-slate-800 to-gray-900 rounded-2xl sm:rounded-3xl shadow-2xl p-3 sm:p-6 lg:p-8 mb-8 border-2 sm:border-4 border-green-500">
-                <h3 id="formTitle" class="text-responsive-xl font-bold bg-gradient-to-r from-green-400 via-emerald-400 to-teal-400 bg-clip-text text-transparent mb-6 text-center">➕ Add New Student</h3>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-                    <div>
-                        <label class="block text-responsive-sm font-bold text-gray-300 mb-2">👦 Student Name:</label>
-                        <input type="text" id="studentName" class="w-full p-3 border-2 sm:border-4 border-green-500 rounded-xl sm:rounded-2xl focus:border-green-400 focus:outline-none bg-gray-700 text-white placeholder-gray-400 font-bold text-responsive-sm touch-button">
-                    </div>
-                    <div>
-                        <label class="block text-responsive-sm font-bold text-gray-300 mb-2">👨 Father's Name:</label>
-                        <input type="text" id="fatherName" class="w-full p-3 border-2 sm:border-4 border-green-500 rounded-xl sm:rounded-2xl focus:border-green-400 focus:outline-none bg-gray-700 text-white placeholder-gray-400 font-bold text-responsive-sm touch-button">
-                    </div>
-                    <div>
-                        <label class="block text-responsive-sm font-bold text-gray-300 mb-2">📚 Class:</label>
-                        <select id="studentClass" class="w-full p-3 border-2 sm:border-4 border-green-500 rounded-xl sm:rounded-2xl focus:border-green-400 focus:outline-none bg-gray-700 text-white font-bold text-responsive-sm touch-button">
-                            <option value="">Select Class...</option>
-                            <option value="1">Class 1</option>
-                            <option value="2">Class 2</option>
-                            <option value="3">Class 3</option>
-                            <option value="4">Class 4</option>
-                            <option value="5">Class 5</option>
-                        </select>
+            
+            <!-- Student Profile Section -->
+            <div id="studentProfileSection" class="hidden bg-gray-800 p-6 rounded-3xl border-4 border-blue-500 mb-8 shadow-xl">
+                <h3 class="text-center font-bold mb-6" style="font-size: calc(var(--master-base-size) * 1.5); color: var(--master-font-color);">👤 Student Profile</h3>
+                
+                <div class="student-profile-card">
+                    <h4>📝 Basic Information</h4>
+                    <div class="profile-info">
+                        <div class="profile-field">
+                            <label>Student Name:</label>
+                            <input type="text" id="profileStudentName" placeholder="Full Name" required>
+                        </div>
+                        <div class="profile-field">
+                            <label>Roll Number:</label>
+                            <input type="text" id="profileRollNumber" placeholder="e.g., 01">
+                        </div>
+                        <div class="profile-field">
+                            <label>Date of Birth:</label>
+                            <input type="date" id="profileDOB">
+                        </div>
+                        <div class="profile-field">
+                            <label>Gender:</label>
+                            <select id="profileGender">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
-                <div class="bg-gradient-to-r from-gray-700 to-slate-700 p-3 sm:p-4 lg:p-6 rounded-2xl sm:rounded-3xl mb-6 border-2 sm:border-4 border-blue-500">
-                    <div class="flex flex-col sm:flex-row justify-between items-center mb-4 space-y-2 sm:space-y-0">
-                        <h4 class="text-responsive-lg font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">📚 Subjects & Marks (Oral + Written)</h4>
-                        <button id="addSubjectBtn" class="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white px-4 py-2 rounded-xl font-bold btn-hover shadow-lg border-2 border-blue-400 text-responsive-sm touch-button">➕ Add Subject</button>
+                <div class="student-profile-card" style="margin-top: 20px;">
+                    <h4>👨‍👩‍👧 Family Information</h4>
+                    <div class="profile-info">
+                        <div class="profile-field">
+                            <label>Father's Name:</label>
+                            <input type="text" id="profileFatherName" placeholder="Father's Name">
+                        </div>
+                        <div class="profile-field">
+                            <label>Mother's Name:</label>
+                            <input type="text" id="profileMotherName" placeholder="Mother's Name">
+                        </div>
+                        <div class="profile-field">
+                            <label>Guardian Contact:</label>
+                            <input type="tel" id="profileContact" placeholder="Phone Number">
+                        </div>
+                        <div class="profile-field">
+                            <label>Address:</label>
+                            <textarea id="profileAddress" placeholder="Full Address" style="resize: vertical; min-height: 60px;"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-900 p-6 rounded-2xl border-2 border-blue-500 mt-6">
+                    <h4 style="color: var(--master-font-color); margin-bottom: 15px; font-weight: bold;">📋 Show on Report Card</h4>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="showRollNumber" checked>
+                            <label for="showRollNumber">Roll Number</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="showDOB" checked>
+                            <label for="showDOB">Date of Birth</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="showGender" checked>
+                            <label for="showGender">Gender</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="showFatherName" checked>
+                            <label for="showFatherName">Father's Name</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="showMotherName" checked>
+                            <label for="showMotherName">Mother's Name</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="showContact" checked>
+                            <label for="showContact">Guardian Contact</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="showAddress" checked>
+                            <label for="showAddress">Address</label>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="saveProfileBtn" class="w-full mt-6 bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-bold border-2 border-green-400" style="font-size: var(--master-base-size);">💾 Save Student Profile</button>
+            </div>
+
+            <!-- Student Marks Form -->
+            <div id="studentForm" class="hidden bg-gray-800 p-6 rounded-3xl border-4 border-green-500 mb-8 shadow-xl">
+                <h3 id="formTitle" class="text-center font-bold mb-6" style="font-size: calc(var(--master-base-size) * 1.25); color: var(--master-font-color);">📚 Manage Student Marks</h3>
+                
+                <div id="messageContainer"></div>
+                
+                <div class="bg-gradient-to-r from-gray-700 to-slate-700 p-4 rounded-2xl mb-6 border-2 border-blue-500">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="font-bold" style="font-size: calc(var(--master-base-size) * 1.125); color: var(--master-font-color);">📚 Subjects Marks (Oral/Written)</h4>
+                        <button id="addSubjectBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl font-bold btn-hover" style="font-size: var(--master-base-size);">➕ Add Subject</button>
                     </div>
                     <div id="allSubjects" class="space-y-3"></div>
                 </div>
 
-                <div id="successMessage" class="hidden bg-green-100 border-2 sm:border-4 border-green-400 text-green-800 px-4 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl mb-4 text-center font-bold text-responsive-sm"></div>
-
-                <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                    <button id="saveStudentBtn" class="bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl text-responsive-base font-bold btn-hover shadow-2xl border-2 sm:border-4 border-green-400 slide-in-left touch-button">💾 Save Student</button>
-                    <button id="deleteStudentBtn" class="hidden bg-gradient-to-r from-red-600 to-pink-700 hover:from-red-700 hover:to-pink-800 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl text-responsive-base font-bold btn-hover shadow-2xl border-2 sm:border-4 border-red-400 slide-in-right touch-button">🗑️ Delete Student</button>
+                <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                    <button id="saveStudentBtn" class="flex-1 bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-xl font-bold btn-hover border-2 border-green-400" style="font-size: var(--master-base-size);">💾 Save Marks</button>
+                    <button id="deleteStudentBtn" class="hidden flex-1 bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-xl font-bold btn-hover border-2 border-red-400" style="font-size: var(--master-base-size);">🗑️ Delete Student</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Master Admin Panel -->
+    <div id="masterAdminPanel" style="display: none;" class="container mx-auto px-4">
+        <div id="masterLogin" class="bg-gray-800 rounded-3xl p-8 max-w-md mx-auto border-4 border-purple-500 shadow-2xl">
+            <h2 class="text-center font-bold mb-6" style="font-size: calc(var(--master-base-size) * 1.5); color: var(--master-font-color);">🔑 Master Login</h2>
+            <input type="password" id="masterPasswordInput" placeholder="Enter Master Password" class="w-full p-3 mb-4 rounded-xl border-2 border-purple-400" style="font-size: var(--master-base-size);">
+            <button id="masterLoginBtn" class="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-xl font-bold btn-hover" style="font-size: var(--master-base-size);">Unlock Master Panel</button>
+        </div>
+        <div id="masterDashboard" class="hidden bg-gray-800 p-6 rounded-3xl border-4 border-purple-500 mb-8 shadow-xl">
+            <h2 class="text-center font-bold mb-8" style="font-size: calc(var(--master-base-size) * 2); color: var(--master-font-color);">⚙️ Master Settings Dashboard</h2>
+            
+            <!-- Tabs -->
+            <div class="admin-tabs">
+                <button class="admin-tab-btn active" onclick="switchTab('system')">🔧 System</button>
+                <button class="admin-tab-btn" onclick="switchTab('colors')">🎨 Colors</button>
+                <button class="admin-tab-btn" onclick="switchTab('terms')">📅 Terms</button>
+                <button class="admin-tab-btn" onclick="switchTab('visibility')">👁️ Visibility</button>
+            </div>
+
+            <!-- System Tab -->
+            <div id="tab-system" class="tab-content active">
+                <div class="bg-gray-900 p-6 rounded-2xl border-2 border-purple-500">
+                    <h3 class="font-bold mb-4 border-b pb-2" style="font-size: calc(var(--master-base-size) * 1.25); color: var(--master-font-color);">🔑 Admin Security</h3>
+                    <label class="block text-gray-300 mb-2 font-bold" style="font-size: var(--master-base-size);">Change Standard Admin Password:</label>
+                    <input type="text" id="mAdminPassword" placeholder="New Admin Password" class="w-full p-3 mb-6 rounded border-2 border-purple-400" style="font-size: var(--master-base-size);">
+                    
+                    <h3 class="font-bold mt-6 mb-4 border-b pb-2" style="font-size: calc(var(--master-base-size) * 1.25); color: var(--master-font-color);">🎨 Theme Settings</h3>
+                    
+                    <label class="block text-gray-300 mb-2 font-bold" style="font-size: var(--master-base-size);">Background Type:</label>
+                    <select id="mBgType" class="w-full p-3 mb-4 rounded border-2 border-purple-400" style="font-size: var(--master-base-size);">
+                        <option value="smooth-animated-bg">🌈 Animated Gradient</option>
+                        <option value="bg-gray-900">🌙 Solid Dark</option>
+                        <option value="bg-slate-800">💙 Slate Blue</option>
+                    </select>
+                    
+                    <label class="block text-gray-300 mb-2 font-bold" style="font-size: var(--master-base-size);">Main Font Color:</label>
+                    <input type="color" id="mFontColor" class="w-full h-12 mb-4 p-1 rounded cursor-pointer">
+                    
+                    <label class="block text-gray-300 mb-2 font-bold" style="font-size: var(--master-base-size);">Base Font Size (12-24 px):</label>
+                    <div class="flex gap-3 items-center mb-6">
+                        <input type="range" id="mFontSizeSlider" min="12" max="24" value="16" class="flex-1 h-2 rounded">
+                        <input type="number" id="mFontSize" min="12" max="24" value="16" class="w-16 p-2 rounded border-2 border-purple-400 text-center" style="font-size: var(--master-base-size);">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Colors Tab -->
+            <div id="tab-colors" class="tab-content">
+                <div class="bg-gray-900 p-6 rounded-2xl border-2 border-purple-500">
+                    <h3 class="font-bold mb-4 border-b pb-2" style="font-size: calc(var(--master-base-size) * 1.25); color: var(--master-font-color);">🎨 Report Card Colors</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-gray-300 mb-2 font-bold" style="font-size: var(--master-base-size);">Background Color:</label>
+                            <input type="color" id="mReportCardBg" class="w-full h-12 mb-4 p-1 rounded cursor-pointer">
+                        </div>
+                        <div>
+                            <label class="block text-gray-300 mb-2 font-bold" style="font-size: var(--master-base-size);">Text Color:</label>
+                            <input type="color" id="mReportCardText" class="w-full h-12 mb-4 p-1 rounded cursor-pointer">
+                        </div>
+                        <div>
+                            <label class="block text-gray-300 mb-2 font-bold" style="font-size: var(--master-base-size);">Header Background:</label>
+                            <input type="color" id="mReportCardHeaderBg" class="w-full h-12 mb-4 p-1 rounded cursor-pointer">
+                        </div>
+                        <div>
+                            <label class="block text-gray-300 mb-2 font-bold" style="font-size: var(--master-base-size);">Header Text:</label>
+                            <input type="color" id="mReportCardHeaderText" class="w-full h-12 mb-4 p-1 rounded cursor-pointer">
+                        </div>
+                        <div>
+                            <label class="block text-gray-300 mb-2 font-bold" style="font-size: var(--master-base-size);">Table Header Color:</label>
+                            <input type="color" id="mReportCardTableHeader" class="w-full h-12 mb-4 p-1 rounded cursor-pointer">
+                        </div>
+                        <div>
+                            <label class="block text-gray-300 mb-2 font-bold" style="font-size: var(--master-base-size);">Table Text Color:</label>
+                            <input type="color" id="mReportCardTableText" class="w-full h-12 mb-4 p-1 rounded cursor-pointer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Terms Tab -->
+            <div id="tab-terms" class="tab-content">
+                <div class="bg-gray-900 p-6 rounded-2xl border-2 border-purple-500">
+                    <h3 class="font-bold mb-4 border-b pb-2" style="font-size: calc(var(--master-base-size) * 1.25); color: var(--master-font-color);">📅 Term Management</h3>
+                    <p style="color: #d1d5db; margin-bottom: 15px;">Select which terms should be visible to students:</p>
+                    <div id="termsCheckboxContainer" class="checkbox-grid"></div>
+                    <button id="addNewTermBtn" class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-bold border-2 border-blue-400" style="font-size: var(--master-base-size);">➕ Add New Term</button>
+                </div>
+            </div>
+
+            <!-- Visibility Tab -->
+            <div id="tab-visibility" class="tab-content">
+                <div class="bg-gray-900 p-6 rounded-2xl border-2 border-purple-500">
+                    <h3 class="font-bold mb-4 border-b pb-2" style="font-size: calc(var(--master-base-size) * 1.25); color: var(--master-font-color);">👁️ Global Settings</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between bg-gray-800 p-4 rounded border border-purple-400">
+                            <span class="font-bold" style="font-size: var(--master-base-size); color: var(--master-font-color);">📊 Show Combined Report</span>
+                            <input type="checkbox" id="vCombined" class="w-6 h-6 cursor-pointer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button id="saveMasterSettings" class="w-full mt-8 bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-bold border-2 border-green-400" style="font-size: calc(var(--master-base-size) * 1.25);">✅ Apply All Changes Globally</button>
+        </div>
+    </div>
+
+    <!-- Bottom Marquee -->
+    <div class="marquee-bottom">
+        <div class="marquee-content-bottom" style="font-size: var(--master-base-size);">
+            🎓 Proudly Developed by Mr. Deepak Kumar Vaishya 👨‍💻 Assistant Teacher at Primary School Karanpur. 📚
+        </div>
+    </div>
+
     <script>
+        // ============ FIREBASE CONFIGURATION ============
         const firebaseConfig = {
-          apiKey: "AIzaSyBXcBGbfxZ0kU0vqbZvsB_eD7nRBdmRAVI",
-          authDomain: "deeapk1281.firebaseapp.com",
-          databaseURL: "https://deeapk1281-default-rtdb.firebaseio.com",
-          projectId: "deeapk1281",
-          storageBucket: "deeapk1281.firebasestorage.app",
-          messagingSenderId: "1033114222578",
-          appId: "1:1033114222578:web:c60b948ecacf60888a356b",
-          measurementId: "G-KMVWFVFM35"
+            apiKey: "AIzaSyBXcBGbfxZ0kU0vqbZvsBeD7nRBdmRAVI",
+            authDomain: "deeapk1281.firebaseapp.com",
+            databaseURL: "https://deeapk1281-default-rtdb.firebaseio.com",
+            projectId: "deeapk1281",
+            storageBucket: "deeapk1281.firebasestorage.app",
+            messagingSenderId: "1033114222578",
+            appId: "1:1033114222578:web:c60b948ecacf60888a356b",
+            measurementId: "G-KMVWFVFM35"
         };
 
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        let currentView = 'student';
-        const adminPassword = 'admin123';
+        // ============ GLOBAL VARIABLES ============
+        let sysSettings = { 
+            adminPassword: 'admin123', 
+            theme: { bg: 'smooth-animated-bg', color: '#ffffff', size: 16 }, 
+            reportCardColors: {
+                bg: 'rgba(255, 255, 255, 0.95)',
+                text: '#000000',
+                headerBg: '#1e3a8a',
+                headerText: '#ffffff',
+                tableHeader: '#6b7280',
+                tableText: '#1f2937'
+            },
+            terms: [],
+            visibility: { combined: true } 
+        };
+        const MASTER_PWD = '9369580476';
         const defaultSubjects = ['Hindi', 'English', 'Maths', 'EVS', 'Sanskrit'];
         let currentStudentId = null;
         let isEditMode = false;
         let currentClass = null;
 
-        // Navigation
-        document.getElementById('studentViewBtn').addEventListener('click', () => {
-            currentView = 'student';
-            document.getElementById('studentView').classList.remove('hidden');
-            document.getElementById('adminPanel').classList.add('hidden');
+        // ============ UTILITY FUNCTIONS ============
+        function showMessage(container, message, type) {
+            const div = document.createElement('div');
+            div.className = type === 'error' ? 'error-message' : 'success-message';
+            div.textContent = message;
+            container.innerHTML = '';
+            container.appendChild(div);
+            setTimeout(() => container.innerHTML = '', 3000);
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.admin-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ============ LOAD SETTINGS & APPLY THEME ============
+        async function loadSettings() {
+            try {
+                const snap = await database.ref('settings').once('value');
+                if(snap.exists()) {
+                    const data = snap.val();
+                    sysSettings.adminPassword = data.adminPassword || 'admin123';
+                    sysSettings.theme = { ...sysSettings.theme, ...(data.theme || {}) };
+                    sysSettings.reportCardColors = { ...sysSettings.reportCardColors, ...(data.reportCardColors || {}) };
+                    sysSettings.visibility = { ...sysSettings.visibility, ...(data.visibility || {}) };
+                    sysSettings.terms = Array.isArray(data.terms) ? data.terms : [];
+                }
+                applyTheme();
+                populateTermsCheckboxes();
+                console.log("✅ Settings loaded successfully");
+            } catch (e) { 
+                console.error("Settings Load Error:", e);
+                applyTheme();
+            }
+        }
+
+        function applyTheme() {
+            document.documentElement.style.setProperty('--master-font-color', sysSettings.theme.color);
+            document.documentElement.style.setProperty('--master-base-size', sysSettings.theme.size + 'px');
+            document.documentElement.style.setProperty('--report-card-bg', sysSettings.reportCardColors.bg);
+            document.documentElement.style.setProperty('--report-card-text', sysSettings.reportCardColors.text);
+            document.documentElement.style.setProperty('--report-card-header-bg', sysSettings.reportCardColors.headerBg);
+            document.documentElement.style.setProperty('--report-card-header-text', sysSettings.reportCardColors.headerText);
+            document.documentElement.style.setProperty('--report-card-table-header', sysSettings.reportCardColors.tableHeader);
+            document.documentElement.style.setProperty('--report-card-table-text', sysSettings.reportCardColors.tableText);
+            
+            document.body.className = `min-h-screen ${sysSettings.theme.bg}`;
+            
+            setTimeout(() => {
+                const inputs = {
+                    mAdminPassword: sysSettings.adminPassword,
+                    mBgType: sysSettings.theme.bg,
+                    mFontColor: sysSettings.theme.color,
+                    mFontSize: sysSettings.theme.size,
+                    mFontSizeSlider: sysSettings.theme.size,
+                    mReportCardBg: sysSettings.reportCardColors.bg,
+                    mReportCardText: sysSettings.reportCardColors.text,
+                    mReportCardHeaderBg: sysSettings.reportCardColors.headerBg,
+                    mReportCardHeaderText: sysSettings.reportCardColors.headerText,
+                    mReportCardTableHeader: sysSettings.reportCardColors.tableHeader,
+                    mReportCardTableText: sysSettings.reportCardColors.tableText,
+                    vCombined: sysSettings.visibility.combined
+                };
+                
+                for (const [id, value] of Object.entries(inputs)) {
+                    const el = document.getElementById(id);
+                    if(el) {
+                        if(el.type === 'checkbox') el.checked = value;
+                        else el.value = value;
+                    }
+                }
+            }, 100);
+        }
+
+        function populateTermsCheckboxes() {
+            const container = document.getElementById('termsCheckboxContainer');
+            container.innerHTML = '';
+            
+            const defaultTerms = ['Term 1', 'Term 2', 'Half Yearly', 'Term 3', 'Final Exam'];
+            defaultTerms.forEach(term => {
+                const isChecked = sysSettings.terms.includes(term);
+                const div = document.createElement('div');
+                div.className = 'checkbox-item';
+                div.innerHTML = `
+                    <input type="checkbox" class="term-checkbox" value="${term}" ${isChecked ? 'checked' : ''}>
+                    <label>${term}</label>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // ============ INITIALIZATION ============
+        loadSettings();
+
+        // ============ FONT SIZE SYNC ============
+        document.getElementById('mFontSizeSlider').addEventListener('input', (e) => {
+            document.getElementById('mFontSize').value = e.target.value;
         });
 
+        // ============ NAVIGATION ============
+        let currentView = 'frontPage';
+        
+        function showSection(id) {
+            currentView = id;
+            const sections = ['frontPage', 'studentView', 'adminPanel', 'masterAdminPanel'];
+            sections.forEach(s => {
+                const el = document.getElementById(s);
+                if(el) {
+                    if(s === id) el.style.display = 'block';
+                    else el.style.display = 'none';
+                }
+            });
+        }
+
+        document.getElementById('studentViewBtn').addEventListener('click', () => {
+            showSection('studentView');
+        });
+        
         document.getElementById('adminViewBtn').addEventListener('click', () => {
-            currentView = 'admin';
-            document.getElementById('studentView').classList.add('hidden');
-            document.getElementById('adminPanel').classList.remove('hidden');
+            showSection('adminPanel');
             document.getElementById('adminLogin').classList.remove('hidden');
             document.getElementById('adminDashboard').classList.add('hidden');
-            document.getElementById('adminPassword').value = '';
+            document.getElementById('adminPasswordInput').value = '';
+        });
+        
+        document.getElementById('masterAdminBtn').addEventListener('click', () => {
+            showSection('masterAdminPanel');
+            document.getElementById('masterLogin').classList.remove('hidden');
+            document.getElementById('masterDashboard').classList.add('hidden');
+            document.getElementById('masterPasswordInput').value = '';
         });
 
-        // Student View
-        document.getElementById('classSelect').addEventListener('change', async (e) => {
-            const selectedClass = e.target.value;
-            const studentSelect = document.getElementById('studentSelect');
-            studentSelect.innerHTML = '<option value="">Select Student...</option>';
-            studentSelect.disabled = true;
-            document.getElementById('studentTermSelect').innerHTML = '<option value="">Auto (First Term)</option>';
-            document.getElementById('reportCard').classList.add('hidden');
+        // ============ MASTER ADMIN LOGIN & SAVE ============
+        document.getElementById('masterLoginBtn').addEventListener('click', () => {
+            if(document.getElementById('masterPasswordInput').value === MASTER_PWD) {
+                document.getElementById('masterLogin').classList.add('hidden');
+                document.getElementById('masterDashboard').classList.remove('hidden');
+            } else alert('❌ Incorrect Master Password!');
+        });
 
-            if (selectedClass) {
-                try {
-                    const snapshot = await database.ref(`students/class${selectedClass}`).once('value');
-                    const students = snapshot.val();
-                    if (students) {
-                        Object.keys(students).forEach(studentId => {
-                            const student = students[studentId];
-                            const option = document.createElement('option');
-                            option.value = studentId;
-                            option.textContent = student.name;
-                            studentSelect.appendChild(option);
-                        });
-                        studentSelect.disabled = false;
+        document.getElementById('addNewTermBtn').addEventListener('click', () => {
+            const termName = prompt("Enter New Term Name (e.g., Summer Exam):");
+            if(termName && termName.trim()) {
+                const container = document.getElementById('termsCheckboxContainer');
+                const div = document.createElement('div');
+                div.className = 'checkbox-item';
+                div.innerHTML = `
+                    <input type="checkbox" class="term-checkbox" value="${termName.trim()}" checked>
+                    <label>${termName.trim()}</label>
+                `;
+                container.appendChild(div);
+            }
+        });
+
+        document.getElementById('saveMasterSettings').addEventListener('click', async () => {
+            const newAdminPwd = document.getElementById('mAdminPassword').value.trim();
+            if(newAdminPwd) sysSettings.adminPassword = newAdminPwd;
+            
+            sysSettings.theme.bg = document.getElementById('mBgType').value;
+            sysSettings.theme.color = document.getElementById('mFontColor').value;
+            sysSettings.theme.size = parseInt(document.getElementById('mFontSize').value);
+            
+            sysSettings.reportCardColors = {
+                bg: document.getElementById('mReportCardBg').value,
+                text: document.getElementById('mReportCardText').value,
+                headerBg: document.getElementById('mReportCardHeaderBg').value,
+                headerText: document.getElementById('mReportCardHeaderText').value,
+                tableHeader: document.getElementById('mReportCardTableHeader').value,
+                tableText: document.getElementById('mReportCardTableText').value
+            };
+            
+            sysSettings.terms = Array.from(document.querySelectorAll('.term-checkbox:checked')).map(cb => cb.value);
+            sysSettings.visibility.combined = document.getElementById('vCombined').checked;
+            
+            try {
+                await database.ref('settings').set(sysSettings);
+                alert('✅ All System Settings Updated Successfully!');
+                applyTheme();
+            } catch(e) {
+                alert('❌ Error saving settings: ' + e.message);
+            }
+        });
+
+        // ============ ADMIN LOGIN ============
+        document.getElementById('loginBtn').addEventListener('click', () => {
+            if(document.getElementById('adminPasswordInput').value === sysSettings.adminPassword) {
+                document.getElementById('adminLogin').classList.add('hidden');
+                document.getElementById('adminDashboard').classList.remove('hidden');
+            } else alert('❌ Invalid Admin Password!');
+        });
+
+        // ============ STUDENT VIEW - CLASS SELECT ============
+        document.getElementById('classSelect').addEventListener('change', async (e) => {
+            const classId = e.target.value;
+            const select = document.getElementById('studentSelect');
+            select.innerHTML = '<option value="">-- Loading... --</option>';
+            document.getElementById('studentTermSelect').innerHTML = '<option value="">-- Select Term --</option>';
+            document.getElementById('studentTermSelect').disabled = true;
+            document.getElementById('reportCard').classList.add('hidden');
+            
+            if(!classId) {
+                select.innerHTML = '<option value="">-- Choose Student --</option>';
+                return;
+            }
+            
+            try {
+                const snap = await database.ref(`students/class${classId}`).once('value');
+                select.innerHTML = '<option value="">-- Select Student --</option>';
+                if(snap.exists()) {
+                    Object.entries(snap.val()).forEach(([id, data]) => {
+                        const opt = document.createElement('option');
+                        opt.value = id;
+                        opt.textContent = data.name || 'Unknown';
+                        select.appendChild(opt);
+                    });
+                    select.disabled = false;
+                }
+            } catch(err) {
+                alert('Error loading students: ' + err.message);
+            }
+        });
+
+        // ============ STUDENT VIEW - STUDENT SELECT ============
+        document.getElementById('studentSelect').addEventListener('change', async (e) => {
+            const classId = document.getElementById('classSelect').value;
+            const studentId = e.target.value;
+            const termSelect = document.getElementById('studentTermSelect');
+            termSelect.innerHTML = '<option value="">-- Loading... --</option>';
+            document.getElementById('reportCard').classList.add('hidden');
+            
+            if(!studentId || !classId) {
+                termSelect.innerHTML = '<option value="">-- Select Term --</option>';
+                termSelect.disabled = true;
+                return;
+            }
+
+            try {
+                const snap = await database.ref(`students/class${classId}/${studentId}`).once('value');
+                const studentData = snap.val();
+                termSelect.innerHTML = '<option value="">-- Select Term --</option>';
+                
+                if(studentData && studentData.terms) {
+                    const availableTerms = Object.keys(studentData.terms);
+                    availableTerms.forEach(t => {
+                        if((!sysSettings.terms || sysSettings.terms.length === 0) || sysSettings.terms.includes(t)) {
+                            const opt = document.createElement('option');
+                            opt.value = t;
+                            opt.textContent = t;
+                            termSelect.appendChild(opt);
+                        }
+                    });
+                    
+                    if(sysSettings.visibility.combined) {
+                        const opt = document.createElement('option');
+                        opt.value = 'COMBINED';
+                        opt.textContent = '📊 Combined (Full Session)';
+                        termSelect.appendChild(opt);
                     }
-                } catch (error) {
-                    console.error('Error fetching students:', error);
+                    termSelect.disabled = false;
+                }
+            } catch(err) {
+                alert('Error loading student data: ' + err.message);
+            }
+        });
+
+        // ============ STUDENT VIEW - TERM SELECT ============
+        document.getElementById('studentTermSelect').addEventListener('change', async (e) => {
+            const classId = document.getElementById('classSelect').value;
+            const studentId = document.getElementById('studentSelect').value;
+            const term = e.target.value;
+            if(!term || !classId || !studentId) return;
+
+            try {
+                const snap = await database.ref(`students/class${classId}/${studentId}`).once('value');
+                if(term === 'COMBINED') {
+                    generateCombinedReportCard(snap.val(), classId);
+                } else {
+                    generateReportCard(snap.val(), classId, term);
+                }
+            } catch(err) {
+                alert('Error generating report: ' + err.message);
+            }
+        });
+
+        // ============ GENERATE COMBINED REPORT CARD ============
+        async function generateCombinedReportCard(studentData, classId) {
+            const allTerms = studentData.terms || {};
+            let subjectsCombined = {};
+            let totalObt = 0, totalMax = 0;
+
+            Object.values(allTerms).forEach(term => {
+                Object.entries(term.subjects || {}).forEach(([sub, marks]) => {
+                    if(!subjectsCombined[sub]) subjectsCombined[sub] = { obt: 0, max: 0 };
+                    const obt = (parseInt(marks.oral?.obtained) || 0) + (parseInt(marks.written?.obtained) || 0);
+                    const max = (parseInt(marks.oral?.maximum) || 0) + (parseInt(marks.written?.maximum) || 0);
+                    subjectsCombined[sub].obt += obt;
+                    subjectsCombined[sub].max += max;
+                    totalObt += obt;
+                    totalMax += max;
+                });
+            });
+
+            const overallPercentage = totalMax > 0 ? ((totalObt / totalMax) * 100).toFixed(2) : 0;
+            
+            let myRank = 'N/A';
+            try {
+                let classSnap = await database.ref(`students/class${classId}`).once('value');
+                let classRanks = [];
+                Object.entries(classSnap.val() || {}).forEach(([id, sData]) => {
+                    let sObt = 0, sMax = 0;
+                    Object.values(sData.terms || {}).forEach(t => {
+                        Object.values(t.subjects || {}).forEach(m => {
+                            sObt += (parseInt(m.oral?.obtained) || 0) + (parseInt(m.written?.obtained) || 0);
+                            sMax += (parseInt(m.oral?.maximum) || 0) + (parseInt(m.written?.maximum) || 0);
+                        });
+                    });
+                    classRanks.push({ id, perc: sMax > 0 ? (sObt/sMax)*100 : 0 });
+                });
+                classRanks.sort((a,b) => b.perc - a.perc);
+                const myStudentId = Object.keys(classSnap.val()).find(key => classSnap.val()[key].name === studentData.name);
+                const rankIndex = classRanks.findIndex(r => r.id === myStudentId);
+                myRank = rankIndex >= 0 ? (rankIndex + 1) : 'N/A';
+            } catch(e) { 
+                console.log("Rank calc error", e);
+            }
+
+            let tableRows = '';
+            Object.entries(subjectsCombined).forEach(([sub, m]) => {
+                const percent = m.max > 0 ? ((m.obt/m.max)*100).toFixed(1) : 0;
+                tableRows += `<tr><td style="padding: 10px; border-bottom: 1px solid #ddd; font-weight: 600;">${sub}</td><td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center; font-weight: bold;">${m.obt}</td><td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;">${m.max}</td><td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center; font-weight: bold;">${percent}%</td></tr>`;
+            });
+
+            let trophySection = '';
+            if(myRank !== 'N/A' && myRank <= 10) {
+                const topQuotes = [
+                    "🏆 CHAMPION! You're the GREATEST! 🌟",
+                    "🥈 EXCELLENT! Outstanding Performance! ✨",
+                    "🥉 SUPERSTAR! Keep Shining! 🚀",
+                    "🎖️ REMARKABLE! You're Unstoppable! 💪",
+                    "⭐ BRILLIANT! Excellence Personified! 👏",
+                    "🏅 OUTSTANDING! Future Leader! 🌈",
+                    "🎗️ EXCEPTIONAL! Keep it up! 💎",
+                    "⭐ PHENOMENAL! Absolutely Fantastic! ✨",
+                    "🌟 INCREDIBLE! You're Inspiring! 🎯",
+                    "👑 MAGNIFICENT! Top Performer! 🔥"
+                ];
+                const quote = topQuotes[Math.min(myRank - 1, topQuotes.length - 1)];
+                trophySection = `
+                    <div class="trophy-container">
+                        <div class="animated-trophy">🏆</div>
+                    </div>
+                    <div class="motivation-quote">
+                        <p>${quote}</p>
+                    </div>`;
+            }
+
+            const profile = studentData.profile || {};
+            const profileVis = studentData.profileVisibility || {
+                rollNumber: false, dob: false, gender: false,
+                fatherName: false, motherName: false, contact: false, address: false
+            };
+            
+            let studentInfoHTML = `<p style="color: ${sysSettings.reportCardColors.text}; margin: 0 0 5px 0; font-weight: bold;">👤 Student: ${studentData.name || 'N/A'}</p>`;
+            
+            if(profileVis.rollNumber === true && profile.rollNumber) {
+                studentInfoHTML += `<p style="color: ${sysSettings.reportCardColors.text}; margin: 0 0 5px 0; font-weight: bold;">📌 Roll Number: ${profile.rollNumber}</p>`;
+            }
+            if(profileVis.fatherName === true && (studentData.fatherName || profile.fatherName)) {
+                studentInfoHTML += `<p style="color: ${sysSettings.reportCardColors.text}; margin: 0 0 5px 0; font-weight: bold;">👨 Father: ${studentData.fatherName || profile.fatherName}</p>`;
+            }
+            if(profileVis.motherName === true && profile.motherName) {
+                studentInfoHTML += `<p style="color: ${sysSettings.reportCardColors.text}; margin: 0 0 5px 0; font-weight: bold;">👩 Mother: ${profile.motherName}</p>`;
+            }
+            if(profileVis.dob === true && profile.dob) {
+                studentInfoHTML += `<p style="color: ${sysSettings.reportCardColors.text}; margin: 0 0 5px 0; font-weight: bold;">📅 DOB: ${profile.dob}</p>`;
+            }
+            if(profileVis.gender === true && profile.gender) {
+                studentInfoHTML += `<p style="color: ${sysSettings.reportCardColors.text}; margin: 0 0 5px 0; font-weight: bold;">⚧️ Gender: ${profile.gender}</p>`;
+            }
+            if(profileVis.contact === true && profile.contact) {
+                studentInfoHTML += `<p style="color: ${sysSettings.reportCardColors.text}; margin: 0 0 5px 0; font-weight: bold;">📞 Contact: ${profile.contact}</p>`;
+            }
+            if(profileVis.address === true && profile.address) {
+                studentInfoHTML += `<p style="color: ${sysSettings.reportCardColors.text}; margin: 0 0 5px 0; font-weight: bold;">🏠 Address: ${profile.address}</p>`;
+            }
+
+            const html = `
+                <div class="school-banner-report">
+                    <h1>PRIMARY SCHOOL KARANPUR</h1>
+                    <p class="address-label">📍 BEHJAM :- LAKHIMPUR-KHERI, UTTAR PRADESH</p>
+                </div>
+
+                <div style="background: ${sysSettings.reportCardColors.bg}; padding: 30px; border-radius: 15px; margin-top: 20px;">
+                    <h2 style="color: ${sysSettings.reportCardColors.text}; text-align: center; font-size: calc(var(--master-base-size) * 2); margin-bottom: 10px;">📊 COMBINED ANNUAL REPORT</h2>
+                    <p style="color: ${sysSettings.reportCardColors.text}; text-align: center; font-size: calc(var(--master-base-size) * 1.125); margin-bottom: 20px;">Session Aggregate Report Card</p>
+                    
+                    <div style="background: #f0f7ff; padding: 15px; border-radius: 10px; border-left: 4px solid #3b82f6; margin-bottom: 20px;">
+                        ${studentInfoHTML}
+                        <div style="background: #f0fdf4; padding: 15px; border-radius: 10px; border-left: 4px solid #22c55e; text-align: center;">
+                            <p style="color: ${sysSettings.reportCardColors.text}; font-size: var(--master-base-size); margin: 0 0 5px 0; font-weight: bold;">Final Combined Rank</p>
+                            <p style="color: ${sysSettings.reportCardColors.text}; font-size: calc(var(--master-base-size) * 2.5); font-weight: bold; margin: 0;">#${myRank}</p>
+                        </div>
+                    </div>
+
+                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; background: ${sysSettings.reportCardColors.bg};">
+                        <thead>
+                            <tr style="background: ${sysSettings.reportCardColors.headerBg};">
+                                <th style="padding: 12px; text-align: left; color: ${sysSettings.reportCardColors.headerText}; font-weight: bold;">Subject</th>
+                                <th style="padding: 12px; text-align: center; color: ${sysSettings.reportCardColors.headerText}; font-weight: bold;">Total Obtained</th>
+                                <th style="padding: 12px; text-align: center; color: ${sysSettings.reportCardColors.headerText}; font-weight: bold;">Total Maximum</th>
+                                <th style="padding: 12px; text-align: center; color: ${sysSettings.reportCardColors.headerText}; font-weight: bold;">Aggregate %</th>
+                            </tr>
+                        </thead>
+                        <tbody>${tableRows}</tbody>
+                        <tfoot>
+                            <tr style="background: #e5e7eb; font-weight: bold; border-top: 3px solid ${sysSettings.reportCardColors.headerBg};">
+                                <td style="padding: 12px; color: ${sysSettings.reportCardColors.tableText};">OVERALL TOTAL</td>
+                                <td style="padding: 12px; text-align: center; color: ${sysSettings.reportCardColors.tableText};">${totalObt}</td>
+                                <td style="padding: 12px; text-align: center; color: ${sysSettings.reportCardColors.tableText};">${totalMax}</td>
+                                <td style="padding: 12px; text-align: center; color: ${sysSettings.reportCardColors.tableText}; font-size: calc(var(--master-base-size) * 1.25);">${overallPercentage}%</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    
+                    ${trophySection}
+                </div>`;
+            
+            document.getElementById('reportContent').innerHTML = html;
+            document.getElementById('reportCard').classList.remove('hidden');
+        }
+
+        // ============ GENERATE SINGLE TERM REPORT CARD ============
+        async function generateReportCard(studentData, classNum, termName) {
+            const termData = studentData.terms[termName] ? studentData.terms[termName].subjects : {};
+            let totalObt = 0, totalMax = 0;
+            let subjectsHTML = '';
+
+            Object.entries(termData).forEach(([sub, m]) => {
+                const obt = (parseInt(m.oral?.obtained) || 0) + (parseInt(m.written?.obtained) || 0);
+                const max = (parseInt(m.oral?.maximum) || 0) + (parseInt(m.written?.maximum) || 0);
+                totalObt += obt;
+                totalMax += max;
+                const percent = max > 0 ? ((obt/max)*100).toFixed(1) : 0;
+                subjectsHTML += `<tr><td style="padding: 10px; border-bottom: 1px solid #ddd; font-weight: 600;">${sub}</td><td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center; font-weight: bold;">${obt}</td><td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;">${max}</td><td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center; font-weight: bold;">${percent}%</td></tr>`;
+            });
+
+            let termRank = 'N/A';
+            try {
+                let classSnap = await database.ref(`students/class${classNum}`).once('value');
+                let classRanks = [];
+                Object.entries(classSnap.val() || {}).forEach(([id, sData]) => {
+                    if(sData.terms && sData.terms[termName]) {
+                        let sObt = 0, sMax = 0;
+                        Object.values(sData.terms[termName].subjects || {}).forEach(m => {
+                            sObt += (parseInt(m.oral?.obtained) || 0) + (parseInt(m.written?.obtained) || 0);
+                            sMax += (parseInt(m.oral?.maximum) || 0) + (parseInt(m.written?.maximum) || 0);
+                        });
+                        classRanks.push({ id, perc: sMax > 0 ? (sObt/sMax)*100 : 0 });
+                    }
+                });
+                classRanks.sort((a,b) => b.perc - a.perc);
+                const myStudentId = Object.keys(classSnap.val()).find(key => classSnap.val()[key].name === studentData.name);
+                const rankIndex = classRanks.findIndex(r => r.id === myStudentId);
+                termRank = rankIndex >= 0 ? (rankIndex + 1) : 'N/A';
+            } catch(e) { 
+                console.log("Rank calc error", e);
+            }
+
+            let trophySection = '';
+            if(termRank !== 'N/A' && termRank <= 10) {
+                const topQuotes = [
+                    "🏆 CHAMPION! You're the GREATEST! 🌟",
+                    "🥈 EXCELLENT! Outstanding Performance! ✨",
+                    "🥉 SUPERSTAR! Keep Shining! 🚀",
+                    "🎖️ REMARKABLE! You're Unstoppable! 💪",
+                    "⭐ BRILLIANT! Excellence Personified! 👏",
+                    "🏅 OUTSTANDING! Future Leader! 🌈",
+                    "🎗️ EXCEPTIONAL! Keep it up! 💎",
+                    "⭐ PHENOMENAL! Absolutely Fantastic! ✨",
+                    "🌟 INCREDIBLE! You're Inspiring! 🎯",
+                    "👑 MAGNIFICENT! Top Performer! 🔥"
+                ];
+                const quote = topQuotes[Math.min(termRank - 1, topQuotes.length - 1)];
+                trophySection = `
+                    <div class="trophy-container">
+                        <div class="animated-trophy">🏆</div>
+                    </div>
+                    <div class="motivation-quote">
+                        <p>${quote}</p>
+                    </div>`;
+            }
+
+            const profile = studentData.profile || {};
+            const profileVis = studentData.profileVisibility || {
+                rollNumber: false, dob: false, gender: false,
+                fatherName: false, motherName: false, contact: false, address: false
+            };
+            
+            let studentInfoHTML = `<p style="color: ${sysSettings.reportCardColors.text}; margin: 0 0 5px 0; font-weight: bold;">👤 Student: ${studentData.name || 'N/A'}</p>`;
+            
+            if(profileVis.rollNumber === true && profile.rollNumber) {
+                studentInfoHTML += `<p style="color: ${sysSettings.reportCardColors.text}; margin: 0 0 5px 0; font-weight: bold;">📌 Roll Number: ${profile.rollNumber}</p>`;
+            }
+            if(profileVis.fatherName === true && (studentData.fatherName || profile.fatherName)) {
+                studentInfoHTML += `<p style="color: ${sysSettings.reportCardColors.text}; margin: 0 0 5px 0; font-weight: bold;">👨 Father: ${studentData.fatherName || profile.fatherName}</p>`;
+            }
+            if(profileVis.motherName === true && profile.motherName) {
+                studentInfoHTML += `<p style="color: ${sysSettings.reportCardColors.text}; margin: 0 0 5px 0; font-weight: bold;">👩 Mother: ${profile.motherName}</p>`;
+            }
+            if(profileVis.dob === true && profile.dob) {
+                studentInfoHTML += `<p style="color: ${sysSettings.reportCardColors.text}; margin: 0 0 5px 0; font-weight: bold;">📅 DOB: ${profile.dob}</p>`;
+            }
+            if(profileVis.gender === true && profile.gender) {
+                studentInfoHTML += `<p style="color: ${sysSettings.reportCardColors.text}; margin: 0 0 5px 0; font-weight: bold;">⚧️ Gender: ${profile.gender}</p>`;
+            }
+            if(profileVis.contact === true && profile.contact) {
+                studentInfoHTML += `<p style="color: ${sysSettings.reportCardColors.text}; margin: 0 0 5px 0; font-weight: bold;">📞 Contact: ${profile.contact}</p>`;
+            }
+            if(profileVis.address === true && profile.address) {
+                studentInfoHTML += `<p style="color: ${sysSettings.reportCardColors.text}; margin: 0 0 5px 0; font-weight: bold;">🏠 Address: ${profile.address}</p>`;
+            }
+
+            const html = `
+                <div class="school-banner-report">
+                    <h1>PRIMARY SCHOOL KARANPUR</h1>
+                    <p class="address-label">📍 BEHJAM :- LAKHIMPUR-KHERI, UTTAR PRADESH</p>
+                </div>
+
+                <div style="background: ${sysSettings.reportCardColors.bg}; padding: 30px; border-radius: 15px; margin-top: 20px;">
+                    <h2 style="color: ${sysSettings.reportCardColors.text}; text-align: center; font-size: calc(var(--master-base-size) * 2); margin-bottom: 20px;">📋 ${termName} Report Card</h2>
+                    
+                    <div style="background: #f0f7ff; padding: 15px; border-radius: 10px; border-left: 4px solid #3b82f6; margin-bottom: 20px;">
+                        ${studentInfoHTML}
+                        <p style="color: ${sysSettings.reportCardColors.text}; margin: 10px 0 0 0; font-weight: bold;">🏆 Rank: #${termRank}</p>
+                        <p style="color: ${sysSettings.reportCardColors.text}; margin: 0; font-weight: bold;">📊 Percentage: ${totalMax > 0 ? ((totalObt/totalMax)*100).toFixed(2) : 0}%</p>
+                    </div>
+
+                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; background: ${sysSettings.reportCardColors.bg};">
+                        <thead>
+                            <tr style="background: ${sysSettings.reportCardColors.headerBg};">
+                                <th style="padding: 12px; text-align: left; color: ${sysSettings.reportCardColors.headerText}; font-weight: bold;">Subject</th>
+                                <th style="padding: 12px; text-align: center; color: ${sysSettings.reportCardColors.headerText}; font-weight: bold;">Obtained</th>
+                                <th style="padding: 12px; text-align: center; color: ${sysSettings.reportCardColors.headerText}; font-weight: bold;">Maximum</th>
+                                <th style="padding: 12px; text-align: center; color: ${sysSettings.reportCardColors.headerText}; font-weight: bold;">%</th>
+                            </tr>
+                        </thead>
+                        <tbody>${subjectsHTML}</tbody>
+                        <tfoot>
+                            <tr style="background: #e5e7eb; font-weight: bold; border-top: 3px solid ${sysSettings.reportCardColors.headerBg};">
+                                <td style="padding: 12px; color: ${sysSettings.reportCardColors.tableText};">TOTAL</td>
+                                <td style="padding: 12px; text-align: center; color: ${sysSettings.reportCardColors.tableText};">${totalObt}</td>
+                                <td style="padding: 12px; text-align: center; color: ${sysSettings.reportCardColors.tableText};">${totalMax}</td>
+                                <td style="padding: 12px; text-align: center; color: ${sysSettings.reportCardColors.tableText}; font-weight: bold;">${totalMax > 0 ? ((totalObt/totalMax)*100).toFixed(2) : 0}%</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    
+                    ${trophySection}
+                </div>`;
+            
+            document.getElementById('reportContent').innerHTML = html;
+            document.getElementById('reportCard').classList.remove('hidden');
+        }
+
+        // ============ ADMIN DASHBOARD - CLASS SELECT ============
+        document.getElementById('adminClassSelect').addEventListener('change', async (e) => {
+            currentClass = e.target.value;
+            const select = document.getElementById('adminStudentSelect');
+            select.innerHTML = '<option value="">-- Select Student --</option>';
+            document.getElementById('studentForm').classList.add('hidden');
+            document.getElementById('studentProfileSection').classList.add('hidden');
+            
+            if(currentClass) {
+                try {
+                    const snap = await database.ref(`students/class${currentClass}`).once('value');
+                    select.innerHTML = '<option value="new">➕ Add New Student</option>';
+                    if(snap.exists()) {
+                        Object.entries(snap.val()).forEach(([id, data]) => {
+                            const opt = document.createElement('option');
+                            opt.value = id;
+                            opt.textContent = data.name || 'Unknown';
+                            select.appendChild(opt);
+                        });
+                    }
+                    select.disabled = false;
+                } catch(e) {
+                    alert('Error loading students: ' + e.message);
                 }
             }
         });
 
-        document.getElementById('studentSelect').addEventListener('change', async (e) => {
-            const selectedClass = document.getElementById('classSelect').value;
-            const selectedStudent = e.target.value;
-            const termSelect = document.getElementById('studentTermSelect');
-            termSelect.innerHTML = '<option value="">Auto (First Term)</option>';
-            termSelect.disabled = true;
-            document.getElementById('reportCard').classList.add('hidden');
-
-            if (selectedClass && selectedStudent) {
+        // ============ ADMIN DASHBOARD - STUDENT SELECT ============
+        document.getElementById('adminStudentSelect').addEventListener('change', async (e) => {
+            const val = e.target.value;
+            document.getElementById('deleteStudentBtn').classList.add('hidden');
+            document.getElementById('messageContainer').innerHTML = '';
+            
+            if(val === 'new') {
+                isEditMode = false;
+                currentStudentId = null;
+                document.getElementById('formTitle').textContent = '📚 Add New Student Marks';
+                
+                const termSelect = document.getElementById('adminTermSelect');
+                termSelect.innerHTML = '<option value="">-- Select or Create Term --</option>';
+                if(sysSettings.terms && sysSettings.terms.length > 0) {
+                    sysSettings.terms.forEach(t => {
+                        const opt = document.createElement('option');
+                        opt.value = t;
+                        opt.textContent = t;
+                        termSelect.appendChild(opt);
+                    });
+                }
+                
+                document.getElementById('studentForm').classList.remove('hidden');
+                document.getElementById('studentProfileSection').classList.remove('hidden');
+                clearProfileForm();
+                renderSubjects({});
+            } else if(val) {
+                isEditMode = true;
+                currentStudentId = val;
+                document.getElementById('formTitle').textContent = '📚 Edit Student Marks';
+                document.getElementById('deleteStudentBtn').classList.remove('hidden');
+                
                 try {
-                    const snapshot = await database.ref(`students/class${selectedClass}/${selectedStudent}`).once('value');
-                    const studentData = snapshot.val();
-                    if (studentData && studentData.terms) {
-                        Object.keys(studentData.terms).forEach(t => {
+                    const snap = await database.ref(`students/class${currentClass}/${val}`).once('value');
+                    const data = snap.val();
+                    if(!data) {
+                        alert('❌ Student data not found');
+                        return;
+                    }
+                    
+                    const profile = data.profile || {};
+                    const defaultVisibility = {
+                        rollNumber: true, dob: true, gender: true,
+                        fatherName: true, motherName: true, contact: true, address: true
+                    };
+                    const profileVisibility = data.profileVisibility ? { ...defaultVisibility, ...data.profileVisibility } : defaultVisibility;
+                    
+                    document.getElementById('profileStudentName').value = data.name || '';
+                    document.getElementById('profileRollNumber').value = profile.rollNumber || '';
+                    document.getElementById('profileDOB').value = profile.dob || '';
+                    document.getElementById('profileGender').value = profile.gender || '';
+                    document.getElementById('profileFatherName').value = profile.fatherName || data.fatherName || '';
+                    document.getElementById('profileMotherName').value = profile.motherName || '';
+                    document.getElementById('profileContact').value = profile.contact || '';
+                    document.getElementById('profileAddress').value = profile.address || '';
+                    
+                    document.getElementById('showRollNumber').checked = profileVisibility.rollNumber === true;
+                    document.getElementById('showDOB').checked = profileVisibility.dob === true;
+                    document.getElementById('showGender').checked = profileVisibility.gender === true;
+                    document.getElementById('showFatherName').checked = profileVisibility.fatherName === true;
+                    document.getElementById('showMotherName').checked = profileVisibility.motherName === true;
+                    document.getElementById('showContact').checked = profileVisibility.contact === true;
+                    document.getElementById('showAddress').checked = profileVisibility.address === true;
+                    
+                    const termSelect = document.getElementById('adminTermSelect');
+                    termSelect.innerHTML = '<option value="">-- Select Term --</option>';
+                    if(data.terms) {
+                        Object.keys(data.terms).forEach(t => {
                             const opt = document.createElement('option');
                             opt.value = t;
                             opt.textContent = t;
                             termSelect.appendChild(opt);
                         });
-                        termSelect.disabled = false;
-                        const termName = termSelect.value || Object.keys(studentData.terms)[0];
-                        generateReportCard(studentData, selectedClass, termName);
                     }
-                } catch (error) {
-                    console.error('Error:', error);
+
+                    document.getElementById('studentForm').classList.remove('hidden');
+                    document.getElementById('studentProfileSection').classList.remove('hidden');
+                    renderSubjects({});
+                } catch(e) {
+                    alert('Error loading student: ' + e.message);
                 }
             }
         });
 
-        document.getElementById('studentTermSelect').addEventListener('change', async () => {
-            const selectedClass = document.getElementById('classSelect').value;
-            const selectedStudent = document.getElementById('studentSelect').value;
-            const termName = document.getElementById('studentTermSelect').value;
-
-            if (selectedClass && selectedStudent) {
-                try {
-                    const snapshot = await database.ref(`students/class${selectedClass}/${selectedStudent}`).once('value');
-                    const studentData = snapshot.val();
-                    if (studentData) {
-                        generateReportCard(studentData, selectedClass, termName || Object.keys(studentData.terms)[0]);
-                    }
-                } catch (e) {
-                    console.error('Error:', e);
-                }
-            }
-        });
-
-        async function generateReportCard(studentData, classNum, termName) {
-            const termData = studentData.terms && studentData.terms[termName] ? studentData.terms[termName] : { subjects: {} };
-            const subjects = termData.subjects || {};
-            let totalObtained = 0;
-            let totalMaximum = 0;
-            const filteredSubjects = {};
-
-            defaultSubjects.forEach(subjectName => {
-                if (subjects[subjectName]) {
-                    const s = subjects[subjectName];
-                    const obt = (s.oral?.obtained || 0) + (s.written?.obtained || 0);
-                    const max = (s.oral?.maximum || 0) + (s.written?.maximum || 0);
-                    if (max > 0) {
-                        filteredSubjects[subjectName] = { obtained: obt, maximum: max };
-                    }
-                }
-            });
-
-            Object.keys(subjects).forEach(subjectName => {
-                if (!defaultSubjects.includes(subjectName)) {
-                    const s = subjects[subjectName];
-                    const obt = (s.oral?.obtained || 0) + (s.written?.obtained || 0);
-                    const max = (s.oral?.maximum || 0) + (s.written?.maximum || 0);
-                    if (max > 0) {
-                        filteredSubjects[subjectName] = { obtained: obt, maximum: max };
-                    }
-                }
-            });
-
-            Object.values(filteredSubjects).forEach(subject => {
-                totalObtained += subject.obtained || 0;
-                totalMaximum += subject.maximum || 0;
-            });
-
-            const percentage = totalMaximum > 0 ? ((totalObtained / totalMaximum) * 100).toFixed(2) : 0;
-
-            let subjectsHTML = '';
-            Object.entries(filteredSubjects).forEach(([subjectName, marks]) => {
-                const properCaseSubject = subjectName.charAt(0).toUpperCase() + subjectName.slice(1).toLowerCase();
-                subjectsHTML += `
-                    <tr class="border-b border-purple-200 hover:bg-gradient-to-r hover:from-blue-100 hover:to-purple-100 transition-colors">
-                        <td class="py-3 px-4 font-semibold text-gray-800">${properCaseSubject}</td>
-                        <td class="py-3 px-4 text-center text-blue-600 font-bold">${marks.obtained || 0}</td>
-                        <td class="py-3 px-4 text-center text-gray-600">${marks.maximum || 0}</td>
-                        <td class="py-3 px-4 text-center font-bold text-purple-600">${marks.obtained || 0}/${marks.maximum || 0}</td>
-                    </tr>
-                `;
-            });
-
-            const reportHTML = `
-                <div class="text-center mb-8 bg-white bg-opacity-90 rounded-2xl p-6">
-                    <h2 class="text-4xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent mb-2">🎓 REPORT CARD ${termName ? ' - ' + termName : ''}</h2>
-                    <p class="text-lg bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent font-semibold">📚 Academic Progress Report 📚</p>
-                </div>
-
-                <div class="bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-600 p-1 rounded-2xl mb-8 shadow-2xl">
-                    <div class="bg-white bg-opacity-95 p-8 rounded-2xl">
-                        <h3 class="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-6 text-center">📋 Student Information</h3>
-                        <div class="space-y-4">
-                            <div class="bg-gradient-to-r from-blue-100 to-blue-200 p-4 rounded-xl shadow-md border-l-4 border-blue-500">
-                                <p class="text-base"><span class="font-semibold text-blue-700">👦 Student Name:</span> <span class="font-bold text-gray-800">${studentData.name}</span></p>
-                            </div>
-                            <div class="bg-gradient-to-r from-purple-100 to-purple-200 p-4 rounded-xl shadow-md border-l-4 border-purple-500">
-                                <p class="text-base"><span class="font-semibold text-purple-700">👨 Father's Name:</span> <span class="font-bold text-gray-800">${studentData.fatherName}</span></p>
-                            </div>
-                            <div class="bg-gradient-to-r from-indigo-100 to-indigo-200 p-4 rounded-xl shadow-md border-l-4 border-indigo-500">
-                                <p class="text-base"><span class="font-semibold text-indigo-700">📚 Class:</span> <span class="font-bold text-gray-800">${classNum}</span></p>
-                            </div>
-                            <div class="bg-gradient-to-r from-yellow-100 to-yellow-200 p-4 rounded-xl shadow-md border-l-4 border-yellow-500">
-                                <p class="text-base"><span class="font-semibold text-yellow-700">📊 Percentage:</span> <span class="font-bold text-gray-800">${percentage}%</span></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 p-1 rounded-2xl mb-8 shadow-2xl">
-                    <div class="bg-white bg-opacity-95 p-6 rounded-2xl">
-                        <h3 class="text-2xl font-bold bg-gradient-to-r from-green-600 via-blue-600 to-purple-600 bg-clip-text text-transparent mb-6 text-center">📚 Subject-wise Performance</h3>
-                        <div class="overflow-x-auto">
-                            <table class="w-full bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl shadow-lg overflow-hidden border-2 border-blue-300">
-                                <thead class="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white">
-                                    <tr>
-                                        <th class="py-4 px-4 text-left font-bold">Subject</th>
-                                        <th class="py-4 px-4 text-center font-bold">Obtained</th>
-                                        <th class="py-4 px-4 text-center font-bold">Maximum</th>
-                                        <th class="py-4 px-4 text-center font-bold">OM/MM</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    ${subjectsHTML}
-                                    <tr class="bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-600 font-bold text-white">
-                                        <td class="py-4 px-4">🎯 TOTAL</td>
-                                        <td class="py-4 px-4 text-center">${totalObtained}</td>
-                                        <td class="py-4 px-4 text-center">${totalMaximum}</td>
-                                        <td class="py-4 px-4 text-center">${totalObtained}/${totalMaximum}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('reportContent').innerHTML = reportHTML;
-            document.getElementById('reportCard').classList.remove('hidden');
-        }
-
-        // Admin Login
-        document.getElementById('loginBtn').addEventListener('click', () => {
-            if (document.getElementById('adminPassword').value === adminPassword) {
-                document.getElementById('adminLogin').classList.add('hidden');
-                document.getElementById('adminDashboard').classList.remove('hidden');
-            } else {
-                alert('❌ Incorrect password!');
-                document.getElementById('adminPassword').value = '';
-            }
-        });
-
-        // Admin Class Select
-        document.getElementById('adminClassSelect').addEventListener('change', async (e) => {
-            currentClass = e.target.value;
-            const adminStudentSelect = document.getElementById('adminStudentSelect');
-            adminStudentSelect.innerHTML = '<option value="">Select Student...</option>';
-            adminStudentSelect.disabled = true;
-            document.getElementById('studentForm').classList.add('hidden');
-
-            if (currentClass) {
-                try {
-                    const snapshot = await database.ref(`students/class${currentClass}`).once('value');
-                    const students = snapshot.val();
-                    adminStudentSelect.innerHTML = '<option value="new">➕ Add New Student</option>';
-                    if (students) {
-                        Object.keys(students).forEach(studentId => {
-                            const student = students[studentId];
-                            const option = document.createElement('option');
-                            option.value = studentId;
-                            option.textContent = `✏️ ${student.name}`;
-                            adminStudentSelect.appendChild(option);
-                        });
-                    }
-                    adminStudentSelect.disabled = false;
-                } catch (error) {
-                    console.error('Error:', error);
-                }
-            }
-        });
-
-        // **FIX: ADMIN STUDENT SELECT - NOW PROPERLY LOADS STUDENT DATA AND TERMS**
-        document.getElementById('adminStudentSelect').addEventListener('change', async (e) => {
-            const selectedStudent = e.target.value;
-            const selectedClass = document.getElementById('adminClassSelect').value;
-            const termSelect = document.getElementById('adminTermSelect');
-
-            termSelect.innerHTML = '<option value="">Select Term...</option>';
-
-            if (selectedStudent === 'new') {
-                isEditMode = false;
-                currentStudentId = null;
-                document.getElementById('formTitle').textContent = '➕ Add New Student';
-                document.getElementById('deleteStudentBtn').classList.add('hidden');
-                clearForm();
-                setupDefaultSubjects();
-                document.getElementById('studentClass').value = selectedClass;
-                document.getElementById('studentForm').classList.remove('hidden');
-            } else if (selectedStudent && selectedClass) {
-                isEditMode = true;
-                currentStudentId = selectedStudent;
-                document.getElementById('formTitle').textContent = '✏️ Edit Student';
-                document.getElementById('deleteStudentBtn').classList.remove('hidden');
-
-                try {
-                    const snapshot = await database.ref(`students/class${selectedClass}/${selectedStudent}`).once('value');
-                    const studentData = snapshot.val();
-
-                    if (studentData) {
-                        document.getElementById('studentName').value = studentData.name || '';
-                        document.getElementById('fatherName').value = studentData.fatherName || '';
-                        document.getElementById('studentClass').value = selectedClass;
-
-                        // **LOAD TERMS FROM STUDENT DATA**
-                        if (studentData.terms) {
-                            Object.keys(studentData.terms).forEach(t => {
-                                const opt = document.createElement('option');
-                                opt.value = t;
-                                opt.textContent = t;
-                                termSelect.appendChild(opt);
-                            });
-                            // Select first term by default
-                            const firstTerm = Object.keys(studentData.terms)[0];
-                            termSelect.value = firstTerm;
-                        }
-
-                        // **LOAD SUBJECTS FOR FIRST TERM**
-                        loadStudentDataForTerm(studentData);
-                        document.getElementById('studentForm').classList.remove('hidden');
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                }
-            } else {
-                document.getElementById('studentForm').classList.add('hidden');
-            }
-        });
-
-        // **FIX: ADMIN TERM SELECT - NOW RELOADS SUBJECTS FOR THE SELECTED TERM**
-        document.getElementById('adminTermSelect').addEventListener('change', async () => {
-            if (!currentStudentId || !isEditMode) return;
-
-            const selectedClass = document.getElementById('adminClassSelect').value;
-            const termName = document.getElementById('adminTermSelect').value;
-
-            if (!selectedClass || !termName) return;
-
-            try {
-                const snapshot = await database.ref(`students/class${selectedClass}/${currentStudentId}`).once('value');
-                const studentData = snapshot.val();
-                if (studentData) {
-                    loadStudentDataForTerm(studentData);
-                }
-            } catch (error) {
-                console.error('Error loading term data:', error);
-            }
-        });
-
-        // **NEW FUNCTION: LOADS STUDENT DATA FOR THE SELECTED TERM**
-        function loadStudentDataForTerm(studentData) {
-            const termName = document.getElementById('adminTermSelect').value;
-            if (!termName) return;
-
-            const container = document.getElementById('allSubjects');
-            container.innerHTML = '';
-
-            const termSubjects = (studentData.terms && studentData.terms[termName] && studentData.terms[termName].subjects) || {};
-
-            if (Object.keys(termSubjects).length === 0) {
-                setupDefaultSubjects();
-            } else {
-                defaultSubjects.forEach(sub => {
-                    const data = termSubjects[sub] || { oral: { obtained: 0, maximum: 10 }, written: { obtained: 0, maximum: 40 } };
-                    addSubjectWithData(sub, data, true);
-                });
-
-                Object.keys(termSubjects).forEach(sub => {
-                    if (!defaultSubjects.includes(sub)) {
-                        addSubjectWithData(sub, termSubjects[sub], false);
-                    }
-                });
-            }
-        }
-
-        function setupDefaultSubjects() {
-            const container = document.getElementById('allSubjects');
-            container.innerHTML = '';
-            defaultSubjects.forEach(sub =>
-                addSubjectWithData(sub, {
-                    oral: { obtained: 0, maximum: 10 },
-                    written: { obtained: 0, maximum: 40 }
-                }, true)
-            );
-        }
-
-        document.getElementById('addSubjectBtn').addEventListener('click', () => {
-            addSubjectWithData('', {
-                oral: { obtained: 0, maximum: 10 },
-                written: { obtained: 0, maximum: 40 }
-            }, false);
-        });
-
-        function addSubjectWithData(subjectName = '', data = {}, isDefault = false) {
-            const container = document.getElementById('allSubjects');
-            const subjectDiv = document.createElement('div');
-            subjectDiv.className = 'bg-gradient-to-r from-gray-700 to-slate-700 p-3 lg:p-4 rounded-xl lg:rounded-2xl shadow-lg border-2 lg:border-4 border-blue-500 subject-block';
-
-            const removeButton = isDefault ? '' : `
-                <div class="flex justify-center mt-3">
-                    <button type="button" onclick="this.closest('.subject-block').remove()" class="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-4 py-2 rounded-lg font-bold border-2 border-red-400">🗑️ Remove</button>
-                </div>
-            `;
-
-            const oral = data.oral || { obtained: 0, maximum: 10 };
-            const written = data.written || { obtained: 0, maximum: 40 };
-
-            subjectDiv.innerHTML = `
-                <div class="space-y-2">
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                        <div>
-                            <label class="block text-xs font-bold text-gray-300 mb-1">Subject Name</label>
-                            <input type="text" class="subject-name w-full p-2 border-2 lg:border-4 border-blue-500 rounded-lg focus:border-blue-400 focus:outline-none bg-gray-700 text-white placeholder-gray-400 font-bold text-xs" value="${subjectName || ''}" placeholder="Subject Name" ${isDefault ? 'readonly' : ''}>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-gray-300 mb-1">Oral (Obt / Max)</label>
-                            <div class="grid grid-cols-2 gap-2">
-                                <input type="number" class="oral-obtained w-full p-2 border-2 lg:border-4 border-blue-500 rounded-lg focus:border-blue-400 focus:outline-none bg-gray-700 text-white font-bold text-center text-xs" min="0" value="${oral.obtained}">
-                                <input type="number" class="oral-maximum w-full p-2 border-2 lg:border-4 border-blue-500 rounded-lg focus:border-blue-400 focus:outline-none bg-gray-700 text-white font-bold text-center text-xs" min="1" value="${oral.maximum}">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-gray-300 mb-1">Written (Obt / Max)</label>
-                            <div class="grid grid-cols-2 gap-2">
-                                <input type="number" class="written-obtained w-full p-2 border-2 lg:border-4 border-blue-500 rounded-lg focus:border-blue-400 focus:outline-none bg-gray-700 text-white font-bold text-center text-xs" min="0" value="${written.obtained}">
-                                <input type="number" class="written-maximum w-full p-2 border-2 lg:border-4 border-blue-500 rounded-lg focus:border-blue-400 focus:outline-none bg-gray-700 text-white font-bold text-center text-xs" min="1" value="${written.maximum}">
-                            </div>
-                        </div>
-                    </div>
-                    ${removeButton}
-                </div>
-            `;
-            container.appendChild(subjectDiv);
-        }
-
-        function clearForm() {
-            document.getElementById('studentName').value = '';
-            document.getElementById('fatherName').value = '';
-            document.getElementById('studentClass').value = '';
-            document.getElementById('allSubjects').innerHTML = '';
-            document.getElementById('successMessage').classList.add('hidden');
-        }
-
-        async function saveStudent() {
-            const name = document.getElementById('studentName').value.trim();
-            const fatherName = document.getElementById('fatherName').value.trim();
-            const studentClass = document.getElementById('studentClass').value;
-            const termName = document.getElementById('adminTermSelect').value;
-
-            if (!name || !fatherName || !studentClass || !termName) {
-                alert('❌ Please fill all fields and select a term!');
-                return;
-            }
-
-            const subjects = {};
-            const blocks = document.querySelectorAll('#allSubjects .subject-block');
-
-            for (let block of blocks) {
-                const subjectName = block.querySelector('.subject-name').value.trim();
-                if (!subjectName) continue;
-
-                subjects[subjectName] = {
-                    oral: { 
-                        obtained: parseInt(block.querySelector('.oral-obtained').value) || 0,
-                        maximum: parseInt(block.querySelector('.oral-maximum').value) || 0
-                    },
-                    written: { 
-                        obtained: parseInt(block.querySelector('.written-obtained').value) || 0,
-                        maximum: parseInt(block.querySelector('.written-maximum').value) || 0
-                    }
-                };
-            }
-
-            if (Object.keys(subjects).length === 0) {
-                alert('❌ Please add at least one subject!');
-                return;
-            }
-
-            try {
-                let studentData = { name, fatherName, class: studentClass };
-
-                if (isEditMode && currentStudentId) {
-                    const snap = await database.ref(`students/class${studentClass}/${currentStudentId}`).once('value');
-                    studentData = snap.val() || studentData;
-                }
-
-                studentData.terms = studentData.terms || {};
-                studentData.terms[termName] = studentData.terms[termName] || {};
-                studentData.terms[termName].subjects = subjects;
-
-                if (isEditMode && currentStudentId) {
-                    await database.ref(`students/class${studentClass}/${currentStudentId}`).set(studentData);
-                    alert(`✅ Student "${name}" updated!`);
-                } else {
-                    const newStudentRef = database.ref(`students/class${studentClass}`).push();
-                    await newStudentRef.set(studentData);
-                    alert(`✅ Student "${name}" added!`);
-                }
-
-                document.getElementById('adminClassSelect').dispatchEvent(new Event('change'));
-            } catch (error) {
-                console.error('Error:', error);
-                alert('❌ Error saving student!');
-            }
-        }
-
-        async function deleteStudent() {
-            if (!currentStudentId || !isEditMode) {
-                alert('❌ No student selected!');
-                return;
-            }
-
-            const studentName = document.getElementById('studentName').value;
-            const studentClass = document.getElementById('adminClassSelect').value;
-
-            if (confirm(`Delete "${studentName}"?`)) {
-                try {
-                    await database.ref(`students/class${studentClass}/${currentStudentId}`).remove();
-                    alert(`✅ Student deleted!`);
-                    currentStudentId = null;
-                    isEditMode = false;
-                    document.getElementById('studentForm').classList.add('hidden');
-                    document.getElementById('adminClassSelect').dispatchEvent(new Event('change'));
-                } catch (error) {
-                    console.error('Error:', error);
-                    alert('❌ Error deleting student!');
-                }
-            }
+        function clearProfileForm() {
+            document.getElementById('profileStudentName').value = '';
+            document.getElementById('profileRollNumber').value = '';
+            document.getElementById('profileDOB').value = '';
+            document.getElementById('profileGender').value = '';
+            document.getElementById('profileFatherName').value = '';
+            document.getElementById('profileMotherName').value = '';
+            document.getElementById('profileContact').value = '';
+            document.getElementById('profileAddress').value = '';
         }
 
         document.getElementById('addTermBtn').addEventListener('click', () => {
-            const newTerm = prompt('Enter new term name (e.g. Term 1, Half Yearly):');
-            if (!newTerm) return;
-            const opt = document.createElement('option');
-            opt.value = newTerm;
-            opt.textContent = newTerm;
-            document.getElementById('adminTermSelect').appendChild(opt);
-            document.getElementById('adminTermSelect').value = newTerm;
+            const termName = prompt("Enter New Term Name (e.g., Half Yearly, Term 1):");
+            if(termName && termName.trim()) {
+                const sel = document.getElementById('adminTermSelect');
+                const opt = document.createElement('option');
+                opt.value = termName;
+                opt.textContent = termName;
+                opt.selected = true;
+                sel.appendChild(opt);
+            }
         });
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const saveBtn = document.getElementById('saveStudentBtn');
-            const deleteBtn = document.getElementById('deleteStudentBtn');
-            if (saveBtn) saveBtn.addEventListener('click', saveStudent);
-            if (deleteBtn) deleteBtn.addEventListener('click', deleteStudent);
+        document.getElementById('adminTermSelect').addEventListener('change', async (e) => {
+            if(!isEditMode || !currentStudentId) return;
+            const term = e.target.value;
+            if(!term) {
+                renderSubjects({});
+                return;
+            }
+            
+            try {
+                const snap = await database.ref(`students/class${currentClass}/${currentStudentId}/terms/${term}`).once('value');
+                const termData = snap.val() || { subjects: {} };
+                renderSubjects(termData.subjects || {});
+            } catch(e) {
+                alert('Error loading term data: ' + e.message);
+            }
+        });
+
+        function renderSubjects(subjects) {
+            const container = document.getElementById('allSubjects');
+            container.innerHTML = '';
+            const allSubs = new Set([...defaultSubjects, ...Object.keys(subjects)]);
+            allSubs.forEach(sub => {
+                const data = subjects[sub] || { oral: { obtained: 0, maximum: 10 }, written: { obtained: 0, maximum: 40 } };
+                addSubjectRow(sub, data);
+            });
+        }
+
+        document.getElementById('addSubjectBtn').addEventListener('click', () => {
+            addSubjectRow('', { oral: { obtained: 0, maximum: 10 }, written: { obtained: 0, maximum: 40 } });
+        });
+
+        function addSubjectRow(name, data) {
+            const div = document.createElement('div');
+            div.className = 'subject-row';
+            div.innerHTML = `
+                <input type="text" class="sub-name" value="${name}" placeholder="Subject Name">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div>
+                        <label style="font-size: var(--master-base-size); color: #d1d5db; font-weight: bold; display: block; margin-bottom: 5px;">Oral (Obt/Max)</label>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="number" class="oral-obt" style="flex: 1;" value="${data.oral?.obtained||0}" min="0">
+                            <span style="color: white; font-weight: bold; padding-top: 6px; font-size: var(--master-base-size);">/</span>
+                            <input type="number" class="oral-max" style="flex: 1;" value="${data.oral?.maximum||10}" min="0">
+                        </div>
+                    </div>
+                    <div>
+                        <label style="font-size: var(--master-base-size); color: #d1d5db; font-weight: bold; display: block; margin-bottom: 5px;">Written (Obt/Max)</label>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="number" class="writ-obt" style="flex: 1;" value="${data.written?.obtained||0}" min="0">
+                            <span style="color: white; font-weight: bold; padding-top: 6px; font-size: var(--master-base-size);">/</span>
+                            <input type="number" class="writ-max" style="flex: 1;" value="${data.written?.maximum||40}" min="0">
+                        </div>
+                    </div>
+                </div>`;
+            document.getElementById('allSubjects').appendChild(div);
+        }
+
+        document.getElementById('saveProfileBtn').addEventListener('click', async () => {
+            if(!currentStudentId) {
+                alert('❌ Please select a student in edit mode first!');
+                return;
+            }
+
+            const profileVisibility = {
+                rollNumber: document.getElementById('showRollNumber').checked,
+                dob: document.getElementById('showDOB').checked,
+                gender: document.getElementById('showGender').checked,
+                fatherName: document.getElementById('showFatherName').checked,
+                motherName: document.getElementById('showMotherName').checked,
+                contact: document.getElementById('showContact').checked,
+                address: document.getElementById('showAddress').checked
+            };
+
+            const profileData = {
+                rollNumber: document.getElementById('profileRollNumber').value.trim(),
+                dob: document.getElementById('profileDOB').value.trim(),
+                gender: document.getElementById('profileGender').value.trim(),
+                fatherName: document.getElementById('profileFatherName').value.trim(),
+                motherName: document.getElementById('profileMotherName').value.trim(),
+                contact: document.getElementById('profileContact').value.trim(),
+                address: document.getElementById('profileAddress').value.trim()
+            };
+
+            try {
+                await database.ref(`students/class${currentClass}/${currentStudentId}`).update({
+                    name: document.getElementById('profileStudentName').value.trim(),
+                    fatherName: document.getElementById('profileFatherName').value.trim(),
+                    profile: profileData,
+                    profileVisibility: profileVisibility
+                });
+                alert('✅ Student Profile Saved Successfully!');
+            } catch(e) {
+                alert('❌ Error saving profile: ' + e.message);
+            }
+        });
+
+        document.getElementById('saveStudentBtn').addEventListener('click', async () => {
+            const msgContainer = document.getElementById('messageContainer');
+            const term = document.getElementById('adminTermSelect').value;
+            const studentName = document.getElementById('profileStudentName').value.trim();
+            
+            if(!studentName) {
+                showMessage(msgContainer, '❌ Please enter student name!', 'error');
+                return;
+            }
+            
+            if(!term) {
+                showMessage(msgContainer, '❌ Please select or create a term!', 'error');
+                return;
+            }
+            
+            const subjects = {};
+            document.querySelectorAll('.subject-row').forEach(row => {
+                const subName = row.querySelector('.sub-name').value.trim();
+                if(subName) {
+                    const oralObt = parseInt(row.querySelector('.oral-obt').value) || 0;
+                    const oralMax = parseInt(row.querySelector('.oral-max').value) || 0;
+                    const writObt = parseInt(row.querySelector('.writ-obt').value) || 0;
+                    const writMax = parseInt(row.querySelector('.writ-max').value) || 0;
+                    
+                    if(oralMax > 0 || writMax > 0) {
+                        subjects[subName] = {
+                            oral: { obtained: oralObt, maximum: oralMax },
+                            written: { obtained: writObt, maximum: writMax }
+                        };
+                    }
+                }
+            });
+
+            if(Object.keys(subjects).length === 0) {
+                showMessage(msgContainer, '❌ Please add at least one subject with marks!', 'error');
+                return;
+            }
+
+            try {
+                if(isEditMode && currentStudentId) {
+                    await database.ref(`students/class${currentClass}/${currentStudentId}/terms/${term}`).set({ subjects });
+                    showMessage(msgContainer, '✅ Marks Updated Successfully!', 'success');
+                } else {
+                    const studentData = { 
+                        name: studentName, 
+                        fatherName: document.getElementById('profileFatherName').value,
+                        profile: {
+                            rollNumber: document.getElementById('profileRollNumber').value,
+                            dob: document.getElementById('profileDOB').value,
+                            gender: document.getElementById('profileGender').value,
+                            fatherName: document.getElementById('profileFatherName').value,
+                            motherName: document.getElementById('profileMotherName').value,
+                            contact: document.getElementById('profileContact').value,
+                            address: document.getElementById('profileAddress').value
+                        },
+                        profileVisibility: {
+                            rollNumber: document.getElementById('showRollNumber').checked,
+                            dob: document.getElementById('showDOB').checked,
+                            gender: document.getElementById('showGender').checked,
+                            fatherName: document.getElementById('showFatherName').checked,
+                            motherName: document.getElementById('showMotherName').checked,
+                            contact: document.getElementById('showContact').checked,
+                            address: document.getElementById('showAddress').checked
+                        },
+                        terms: { [term]: { subjects } }
+                    };
+                    await database.ref(`students/class${currentClass}`).push().set(studentData);
+                    showMessage(msgContainer, '✅ New Student Added Successfully!', 'success');
+                }
+                
+                clearProfileForm();
+                renderSubjects({});
+                document.getElementById('adminClassSelect').dispatchEvent(new Event('change'));
+            } catch(e) {
+                showMessage(msgContainer, '❌ Error: ' + e.message, 'error');
+            }
+        });
+
+        document.getElementById('deleteStudentBtn').addEventListener('click', async () => {
+            if(!confirm('⚠️ Are you sure? This cannot be undone!')) return;
+            
+            try {
+                await database.ref(`students/class${currentClass}/${currentStudentId}`).remove();
+                alert('✅ Student deleted successfully!');
+                document.getElementById('adminClassSelect').dispatchEvent(new Event('change'));
+            } catch(e) {
+                alert('❌ Error deleting student: ' + e.message);
+            }
         });
     </script>
-
-    <div class="marquee-bottom">
-        <div class="marquee-content-bottom">
-            🚀 Proudly Developed by Mr. Deepak Kumar Vaishya 🚀 Assistant Teacher & Tech Innovator 🚀 Custom Web Solutions for Education 🚀 
-        </div>
-    </div>
 </body>
 </html>
